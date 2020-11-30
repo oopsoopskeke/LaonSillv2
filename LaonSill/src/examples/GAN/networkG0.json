@@ -1,0 +1,400 @@
+{
+    "layers" :
+    [
+        {
+            "name" : "noise0",
+            "layer" : "NoiseInput",
+            "id" : 9999,
+            "output" : ["noise"],
+            "noiseDepth" : 100,
+            "noiseRangeLow" : -1.0,
+            "noiseRangeHigh" : 1.0
+        },
+
+        {
+            "name" : "fc0",
+            "layer" : "FullyConnected",
+            "id" : 10000,
+            "input" : ["noise"],
+            "output" : ["fc0"],
+            "nOut" : 8192,
+            "weightFiller.type" : "Gaussian",
+            "weightFiller.std" : 0.02,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.0,
+            "donate" : true,
+            "updateGrad" : false
+        },
+
+        {
+            "name" : "reshape",
+            "layer" : "Reshape",
+            "id" : 10001,
+            "input" : ["fc0"],
+            "output" : ["reshape0"],
+            "shape" : [-1, 512, 4, 4]
+        },
+
+        {
+            "name" : "bn/noiseInput",
+            "layer" : "BatchNorm",
+            "id" : 10002,
+            "input" : ["reshape0"],
+            "output" : ["bn/noiseInput"],
+            "donate" : true,
+            "updateGrad" : false
+        },
+
+        {
+            "name" : "relu/noiseInput",
+            "layer" : "Relu",
+            "id" : 10003,
+            "input" : ["bn/noiseInput"],
+            "output" : ["relu/noiseInput"]
+        },
+
+        {
+            "name" : "deconv1",
+            "layer" : "Conv",
+            "id" : 10004,
+            "input" : ["relu/noiseInput"],
+            "output" : ["deconv1"],
+            "weightFiller.type" : "Gaussian",
+            "weightFiller.std" : 0.02,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.0,
+            "deconv" : true,
+            "filterDim.rows" : 4,
+            "filterDim.cols" : 4,
+            "filterDim.channels" : 512,
+            "filterDim.filters" : 256,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 2,
+            "donate" : true,
+            "updateGrad" : false
+        },
+
+        {
+            "name" : "bn/deconv1",
+            "layer" : "BatchNorm",
+            "id" : 10005,
+            "input" : ["deconv1"],
+            "output" : ["bn/deconv1"],
+            "donate" : true,
+            "updateGrad" : false
+        },
+
+        {
+            "name" : "relu1",
+            "layer" : "Relu",
+            "id" : 10006,
+            "input" : ["bn/deconv1"],
+            "output" : ["relu1"]
+        },
+
+        {
+            "name" : "deconv2",
+            "layer" : "Conv",
+            "id" : 10007,
+            "input" : ["relu1"],
+            "output" : ["deconv2"],
+            "weightFiller.type" : "Gaussian",
+            "weightFiller.std" : 0.02,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.0,
+            "deconv" : true,
+            "filterDim.rows" : 4,
+            "filterDim.cols" : 4,
+            "filterDim.channels" : 256,
+            "filterDim.filters" : 128,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 2,
+            "donate" : true,
+            "updateGrad" : false
+        },
+
+        {
+            "name" : "bn/deconv2",
+            "layer" : "BatchNorm",
+            "id" : 10008,
+            "input" : ["deconv2"],
+            "output" : ["bn/deconv2"],
+            "donate" : true,
+            "updateGrad" : false
+        },
+
+        {
+            "name" : "relu2",
+            "layer" : "Relu",
+            "id" : 10009,
+            "input" : ["bn/deconv2"],
+            "output" : ["relu2"]
+        },
+
+        {
+            "name" : "deconv3",
+            "layer" : "Conv",
+            "id" : 10010,
+            "input" : ["relu2"],
+            "output" : ["deconv3"],
+            "weightFiller.type" : "Gaussian",
+            "weightFiller.std" : 0.02,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.0,
+            "deconv" : true,
+            "filterDim.rows" : 4,
+            "filterDim.cols" : 4,
+            "filterDim.channels" : 128,
+            "filterDim.filters" : 64,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 2,
+            "donate" : true,
+            "updateGrad" : false
+        },
+
+        {
+            "name" : "bn/deconv3",
+            "layer" : "BatchNorm",
+            "id" : 10011,
+            "input" : ["deconv3"],
+            "output" : ["bn/deconv3"],
+            "donate" : true,
+            "updateGrad" : false
+        },
+
+        {
+            "name" : "relu3",
+            "layer" : "Relu",
+            "id" : 10012,
+            "input" : ["bn/deconv3"],
+            "output" : ["relu3"]
+        },
+
+        {
+            "name" : "deconv4",
+            "layer" : "Conv",
+            "id" : 10013,
+            "input" : ["relu3"],
+            "output" : ["deconv4"],
+            "weightFiller.type" : "Gaussian",
+            "weightFiller.std" : 0.02,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.0,
+            "deconv" : true,
+            "filterDim.rows" : 4,
+            "filterDim.cols" : 4,
+            "filterDim.channels" : 64,
+            "filterDim.filters" : 3,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 2,
+            "donate" : true,
+            "updateGrad" : false
+        },
+
+        {
+            "name" : "hypertangent",
+            "layer" : "HyperTangent",
+            "id" : 10014,
+            "input" : ["deconv4"],
+            "output" : ["hypertangent"]
+        },
+
+        {
+            "name" : "conv1",
+            "layer" : "Conv",
+            "id" : 10015,
+            "input" : ["hypertangent"],
+            "output" : ["conv1"],
+            "weightFiller.type" : "Gaussian",
+            "weightFiller.std" : 0.02,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.0,
+            "filterDim.rows" : 4,
+            "filterDim.cols" : 4,
+            "filterDim.channels" : 3,
+            "filterDim.filters" : 64,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 2,
+            "donate" : true,
+            "updateGrad" : true
+        },
+
+        {
+            "name" : "lrelu1",
+            "layer" : "Relu",
+            "id" : 10017,
+            "useLeaky" : true,
+            "leaky" : 0.2,
+            "input" : ["conv1"],
+            "output" : ["lrelu1"]
+        },
+
+        {
+            "name" : "conv2",
+            "layer" : "Conv",
+            "id" : 10018,
+            "input" : ["lrelu1"],
+            "output" : ["conv2"],
+            "weightFiller.type" : "Gaussian",
+            "weightFiller.std" : 0.02,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.0,
+            "filterDim.rows" : 4,
+            "filterDim.cols" : 4,
+            "filterDim.channels" : 64,
+            "filterDim.filters" : 128,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 2,
+            "donate" : true,
+            "updateGrad" : true
+        },
+
+        {
+            "name" : "bn/conv2",
+            "layer" : "BatchNorm",
+            "id" : 10019,
+            "input" : ["conv2"],
+            "output" : ["bn/conv2"],
+            "donate" : true,
+            "updateGrad" : true
+        },
+
+        {
+            "name" : "lrelu2",
+            "layer" : "Relu",
+            "id" : 10020,
+            "useLeaky" : true,
+            "leaky" : 0.2,
+            "input" : ["bn/conv2"],
+            "output" : ["lrelu2"]
+        },
+
+        {
+            "name" : "conv3",
+            "layer" : "Conv",
+            "id" : 10021,
+            "input" : ["lrelu2"],
+            "output" : ["conv3"],
+            "weightFiller.type" : "Gaussian",
+            "weightFiller.std" : 0.02,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.0,
+            "filterDim.rows" : 4,
+            "filterDim.cols" : 4,
+            "filterDim.channels" : 128,
+            "filterDim.filters" : 256,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 2,
+            "donate" : true,
+            "updateGrad" : true
+        },
+
+        {
+            "name" : "bn/conv3",
+            "layer" : "BatchNorm",
+            "id" : 10022,
+            "input" : ["conv3"],
+            "output" : ["bn/conv3"],
+            "donate" : true,
+            "updateGrad" : true
+        },
+
+        {
+            "name" : "lrelu3",
+            "layer" : "Relu",
+            "id" : 10023,
+            "useLeaky" : true,
+            "leaky" : 0.2,
+            "input" : ["bn/conv3"],
+            "output" : ["lrelu3"]
+        },
+
+        {
+            "name" : "conv4",
+            "layer" : "Conv",
+            "id" : 10024,
+            "input" : ["lrelu3"],
+            "output" : ["conv4"],
+            "weightFiller.type" : "Gaussian",
+            "weightFiller.std" : 0.02,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.0,
+            "filterDim.rows" : 4,
+            "filterDim.cols" : 4,
+            "filterDim.channels" : 256,
+            "filterDim.filters" : 512,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 2,
+            "donate" : true,
+            "updateGrad" : true
+        },
+
+        {
+            "name" : "bn/conv4",
+            "layer" : "BatchNorm",
+            "id" : 10025,
+            "input" : ["conv4"],
+            "output" : ["bn/conv4"],
+            "donate" : true,
+            "updateGrad" : true
+        },
+
+        {
+            "name" : "lrelu4",
+            "layer" : "Relu",
+            "id" : 10026,
+            "useLeaky" : true,
+            "leaky" : 0.2,
+            "input" : ["bn/conv4"],
+            "output" : ["lrelu4"]
+        },
+
+        {
+            "name" : "fc1",
+            "layer" : "FullyConnected",
+            "id" : 10027,
+            "input" : ["lrelu4"],
+            "output" : ["fc1"],
+            "nOut" : 1,
+            "weightFiller.type" : "Gaussian",
+            "weightFiller.std" : 0.02,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.0,
+            "donate" : true,
+            "updateGrad" : true
+        },
+
+        {
+            "name" : "celossGD0GAN",
+            "layer" : "CrossEntropyWithLoss",
+            "id" : 10028,
+            "input" : ["fc1"],
+            "output" : ["prob"],
+            "targetValue" : 0.0,
+            "withSigmoid" : true
+        }
+        
+    ],
+
+    "configs" :
+    {
+        "batchSize" : 64,
+        "epochs" : 16,
+        "lossLayer" : ["celossGD0GAN"],
+        "gamma" : 0.1,
+        "saveInterval" : 1000000,
+        "testInterval" : 100,
+        "savePathPrefix" : "",
+        "baseLearningRate" : 0.0002,
+        "stepSize" : 100000,
+        "weightDecay" : 0.0001,
+        "momentum" : 0.9,
+        "clipGradientsLevel" : 0.0,
+        "gamma" : 0.1,
+        "lrPolicy" : "Fixed",
+        "optimizer" : "Adam",
+        "beta1" : 0.5,
+        "beta2" : 0.999,
+        "miniBatch" : 0
+    }
+}

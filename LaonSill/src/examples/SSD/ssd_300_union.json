@@ -1,0 +1,1658 @@
+{
+	"layers" :
+	[
+		{
+			"name" : "data",
+			"layer" : "AnnotatedData",
+			"id" : 0,
+			"output" : ["data", "label"],
+
+			"dataTransformParam.mirror" : true,
+			"dataTransformParam.mean" : [104.0, 117.0, 123.0],
+
+			"resizeParam.prob" : 1.0,
+			"resizeParam.resizeMode" : "WARP",
+			"resizeParam.height" : 300,
+			"resizeParam.width" : 300,
+			"resizeParam.interpMode0" : "LINEAR",
+			"resizeParam.interpMode1" : "AREA",
+			"resizeParam.interpMode2" : "NEAREST",
+			"resizeParam.interpMode3" : "CUBIC",
+			"resizeParam.interpMode4" : "LANCZOS4",
+
+			"emitConstraint.emitType" : "CENTER",
+
+			"distortParam.brightnessProb" : 0.5,
+			"distortParam.brightnessDelta" : 32.0,
+			"distortParam.contrastProb" : 0.5,
+			"distortParam.contrastLower" : 0.5,
+			"distortParam.contrastUpper" : 1.5,
+			"distortParam.hueProb" : 0.5,
+			"distortParam.hueDelta" : 18.0,
+			"distortParam.saturationProb" : 0.5,
+			"distortParam.saturationLower" : 0.5,
+			"distortParam.saturationUpper" : 1.5,
+			"distortParam.randomOrderProb" : 0.0,
+
+			"expandParam.prob" : 0.5,
+			"expandParam.maxExpandRatio" : 4.0,
+
+			"source" : "$(LAONSILL_HOME)/data/sdf/voc2007_train_sdf/",
+
+			"batchSampler0.maxSample" : 1,
+			"batchSampler0.maxTrials" : 1,
+
+			"batchSampler1.minScale" : 0.300000011921,
+			"batchSampler1.maxScale" : 1.0,
+			"batchSampler1.minAspectRatio" : 0.5,
+			"batchSampler1.maxAspectRatio" : 2.0,
+			"batchSampler1.minJaccardOverlap" : 0.10000000149,
+			"batchSampler1.maxSample" : 1,
+			"batchSampler1.maxTrials" : 50,
+
+			"batchSampler2.minScale" : 0.300000011921,
+			"batchSampler2.maxScale" : 1.0,
+			"batchSampler2.minAspectRatio" : 0.5,
+			"batchSampler2.maxAspectRatio" : 2.0,
+			"batchSampler2.minJaccardOverlap" : 0.300000011921,
+			"batchSampler2.maxSample" : 1,
+			"batchSampler2.maxTrials" : 50,
+
+			"batchSampler3.minScale" : 0.300000011921,
+			"batchSampler3.maxScale" : 1.0,
+			"batchSampler3.minAspectRatio" : 0.5,
+			"batchSampler3.maxAspectRatio" : 2.0,
+			"batchSampler3.minJaccardOverlap" : 0.5,
+			"batchSampler3.maxSample" : 1,
+			"batchSampler3.maxTrials" : 50,
+
+			"batchSampler4.minScale" : 0.300000011921,
+			"batchSampler4.maxScale" : 1.0,
+			"batchSampler4.minAspectRatio" : 0.5,
+			"batchSampler4.maxAspectRatio" : 2.0,
+			"batchSampler4.minJaccardOverlap" : 0.699999988079,
+			"batchSampler4.maxSample" : 1,
+			"batchSampler4.maxTrials" : 50,
+
+			"batchSampler5.minScale" : 0.300000011921,
+			"batchSampler5.maxScale" : 1.0,
+			"batchSampler5.minAspectRatio" : 0.5,
+			"batchSampler5.maxAspectRatio" : 2.0,
+			"batchSampler5.minJaccardOverlap" : 0.899999976158,
+			"batchSampler5.maxSample" : 1,
+			"batchSampler5.maxTrials" : 50,
+
+			"batchSampler6.minScale" : 0.300000011921,
+			"batchSampler6.maxScale" : 1.0,
+			"batchSampler6.minAspectRatio" : 0.5,
+			"batchSampler6.maxAspectRatio" : 2.0,
+			"batchSampler6.maxJaccardOverlap" : 1.0,
+			"batchSampler6.maxSample" : 1,
+			"batchSampler6.maxTrials" : 50,
+
+			"labelMapFile" : "$(LAONSILL_HOME)/resource/labelmap/labelmap_voc.json",
+			"annoType" : "BBOX",
+            "activation" : "TrainActivation"
+		},
+				
+		{
+			"name" : "data",
+			"layer" : "AnnotationData",
+			"id" : 1,
+			"output" : ["data", "label"],
+			"imageHeight" : 300,
+			"imageWidth" : 300,
+			"mean" : [104.0, 117.0, 123.0],
+			"labelMapPath" : "$(LAONSILL_HOME)/resource/labelmap/labelmap_voc.json",
+			"live" : true,
+            "activation" : "TestActivation"
+		},
+
+		{
+			"name" : "conv1_1",
+			"layer" : "Conv",
+			"id" : 10,
+			"input" : ["data"],
+			"output" : ["conv1_1"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 3,
+			"filterDim.filters" : 64,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "relu1_1",
+			"layer" : "Relu",
+			"id" : 20,
+			"input" : ["conv1_1"],
+			"output" : ["conv1_1"]
+		},
+
+		{
+			"name" : "conv1_2",
+			"layer" : "Conv",
+			"id" : 30,
+			"input" : ["conv1_1"],
+			"output" : ["conv1_2"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 64,
+			"filterDim.filters" : 64,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "relu1_2",
+			"layer" : "Relu",
+			"id" : 40,
+			"input" : ["conv1_2"],
+			"output" : ["conv1_2"]
+		},
+
+		{
+			"name" : "pool1",
+			"layer" : "Pooling",
+			"id" : 50,
+			"input" : ["conv1_2"],
+			"output" : ["pool1"],
+			"poolDim.rows" : 2,
+			"poolDim.cols" : 2,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 2,
+			"poolingType" : "Max"
+		},
+
+		{
+			"name" : "conv2_1",
+			"layer" : "Conv",
+			"id" : 60,
+			"input" : ["pool1"],
+			"output" : ["conv2_1"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 64,
+			"filterDim.filters" : 128,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "relu2_1",
+			"layer" : "Relu",
+			"id" : 70,
+			"input" : ["conv2_1"],
+			"output" : ["conv2_1"]
+		},
+
+		{
+			"name" : "conv2_2",
+			"layer" : "Conv",
+			"id" : 80,
+			"input" : ["conv2_1"],
+			"output" : ["conv2_2"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 128,
+			"filterDim.filters" : 128,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "relu2_2",
+			"layer" : "Relu",
+			"id" : 90,
+			"input" : ["conv2_2"],
+			"output" : ["conv2_2"]
+		},
+
+		{
+			"name" : "pool2",
+			"layer" : "Pooling",
+			"id" : 100,
+			"input" : ["conv2_2"],
+			"output" : ["pool2"],
+			"poolDim.rows" : 2,
+			"poolDim.cols" : 2,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 2,
+			"poolingType" : "Max"
+		},
+		
+		{
+			"name" : "conv3_1",
+			"layer" : "Conv",
+			"id" : 110,
+			"input" : ["pool2"],
+			"output" : ["conv3_1"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 128,
+			"filterDim.filters" : 256,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "relu3_1",
+			"layer" : "Relu",
+			"id" : 120,
+			"input" : ["conv3_1"],
+			"output" : ["conv3_1"]
+		},
+
+		{
+			"name" : "conv3_2",
+			"layer" : "Conv",
+			"id" : 130,
+			"input" : ["conv3_1"],
+			"output" : ["conv3_2"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 256,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "relu3_2",
+			"layer" : "Relu",
+			"id" : 140,
+			"input" : ["conv3_2"],
+			"output" : ["conv3_2"]
+		},
+
+		{
+			"name" : "conv3_3",
+			"layer" : "Conv",
+			"id" : 150,
+			"input" : ["conv3_2"],
+			"output" : ["conv3_3"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 256,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "relu3_3",
+			"layer" : "Relu",
+			"id" : 160,
+			"input" : ["conv3_3"],
+			"output" : ["conv3_3"]
+		},
+
+		{
+			"name" : "pool3",
+			"layer" : "Pooling",
+			"id" : 170,
+			"input" : ["conv3_3"],
+			"output" : ["pool3"],
+			"poolDim.rows" : 2,
+			"poolDim.cols" : 2,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 2,
+			"poolingType" : "Max"
+		},
+
+
+
+
+
+
+
+
+
+
+
+
+		{
+			"name" : "conv4_1",
+			"layer" : "Conv",
+			"id" : 180,
+			"input" : ["pool3"],
+			"output" : ["conv4_1"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 512,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "relu4_1",
+			"layer" : "Relu",
+			"id" : 190,
+			"input" : ["conv4_1"],
+			"output" : ["conv4_1"]
+		},
+
+		{
+			"name" : "conv4_2",
+			"layer" : "Conv",
+			"id" : 200,
+			"input" : ["conv4_1"],
+			"output" : ["conv4_2"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 512,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "relu4_2",
+			"layer" : "Relu",
+			"id" : 210,
+			"input" : ["conv4_2"],
+			"output" : ["conv4_2"]
+		},
+
+		{
+			"name" : "conv4_3",
+			"layer" : "Conv",
+			"id" : 220,
+			"input" : ["conv4_2"],
+			"output" : ["conv4_3"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 512,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "relu4_3",
+			"layer" : "Relu",
+			"id" : 230,
+			"input" : ["conv4_3"],
+			"output" : ["conv4_3"]
+		},
+
+		{
+			"name" : "pool4",
+			"layer" : "Pooling",
+			"id" : 240,
+			"input" : ["conv4_3"],
+			"output" : ["pool4"],
+			"poolDim.rows" : 2,
+			"poolDim.cols" : 2,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 2,
+			"poolingType" : "Max"
+		},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		{
+			"name" : "conv5_1",
+			"layer" : "Conv",
+			"id" : 250,
+			"input" : ["pool4"],
+			"output" : ["conv5_1"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 512,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"filterDim.dilation" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "relu5_1",
+			"layer" : "Relu",
+			"id" : 260,
+			"input" : ["conv5_1"],
+			"output" : ["conv5_1"]
+		},
+
+		{
+			"name" : "conv5_2",
+			"layer" : "Conv",
+			"id" : 270,
+			"input" : ["conv5_1"],
+			"output" : ["conv5_2"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 512,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"filterDim.dilation" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "relu5_2",
+			"layer" : "Relu",
+			"id" : 280,
+			"input" : ["conv5_2"],
+			"output" : ["conv5_2"]
+		},
+
+		{
+			"name" : "conv5_3",
+			"layer" : "Conv",
+			"id" : 290,
+			"input" : ["conv5_2"],
+			"output" : ["conv5_3"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 512,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"filterDim.dilation" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "relu5_3",
+			"layer" : "Relu",
+			"id" : 300,
+			"input" : ["conv5_3"],
+			"output" : ["conv5_3"]
+		},
+
+		{
+			"name" : "pool5",
+			"layer" : "Pooling",
+			"id" : 310,
+			"input" : ["conv5_3"],
+			"output" : ["pool5"],
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.pad" : 1,
+			"poolDim.stride" : 1,
+			"poolingType" : "Max"
+		},
+		
+		{
+			"name" : "fc6",
+			"layer" : "Conv",
+			"id" : 320,
+			"input" : ["pool5"],
+			"output" : ["fc6"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 1024,
+			"filterDim.pad" : 6,
+			"filterDim.stride" : 1,
+			"filterDim.dilation" : 6,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+		
+		{
+			"name" : "relu6",
+			"layer" : "Relu",
+			"id" : 330,
+			"input" : ["fc6"],
+			"output" : ["fc6"]
+		},
+		
+		{
+			"name" : "fc7",
+			"layer" : "Conv",
+			"id" : 340,
+			"input" : ["fc6"],
+			"output" : ["fc7"],
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.channels" : 1024,
+			"filterDim.filters" : 1024,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+		
+		{
+			"name" : "relu7",
+			"layer" : "Relu",
+			"id" : 350,
+			"input" : ["fc7"],
+			"output" : ["fc7"]
+		},
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		{
+			"name" : "conv6_1",
+			"layer" : "Conv",
+			"id" : 360,
+			"input" : ["fc7"],
+			"output" : ["conv6_1"],
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.channels" : 1024,
+			"filterDim.filters" : 256,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "conv6_1_relu",
+			"layer" : "Relu",
+			"id" : 370,
+			"input" : ["conv6_1"],
+			"output" : ["conv6_1"]
+		},
+
+		{
+			"name" : "conv6_2",
+			"layer" : "Conv",
+			"id" : 380,
+			"input" : ["conv6_1"],
+			"output" : ["conv6_2"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 512,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 2,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "conv6_2_relu",
+			"layer" : "Relu",
+			"id" : 390,
+			"input" : ["conv6_2"],
+			"output" : ["conv6_2"]
+		},
+
+		{
+			"name" : "conv7_1",
+			"layer" : "Conv",
+			"id" : 400,
+			"input" : ["conv6_2"],
+			"output" : ["conv7_1"],
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 128,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "conv7_1_relu",
+			"layer" : "Relu",
+			"id" : 410,
+			"input" : ["conv7_1"],
+			"output" : ["conv7_1"]
+		},
+
+		{
+			"name" : "conv7_2",
+			"layer" : "Conv",
+			"id" : 420,
+			"input" : ["conv7_1"],
+			"output" : ["conv7_2"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 128,
+			"filterDim.filters" : 256,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 2,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "conv7_2_relu",
+			"layer" : "Relu",
+			"id" : 430,
+			"input" : ["conv7_2"],
+			"output" : ["conv7_2"]
+		},
+
+
+
+
+
+		{
+			"name" : "conv8_1",
+			"layer" : "Conv",
+			"id" : 440,
+			"input" : ["conv7_2"],
+			"output" : ["conv8_1"],
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 128,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "conv8_1_relu",
+			"layer" : "Relu",
+			"id" : 450,
+			"input" : ["conv8_1"],
+			"output" : ["conv8_1"]
+		},
+
+		{
+			"name" : "conv8_2",
+			"layer" : "Conv",
+			"id" : 460,
+			"input" : ["conv8_1"],
+			"output" : ["conv8_2"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 128,
+			"filterDim.filters" : 256,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "conv8_2_relu",
+			"layer" : "Relu",
+			"id" : 470,
+			"input" : ["conv8_2"],
+			"output" : ["conv8_2"]
+		},
+
+
+
+
+		{
+			"name" : "conv9_1",
+			"layer" : "Conv",
+			"id" : 480,
+			"input" : ["conv8_2"],
+			"output" : ["conv9_1"],
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 128,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "conv9_1_relu",
+			"layer" : "Relu",
+			"id" : 490,
+			"input" : ["conv9_1"],
+			"output" : ["conv9_1"]
+		},
+
+		{
+			"name" : "conv9_2",
+			"layer" : "Conv",
+			"id" : 500,
+			"input" : ["conv9_1"],
+			"output" : ["conv9_2"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 128,
+			"filterDim.filters" : 256,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "conv9_2_relu",
+			"layer" : "Relu",
+			"id" : 510,
+			"input" : ["conv9_2"],
+			"output" : ["conv9_2"]
+		},
+		
+		{
+			"name" : "conv4_3_norm",
+			"layer" : "Normalize",
+			"id" : 520,
+			"input" : ["conv4_3"],
+			"output" : ["conv4_3_norm"],
+			"acrossSpatial" : false,
+			"scaleFiller.type" : "Constant",
+			"scaleFiller.value" : 20.0,
+			"channelShared" : false
+		},
+		
+		{
+			"name" : "conv4_3_norm_mbox_loc",
+			"layer" : "Conv",
+			"id" : 530,
+			"input" : ["conv4_3_norm"],
+			"output" : ["conv4_3_norm_mbox_loc"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 16,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+		
+		{
+			"name" : "conv4_3_norm_mbox_loc_perm",
+			"layer" : "Permute",
+			"id" : 540,
+			"input" : ["conv4_3_norm_mbox_loc"],
+			"output" : ["conv4_3_norm_mbox_loc_perm"],
+			"order" : [0, 2, 3, 1]
+		},
+		
+		{
+			"name" : "conv4_3_norm_mbox_loc_flat",
+			"layer" : "Flatten",
+			"id" : 550,
+			"input" : ["conv4_3_norm_mbox_loc_perm"],
+			"output" : ["conv4_3_norm_mbox_loc_flat"],
+			"axis" : 1
+		},
+				
+				
+				
+		{
+			"name" : "conv4_3_norm_mbox_conf",
+			"layer" : "Conv",
+			"id" : 560,
+			"input" : ["conv4_3_norm"],
+			"output" : ["conv4_3_norm_mbox_conf"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 84,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+		
+		{
+			"name" : "conv4_3_norm_mbox_conf_perm",
+			"layer" : "Permute",
+			"id" : 570,
+			"input" : ["conv4_3_norm_mbox_conf"],
+			"output" : ["conv4_3_norm_mbox_conf_perm"],
+			"order" : [0, 2, 3, 1]
+		},
+		
+		{
+			"name" : "conv4_3_norm_mbox_conf_flat",
+			"layer" : "Flatten",
+			"id" : 580,
+			"input" : ["conv4_3_norm_mbox_conf_perm"],
+			"output" : ["conv4_3_norm_mbox_conf_flat"],
+			"axis" : 1
+		},
+				
+		{
+			"name" : "conv4_3_norm_mbox_priorbox",
+			"layer" : "PriorBox",
+			"id" : 590,
+			"input" : ["conv4_3_norm", "data"],
+			"output" : ["conv4_3_norm_mbox_priorbox"],
+			"minSize" : [30.0],
+			"maxSize" : [60.0],
+			"aspectRatio" : [2.0],
+			"flip" : true,
+			"clip" : false,
+			"variance" : [0.1, 0.1, 0.2, 0.2],
+			"step" : 8.0,
+			"offset" : 0.5
+		},
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+
+		{
+			"name" : "fc7_mbox_loc",
+			"layer" : "Conv",
+			"id" : 600,
+			"input" : ["fc7"],
+			"output" : ["fc7_mbox_loc"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 1024,
+			"filterDim.filters" : 24,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+		
+		{
+			"name" : "fc7_mbox_loc_perm",
+			"layer" : "Permute",
+			"id" : 610,
+			"input" : ["fc7_mbox_loc"],
+			"output" : ["fc7_mbox_loc_perm"],
+			"order" : [0, 2, 3, 1]
+		},
+		
+		{
+			"name" : "fc7_mbox_loc_flat",
+			"layer" : "Flatten",
+			"id" : 620,
+			"input" : ["fc7_mbox_loc_perm"],
+			"output" : ["fc7_mbox_loc_flat"],
+			"axis" : 1
+		},
+				
+				
+				
+		{
+			"name" : "fc7_mbox_conf",
+			"layer" : "Conv",
+			"id" : 630,
+			"input" : ["fc7"],
+			"output" : ["fc7_mbox_conf"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 1024,
+			"filterDim.filters" : 126,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+		
+		{
+			"name" : "fc7_mbox_conf_perm",
+			"layer" : "Permute",
+			"id" : 640,
+			"input" : ["fc7_mbox_conf"],
+			"output" : ["fc7_mbox_conf_perm"],
+			"order" : [0, 2, 3, 1]
+		},
+		
+		{
+			"name" : "fc7_mbox_conf_flat",
+			"layer" : "Flatten",
+			"id" : 650,
+			"input" : ["fc7_mbox_conf_perm"],
+			"output" : ["fc7_mbox_conf_flat"],
+			"axis" : 1
+		},
+				
+		{
+			"name" : "fc7_mbox_priorbox",
+			"layer" : "PriorBox",
+			"id" : 660,
+			"input" : ["fc7", "data"],
+			"output" : ["fc7_mbox_priorbox"],
+			"minSize" : [60.0],
+			"maxSize" : [111.0],
+			"aspectRatio" : [2.0, 3.0],
+			"flip" : true,
+			"clip" : false,
+			"variance" : [0.1, 0.1, 0.2, 0.2],
+			"step" : 16.0,
+			"offset" : 0.5
+		},
+		
+		
+		
+		
+		
+		
+		
+		
+		{
+			"name" : "conv6_2_mbox_loc",
+			"layer" : "Conv",
+			"id" : 670,
+			"input" : ["conv6_2"],
+			"output" : ["conv6_2_mbox_loc"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 24,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+		
+		{
+			"name" : "conv6_2_mbox_loc_perm",
+			"layer" : "Permute",
+			"id" : 690,
+			"input" : ["conv6_2_mbox_loc"],
+			"output" : ["conv6_2_mbox_loc_perm"],
+			"order" : [0, 2, 3, 1]
+		},
+		
+		{
+			"name" : "conv6_2_mbox_loc_flat",
+			"layer" : "Flatten",
+			"id" : 700,
+			"input" : ["conv6_2_mbox_loc_perm"],
+			"output" : ["conv6_2_mbox_loc_flat"],
+			"axis" : 1
+		},
+				
+				
+				
+		{
+			"name" : "conv6_2_mbox_conf",
+			"layer" : "Conv",
+			"id" : 710,
+			"input" : ["conv6_2"],
+			"output" : ["conv6_2_mbox_conf"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 126,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+		
+		{
+			"name" : "conv6_2_mbox_conf_perm",
+			"layer" : "Permute",
+			"id" : 720,
+			"input" : ["conv6_2_mbox_conf"],
+			"output" : ["conv6_2_mbox_conf_perm"],
+			"order" : [0, 2, 3, 1]
+		},
+		
+		{
+			"name" : "conv6_2_mbox_conf_flat",
+			"layer" : "Flatten",
+			"id" : 730,
+			"input" : ["conv6_2_mbox_conf_perm"],
+			"output" : ["conv6_2_mbox_conf_flat"],
+			"axis" : 1
+		},
+				
+		{
+			"name" : "conv6_2_mbox_priorbox",
+			"layer" : "PriorBox",
+			"id" : 740,
+			"input" : ["conv6_2", "data"],
+			"output" : ["conv6_2_mbox_priorbox"],
+			"minSize" : [111.0],
+			"maxSize" : [162.0],
+			"aspectRatio" : [2.0, 3.0],
+			"flip" : true,
+			"clip" : false,
+			"variance" : [0.1, 0.1, 0.2, 0.2],
+			"step" : 32.0,
+			"offset" : 0.5
+		},
+		
+		
+		
+		
+		{
+			"name" : "conv7_2_mbox_loc",
+			"layer" : "Conv",
+			"id" : 750,
+			"input" : ["conv7_2"],
+			"output" : ["conv7_2_mbox_loc"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 24,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+		
+		{
+			"name" : "conv7_2_mbox_loc_perm",
+			"layer" : "Permute",
+			"id" : 760,
+			"input" : ["conv7_2_mbox_loc"],
+			"output" : ["conv7_2_mbox_loc_perm"],
+			"order" : [0, 2, 3, 1]
+		},
+		
+		{
+			"name" : "conv7_2_mbox_loc_flat",
+			"layer" : "Flatten",
+			"id" : 770,
+			"input" : ["conv7_2_mbox_loc_perm"],
+			"output" : ["conv7_2_mbox_loc_flat"],
+			"axis" : 1
+		},
+				
+				
+				
+		{
+			"name" : "conv7_2_mbox_conf",
+			"layer" : "Conv",
+			"id" : 780,
+			"input" : ["conv7_2"],
+			"output" : ["conv7_2_mbox_conf"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 126,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+		
+		{
+			"name" : "conv7_2_mbox_conf_perm",
+			"layer" : "Permute",
+			"id" : 790,
+			"input" : ["conv7_2_mbox_conf"],
+			"output" : ["conv7_2_mbox_conf_perm"],
+			"order" : [0, 2, 3, 1]
+		},
+		
+		{
+			"name" : "conv7_2_mbox_conf_flat",
+			"layer" : "Flatten",
+			"id" : 800,
+			"input" : ["conv7_2_mbox_conf_perm"],
+			"output" : ["conv7_2_mbox_conf_flat"],
+			"axis" : 1
+		},
+				
+		{
+			"name" : "conv7_2_mbox_priorbox",
+			"layer" : "PriorBox",
+			"id" : 810,
+			"input" : ["conv7_2", "data"],
+			"output" : ["conv7_2_mbox_priorbox"],
+			"minSize" : [162.0],
+			"maxSize" : [213.0],
+			"aspectRatio" : [2.0, 3.0],
+			"flip" : true,
+			"clip" : false,
+			"variance" : [0.1, 0.1, 0.2, 0.2],
+			"step" : 64.0,
+			"offset" : 0.5
+		},
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		{
+			"name" : "conv8_2_mbox_loc",
+			"layer" : "Conv",
+			"id" : 820,
+			"input" : ["conv8_2"],
+			"output" : ["conv8_2_mbox_loc"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 16,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+		
+		{
+			"name" : "conv8_2_mbox_loc_perm",
+			"layer" : "Permute",
+			"id" : 830,
+			"input" : ["conv8_2_mbox_loc"],
+			"output" : ["conv8_2_mbox_loc_perm"],
+			"order" : [0, 2, 3, 1]
+		},
+		
+		{
+			"name" : "conv8_2_mbox_loc_flat",
+			"layer" : "Flatten",
+			"id" : 840,
+			"input" : ["conv8_2_mbox_loc_perm"],
+			"output" : ["conv8_2_mbox_loc_flat"],
+			"axis" : 1
+		},
+				
+				
+				
+		{
+			"name" : "conv8_2_mbox_conf",
+			"layer" : "Conv",
+			"id" : 850,
+			"input" : ["conv8_2"],
+			"output" : ["conv8_2_mbox_conf"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 84,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+		
+		{
+			"name" : "conv8_2_mbox_conf_perm",
+			"layer" : "Permute",
+			"id" : 860,
+			"input" : ["conv8_2_mbox_conf"],
+			"output" : ["conv8_2_mbox_conf_perm"],
+			"order" : [0, 2, 3, 1]
+		},
+		
+		{
+			"name" : "conv8_2_mbox_conf_flat",
+			"layer" : "Flatten",
+			"id" : 870,
+			"input" : ["conv8_2_mbox_conf_perm"],
+			"output" : ["conv8_2_mbox_conf_flat"],
+			"axis" : 1
+		},
+				
+		{
+			"name" : "conv8_2_mbox_priorbox",
+			"layer" : "PriorBox",
+			"id" : 880,
+			"input" : ["conv8_2", "data"],
+			"output" : ["conv8_2_mbox_priorbox"],
+			"minSize" : [213.0],
+			"maxSize" : [264.0],
+			"aspectRatio" : [2.0],
+			"flip" : true,
+			"clip" : false,
+			"variance" : [0.1, 0.1, 0.2, 0.2],
+			"step" : 100.0,
+			"offset" : 0.5
+		},
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		{
+			"name" : "conv9_2_mbox_loc",
+			"layer" : "Conv",
+			"id" : 890,
+			"input" : ["conv9_2"],
+			"output" : ["conv9_2_mbox_loc"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 16,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+		
+		{
+			"name" : "conv9_2_mbox_loc_perm",
+			"layer" : "Permute",
+			"id" : 900,
+			"input" : ["conv9_2_mbox_loc"],
+			"output" : ["conv9_2_mbox_loc_perm"],
+			"order" : [0, 2, 3, 1]
+		},
+		
+		{
+			"name" : "conv9_2_mbox_loc_flat",
+			"layer" : "Flatten",
+			"id" : 910,
+			"input" : ["conv9_2_mbox_loc_perm"],
+			"output" : ["conv9_2_mbox_loc_flat"],
+			"axis" : 1
+		},
+				
+				
+				
+		{
+			"name" : "conv9_2_mbox_conf",
+			"layer" : "Conv",
+			"id" : 920,
+			"input" : ["conv9_2"],
+			"output" : ["conv9_2_mbox_conf"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 84,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+		
+		{
+			"name" : "conv9_2_mbox_conf_perm",
+			"layer" : "Permute",
+			"id" : 930,
+			"input" : ["conv9_2_mbox_conf"],
+			"output" : ["conv9_2_mbox_conf_perm"],
+			"order" : [0, 2, 3, 1]
+		},
+		
+		{
+			"name" : "conv9_2_mbox_conf_flat",
+			"layer" : "Flatten",
+			"id" : 940,
+			"input" : ["conv9_2_mbox_conf_perm"],
+			"output" : ["conv9_2_mbox_conf_flat"],
+			"axis" : 1
+		},
+				
+		{
+			"name" : "conv9_2_mbox_priorbox",
+			"layer" : "PriorBox",
+			"id" : 950,
+			"input" : ["conv9_2", "data"],
+			"output" : ["conv9_2_mbox_priorbox"],
+			"minSize" : [264.0],
+			"maxSize" : [315.0],
+			"aspectRatio" : [2.0],
+			"flip" : true,
+			"clip" : false,
+			"variance" : [0.1, 0.1, 0.2, 0.2],
+			"step" : 300.0,
+			"offset" : 0.5
+		},
+				
+		{
+			"name" : "mbox_loc",
+			"layer" : "Concat",
+			"id" : 960,
+			"input" : ["conv4_3_norm_mbox_loc_flat", "fc7_mbox_loc_flat", "conv6_2_mbox_loc_flat", "conv7_2_mbox_loc_flat", "conv8_2_mbox_loc_flat", "conv9_2_mbox_loc_flat"],
+			"output" : ["mbox_loc"],
+			"axis" : 1
+		},
+		
+		{
+			"name" : "mbox_conf",
+			"layer" : "Concat",
+			"id" : 970,
+			"input" : ["conv4_3_norm_mbox_conf_flat", "fc7_mbox_conf_flat", "conv6_2_mbox_conf_flat", "conv7_2_mbox_conf_flat", "conv8_2_mbox_conf_flat", "conv9_2_mbox_conf_flat"],
+			"output" : ["mbox_conf"],
+			"axis" : 1
+		},
+
+		{
+			"name" : "mbox_priorbox",
+			"layer" : "Concat",
+			"id" : 980,
+			"input" : ["conv4_3_norm_mbox_priorbox", "fc7_mbox_priorbox", "conv6_2_mbox_priorbox", "conv7_2_mbox_priorbox", "conv8_2_mbox_priorbox", "conv9_2_mbox_priorbox"],
+			"output" : ["mbox_priorbox"],
+			"axis" : 1
+		},		
+		
+		{
+			"name" : "mbox_loss",
+			"layer" : "MultiBoxLoss",
+			"id" : 990,
+			"input" : ["mbox_loc", "mbox_conf", "mbox_priorbox", "label"],
+			"output" : ["mbox_loss"],
+			"propDown" : [true, true, false, false],
+			"normalization" : "Valid",
+			"locLossType" : "SMOOTH_L1",
+			"confLossType" : "SOFTMAX",
+			"locWeight" : 1.0,
+			"numClasses" : 21,
+			"shareLocation" : true,
+			"matchType" : "PER_PREDICTION",
+			"overlapThreshold" : 0.5,
+			"usePriorForMatching" : true,
+			"backgroundLabelId" : 0,
+			"useDifficultGt" : true,
+			"negPosRatio" : 3.0,
+			"negOverlap" : 0.5,
+			"codeType" : "CENTER_SIZE",
+			"ignoreCrossBoundaryBBox" : false,
+			"miningType" : "MAX_NEGATIVE",
+            "activation" : "TrainActivation"
+		},
+
+        {
+			"name" : "mbox_conf_reshape",
+			"layer" : "Reshape",
+			"id" : 991,
+			"input" : ["mbox_conf"],
+			"output" : ["mbox_conf_reshape"],
+			"shape" : [0, 1, -1, 21],
+            "activation" : "TestActivation"
+		},
+		
+		{
+			"name" : "mbox_conf_softmax",
+			"layer" : "Softmax",
+			"id" : 1000,
+			"input" : ["mbox_conf_reshape"],
+			"output" : ["mbox_conf_softmax"],
+			"softmaxAxis" : 3,
+            "activation" : "TestActivation"
+		},		
+
+		{
+			"name" : "mbox_conf_flatten",
+			"layer" : "Flatten",
+			"id" : 1010,
+			"input" : ["mbox_conf_softmax"],
+			"output" : ["mbox_conf_flatten"],
+			"axis" : 1,
+            "activation" : "TestActivation"
+		},
+
+		{
+			"name" : "detection_out",
+			"layer" : "DetectionOutput",
+			"id" : 1020,
+			"input" : ["mbox_loc", "mbox_conf_flatten", "mbox_priorbox"],
+			"output" : ["detection_out"],
+			"numClasses" : 21,
+			"shareLocation" : true,
+			"backgroundLabelId" : 0,
+			"nmsParam.nmsThreshold" : 0.45,
+			"nmsParam.topK" : 400,
+			"codeType" : "CENTER_SIZE",
+			"keepTopK" : 200,
+			"confidenceThreshold" : 0.3,
+            "activation" : "TestActivation"
+		}
+
+
+	],
+
+	"configs" :
+	{
+		"batchSize" : 16,
+		"epochs" : 5, 
+		"lossLayer" : ["mbox_loss"],
+        "measureLayer" : ["mbox_loss"],
+		"gamma" : 0.1,
+		"testInterval" : 100,
+		"saveInterval" : 250,
+		"savePathPrefix" : "", 
+		"baseLearningRate" : 0.001,
+		"stepSize" : 50000,
+		"weightDecay" : 0.0005,
+		"momentum" : 0.9,
+		"lrPolicy" : "Multistep",
+		"stepValue" : [80000, 100000, 120000],
+		"optimizer" : "Momentum",
+		"loadPath" : "$(LAONSILL_HOME)/param/VGG_ILSVRC_16_layers_fc_reduced_SSD_300x300.param",
+        "keepSaveBestModel" : true,
+        "keepSaveBestModelStartIterNum" : 1000,
+		"status" : "Train",
+		"loadPathForTest" : "$(LAONSILL_HOME)/param/VGG_VOC0712_SSD_300x300_iter_120000.param",
+        "useCompositeModel" : true
+	}
+
+}

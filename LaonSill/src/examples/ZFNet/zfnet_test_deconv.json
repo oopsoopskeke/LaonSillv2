@@ -1,0 +1,39 @@
+{
+	"layers" :
+	[		
+		{
+			"name" : "dummyInput",
+			"layer" : "DummyInput",
+			"id" : 1000,
+			"output" : ["dummyInput"],
+			"shapes" : [0, 96, 111, 111],
+			"numClasses" : 1,
+			"numTrainData" : 1,
+			"numTestData" : 1
+		},
+
+		{
+			"name" : "deconv1",
+			"layer" : "Conv",
+			"id" : 1010,
+			"input" : ["dummyInput"],
+			"output" : ["deconv1"],
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 7,
+			"filterDim.channels" : 96,
+			"filterDim.filters" : 3,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 2,
+			"biasFiller.type" : "Constant",
+			"receive" : true,
+			"donatorID" : 10,
+			"deconv" : true
+		}
+	],
+	"configs" :
+	{
+		"batchSize" : 1, 
+		"epochs" : 1
+
+	}
+}

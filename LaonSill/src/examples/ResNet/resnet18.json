@@ -1,0 +1,812 @@
+{
+	"layers" : 
+	[
+		{
+			"name" : "data",
+			"layer" : "DataInput",
+			"id" : 0,
+			"output" : ["data", "label"],
+	        "source" : "$(LAONSILL_HOME)/data/sdf/ilsvrc12_train_224px",
+			"dataSetName" : "train",
+			"dataTransformParam.cropSize" : 224,
+			"dataTransformParam.mean" : [104.0, 117.0, 123.0],
+			"dataTransformParam.mirror" : true
+		},
+
+		{
+			"name" : "conv1",
+			"layer" : "Conv",
+			"id" : 10,
+			"input" : ["data"],
+			"output" : ["conv1"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 7,
+			"filterDim.pad" : 3,
+			"filterDim.stride" : 2,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "conv1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 20,
+			"input" : ["conv1"],
+			"output" : ["conv1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "conv1/relu",
+			"layer" : "Relu",
+			"id" : 30,
+			"input" : ["conv1/bn"],
+			"output" : ["conv1/bn"]
+		},
+
+		{
+			"name" : "pool1",
+			"layer" : "Pooling",
+			"id" : 40,
+			"input" : ["conv1/bn"],
+			"output" : ["pool1"],
+			"poolingType" : "Max",
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.stride" : 2
+		},
+
+		{
+			"name" : "res2.1.conv1",
+			"layer" : "Conv",
+			"id" : 50,
+			"input" : ["pool1"],
+			"output" : ["res2.1.conv1"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res2.1.conv1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 60,
+			"input" : ["res2.1.conv1"],
+			"output" : ["res2.1.conv1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res2.1.conv1/relu",
+			"layer" : "Relu",
+			"id" : 70,
+			"input" : ["res2.1.conv1/bn"],
+			"output" : ["res2.1.conv1/bn"]
+		},
+
+		{
+			"name" : "res2.1.conv2",
+			"layer" : "Conv",
+			"id" : 80,
+			"input" : ["res2.1.conv1/bn"],
+			"output" : ["res2.1.conv2"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res2.1.conv2/bn",
+			"layer" : "BatchNorm2",
+			"id" : 90,
+			"input" : ["res2.1.conv2"],
+			"output" : ["res2.1.conv2/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res2.1.sum",
+			"layer" : "ElementWise",
+			"id" : 100,
+			"input" : ["res2.1.conv2/bn", "pool1"],
+			"output" : ["res2.1.sum"],
+			"operation" : "SUM"
+		},
+
+		{
+			"name" : "res2.1.relu",
+			"layer" : "Relu",
+			"id" : 110,
+			"input" : ["res2.1.sum"],
+			"output" : ["res2.1.sum"]
+		},
+
+		{
+			"name" : "res2.2.conv1",
+			"layer" : "Conv",
+			"id" : 120,
+			"input" : ["res2.1.sum"],
+			"output" : ["res2.2.conv1"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res2.2.conv1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 130,
+			"input" : ["res2.2.conv1"],
+			"output" : ["res2.2.conv1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res2.2.conv1/relu",
+			"layer" : "Relu",
+			"id" : 140,
+			"input" : ["res2.2.conv1/bn"],
+			"output" : ["res2.2.conv1/bn"]
+		},
+
+		{
+			"name" : "res2.2.conv2",
+			"layer" : "Conv",
+			"id" : 150,
+			"input" : ["res2.2.conv1/bn"],
+			"output" : ["res2.2.conv2"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res2.2.conv2/bn",
+			"layer" : "BatchNorm2",
+			"id" : 160,
+			"input" : ["res2.2.conv2"],
+			"output" : ["res2.2.conv2/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res2.2.sum",
+			"layer" : "ElementWise",
+			"id" : 170,
+			"input" : ["res2.2.conv2/bn", "res2.1.sum"],
+			"output" : ["res2.2.sum"],
+			"operation" : "SUM"
+		},
+
+		{
+			"name" : "res2.2.relu",
+			"layer" : "Relu",
+			"id" : 180,
+			"input" : ["res2.2.sum"],
+			"output" : ["res2.2.sum"]
+		},
+
+		{
+			"name" : "res3.1.conv1",
+			"layer" : "Conv",
+			"id" : 190,
+			"input" : ["res2.2.sum"],
+			"output" : ["res3.1.conv1"],
+			"filterDim.filters" : 128,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 2,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res3.1.conv1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 200,
+			"input" : ["res3.1.conv1"],
+			"output" : ["res3.1.conv1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res3.1.conv1/relu",
+			"layer" : "Relu",
+			"id" : 210,
+			"input" : ["res3.1.conv1/bn"],
+			"output" : ["res3.1.conv1/bn"]
+		},
+
+		{
+			"name" : "res3.1.conv2",
+			"layer" : "Conv",
+			"id" : 220,
+			"input" : ["res3.1.conv1/bn"],
+			"output" : ["res3.1.conv2"],
+			"filterDim.filters" : 128,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res3.1.conv2/bn",
+			"layer" : "BatchNorm2",
+			"id" : 230,
+			"input" : ["res3.1.conv2"],
+			"output" : ["res3.1.conv2/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res3.1.skipConv",
+			"layer" : "Conv",
+			"id" : 240,
+			"input" : ["res2.2.sum"],
+			"output" : ["res3.1.skipConv"],
+			"filterDim.filters" : 128,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.stride" : 2,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res3.1.skipConv/bn",
+			"layer" : "BatchNorm2",
+			"id" : 250,
+			"input" : ["res3.1.skipConv"],
+			"output" : ["res3.1.skipConv/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res3.1.sum",
+			"layer" : "ElementWise",
+			"id" : 260,
+			"input" : ["res3.1.conv2/bn", "res3.1.skipConv/bn"],
+			"output" : ["res3.1.sum"],
+			"operation" : "SUM"
+		},
+
+		{
+			"name" : "res3.1.relu",
+			"layer" : "Relu",
+			"id" : 270,
+			"input" : ["res3.1.sum"],
+			"output" : ["res3.1.sum"]
+		},
+
+		{
+			"name" : "res3.2.conv1",
+			"layer" : "Conv",
+			"id" : 280,
+			"input" : ["res3.1.sum"],
+			"output" : ["res3.2.conv1"],
+			"filterDim.filters" : 128,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res3.2.conv1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 290,
+			"input" : ["res3.2.conv1"],
+			"output" : ["res3.2.conv1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res3.2.conv1/relu",
+			"layer" : "Relu",
+			"id" : 300,
+			"input" : ["res3.2.conv1/bn"],
+			"output" : ["res3.2.conv1/bn"]
+		},
+
+		{
+			"name" : "res3.2.conv2",
+			"layer" : "Conv",
+			"id" : 310,
+			"input" : ["res3.2.conv1/bn"],
+			"output" : ["res3.2.conv2"],
+			"filterDim.filters" : 128,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res3.2.conv2/bn",
+			"layer" : "BatchNorm2",
+			"id" : 320,
+			"input" : ["res3.2.conv2"],
+			"output" : ["res3.2.conv2/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res3.2.sum",
+			"layer" : "ElementWise",
+			"id" : 330,
+			"input" : ["res3.2.conv2/bn", "res3.1.sum"],
+			"output" : ["res3.2.sum"],
+			"operation" : "SUM"
+		},
+
+		{
+			"name" : "res3.2.relu",
+			"layer" : "Relu",
+			"id" : 340,
+			"input" : ["res3.2.sum"],
+			"output" : ["res3.2.sum"]
+		},
+
+		{
+			"name" : "res4.1.conv1",
+			"layer" : "Conv",
+			"id" : 350,
+			"input" : ["res3.2.sum"],
+			"output" : ["res4.1.conv1"],
+			"filterDim.filters" : 256,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 2,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res4.1.conv1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 360,
+			"input" : ["res4.1.conv1"],
+			"output" : ["res4.1.conv1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res4.1.conv1/relu",
+			"layer" : "Relu",
+			"id" : 370,
+			"input" : ["res4.1.conv1/bn"],
+			"output" : ["res4.1.conv1/bn"]
+		},
+
+		{
+			"name" : "res4.1.conv2",
+			"layer" : "Conv",
+			"id" : 380,
+			"input" : ["res4.1.conv1/bn"],
+			"output" : ["res4.1.conv2"],
+			"filterDim.filters" : 256,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res4.1.conv2/bn",
+			"layer" : "BatchNorm2",
+			"id" : 390,
+			"input" : ["res4.1.conv2"],
+			"output" : ["res4.1.conv2/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res4.1.skipConv",
+			"layer" : "Conv",
+			"id" : 400,
+			"input" : ["res3.2.sum"],
+			"output" : ["res4.1.skipConv"],
+			"filterDim.filters" : 256,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.stride" : 2,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res4.1.skipConv/bn",
+			"layer" : "BatchNorm2",
+			"id" : 410,
+			"input" : ["res4.1.skipConv"],
+			"output" : ["res4.1.skipConv/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res4.1.sum",
+			"layer" : "ElementWise",
+			"id" : 420,
+			"input" : ["res4.1.conv2/bn", "res4.1.skipConv/bn"],
+			"output" : ["res4.1.sum"],
+			"operation" : "SUM"
+		},
+
+		{
+			"name" : "res4.1.relu",
+			"layer" : "Relu",
+			"id" : 430,
+			"input" : ["res4.1.sum"],
+			"output" : ["res4.1.sum"]
+		},
+
+		{
+			"name" : "res4.2.conv1",
+			"layer" : "Conv",
+			"id" : 440,
+			"input" : ["res4.1.sum"],
+			"output" : ["res4.2.conv1"],
+			"filterDim.filters" : 256,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res4.2.conv1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 450,
+			"input" : ["res4.2.conv1"],
+			"output" : ["res4.2.conv1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res4.2.conv1/relu",
+			"layer" : "Relu",
+			"id" : 460,
+			"input" : ["res4.2.conv1/bn"],
+			"output" : ["res4.2.conv1/bn"]
+		},
+
+		{
+			"name" : "res4.2.conv2",
+			"layer" : "Conv",
+			"id" : 470,
+			"input" : ["res4.2.conv1/bn"],
+			"output" : ["res4.2.conv2"],
+			"filterDim.filters" : 256,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res4.2.conv2/bn",
+			"layer" : "BatchNorm2",
+			"id" : 480,
+			"input" : ["res4.2.conv2"],
+			"output" : ["res4.2.conv2/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res4.2.sum",
+			"layer" : "ElementWise",
+			"id" : 490,
+			"input" : ["res4.2.conv2/bn", "res4.1.sum"],
+			"output" : ["res4.2.sum"],
+			"operation" : "SUM"
+		},
+
+		{
+			"name" : "res4.2.relu",
+			"layer" : "Relu",
+			"id" : 500,
+			"input" : ["res4.2.sum"],
+			"output" : ["res4.2.sum"]
+		},
+
+		{
+			"name" : "res5.1.conv1",
+			"layer" : "Conv",
+			"id" : 510,
+			"input" : ["res4.2.sum"],
+			"output" : ["res5.1.conv1"],
+			"filterDim.filters" : 512,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 2,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res5.1.conv1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 520,
+			"input" : ["res5.1.conv1"],
+			"output" : ["res5.1.conv1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res5.1.conv1/relu",
+			"layer" : "Relu",
+			"id" : 530,
+			"input" : ["res5.1.conv1/bn"],
+			"output" : ["res5.1.conv1/bn"]
+		},
+
+		{
+			"name" : "res5.1.conv2",
+			"layer" : "Conv",
+			"id" : 540,
+			"input" : ["res5.1.conv1/bn"],
+			"output" : ["res5.1.conv2"],
+			"filterDim.filters" : 512,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res5.1.conv2/bn",
+			"layer" : "BatchNorm2",
+			"id" : 550,
+			"input" : ["res5.1.conv2"],
+			"output" : ["res5.1.conv2/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res5.1.skipConv",
+			"layer" : "Conv",
+			"id" : 560,
+			"input" : ["res4.2.sum"],
+			"output" : ["res5.1.skipConv"],
+			"filterDim.filters" : 512,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.stride" : 2,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res5.1.skipConv/bn",
+			"layer" : "BatchNorm2",
+			"id" : 570,
+			"input" : ["res5.1.skipConv"],
+			"output" : ["res5.1.skipConv/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res5.1.sum",
+			"layer" : "ElementWise",
+			"id" : 580,
+			"input" : ["res5.1.conv2/bn", "res5.1.skipConv/bn"],
+			"output" : ["res5.1.sum"],
+			"operation" : "SUM"
+		},
+
+		{
+			"name" : "res5.1.relu",
+			"layer" : "Relu",
+			"id" : 590,
+			"input" : ["res5.1.sum"],
+			"output" : ["res5.1.sum"]
+		},
+
+		{
+			"name" : "res5.2.conv1",
+			"layer" : "Conv",
+			"id" : 600,
+			"input" : ["res5.1.sum"],
+			"output" : ["res5.2.conv1"],
+			"filterDim.filters" : 512,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res5.2.conv1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 610,
+			"input" : ["res5.2.conv1"],
+			"output" : ["res5.2.conv1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res5.2.conv1/relu",
+			"layer" : "Relu",
+			"id" : 620,
+			"input" : ["res5.2.conv1/bn"],
+			"output" : ["res5.2.conv1/bn"]
+		},
+
+		{
+			"name" : "res5.2.conv2",
+			"layer" : "Conv",
+			"id" : 630,
+			"input" : ["res5.2.conv1/bn"],
+			"output" : ["res5.2.conv2"],
+			"filterDim.filters" : 512,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "MSRA",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "res5.2.conv2/bn",
+			"layer" : "BatchNorm2",
+			"id" : 640,
+			"input" : ["res5.2.conv2"],
+			"output" : ["res5.2.conv2/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "res5.2.sum",
+			"layer" : "ElementWise",
+			"id" : 650,
+			"input" : ["res5.2.conv2/bn", "res5.1.sum"],
+			"output" : ["res5.2.sum"],
+			"operation" : "SUM"
+		},
+
+		{
+			"name" : "res5.2.relu",
+			"layer" : "Relu",
+			"id" : 660,
+			"input" : ["res5.2.sum"],
+			"output" : ["res5.2.sum"]
+		},
+
+		{
+			"name" : "pool2",
+			"layer" : "Pooling",
+			"id" : 670,
+			"input" : ["res5.2.sum"],
+			"output" : ["pool2"],
+			"poolingType" : "Avg",
+			"poolDim.rows" : 7,
+			"poolDim.cols" : 7
+		},
+
+		{
+			"name" : "fc",
+			"layer" : "FullyConnected",
+			"id" : 680,
+			"input" : ["pool2"],
+			"output" : ["fc"],
+			"nOut" : 1000,
+			"weightFiller.type" : "MSRA",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "loss",
+			"layer" : "SoftmaxWithLoss",
+			"id" : 690,
+			"input" : ["fc", "label"],
+			"output" : ["loss"],
+			"propDown" : [true, false],
+			"softmaxAxis" : 2,
+			"innerLayer" : 
+			[
+				{
+					"name" : "inner_softmax",
+					"layer" : "Softmax",
+					"id" : 11000,
+					"input" : ["inner_softmax_11000_input"],
+					"output" : ["inner_softmax_11000_output"],
+					"softmaxAxis" : 2
+				}
+			]
+		}
+
+	],
+
+	"configs" :
+	{
+		"batchSize" : 64,
+		"epochs" : 60, 
+		"lossLayer" : ["loss"],
+		"testInterval" : 10,
+		"saveInterval" : 60000,
+		"savePathPrefix" : "", 
+		
+		"baseLearningRate" : 0.1,
+
+		"lrPolicy" : "Poly",
+		"maxIterations" : 600000,
+		"power" : 2.0,
+		"momentum" : 0.9,
+		"weightDecay" : 1e-4,
+
+		"optimizer" : "Momentum",
+        "measureLayer" : ["loss"],
+
+		"loadPath" : "$(LAONSILL_HOME)/param/resnet18_init.param",
+
+        "keepSaveIntervalModelCount" : 4,
+        "keepSaveBestModel" : false,
+        "keepSaveBestModelStartIterNum" : 10000
+	}
+}

@@ -1,0 +1,70 @@
+[ Install LaonSill on Centos7 ]
+
+(1) Centos7 설치
+     "개발 및 창조를 위한 워크스테이션" 선택
+         "추가개발", "호환성 라이브러리", "개발용도구", "플랫폼개발", "Python" 추가 선택
+
+(2) CUDA, CUDNN 설치
+ (2-1) https://developer.nvidia.com/cuda-downloads에서 runfile을 다운
+
+ (2-2) nouveau 비활성화
+ $ sudo vi /etc/modprobe.d/blacklist-nouveau.conf
+   [blacklist-nouveau.conf]
+blacklist nouveau
+options nouveau modeset=0
+ $ sudo dracut --force
+
+ (2-3) 콘솔 모드로 부팅을 하게 부트모드를 변경한 후에 재부팅
+ $ sudo systemctl set-default multi-user.target
+ $ sudo reboot
+
+ (2-4) CUDA설치
+ $ sudo sh cuda_8.0.61_375.26_linux.run
+   => 인스톨러 진행 과정중에 OPENGL, nvidia-xconfig 설정은 No로 나머지는 모두 Yes 혹은 default 
+      값으로 선택한다.
+
+ (2-5) GUI 모드로 부팅을 하게 부트모드를 변경한 후에 재부팅
+ $ sudo systemctl set-default graphical.target
+ $ sudo reboot
+
+ (2-6) CUDNN 6.0 다운로드 (https://developer.nvidia.com/cudnn)
+
+ (2-7) CUDNN 압축을 풀고, include, lib을 cuda에 덮어씌운다.
+ $ tar zxvf cudnn-8.0-linux-x86-v6.0.tgz
+ $ sudo cp cuda/include/* /usr/local/cuda/include/.
+ $ sudo cp cuda/lib64/* /usr/local/cuda/lib64/.
+
+ (2-8) device query를 빌드해서 실행하여 정상적인 결과가 나오는지 확인한다.
+ $ cd ~/NVIDIA_CUDA-8.0_Samples/1_Utilities/deviceQuery
+ $ make
+ $ ./deviceQuery
+
+※  참고로 본 내용은 http://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#abstract에도 나와 있습니다.
+
+(3) opencv 설치
+ (3-1) http://docs.opencv.org/2.4/doc/tutorials/introduction/linux_install/linux_install.html를 참고하여 설치
+  $ git clone https://github.com/opencv/opencv.git
+  $ cd opencv
+  $ mkdir release
+  $ cd release
+  $ cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+  $ make
+  $ sudo make install
+
+(4) LaonSill 바이너리 설치
+ (4-1) 압축을 풀고, 그 위치에 LAONSILL_HOME 환경 변수를 설정한다.
+  $ tar zxvf LaonSill_RevXXXXXX.tar.gz  (XXXXXX : LaonSill Revision Number)
+  $ export LAONSILL_HOME=`pwd`/LAONSILL_HOME
+
+ (4-2) laonsill.conf를 자신의 환경에 맞게 수정한다.
+ 
+ (4-3) bin경로와 library경로를 등록한다.
+  $ export PATH=$LAONSILL_HOME/bin:$PATH
+  $ export LD_LIBRARY_PATH=$LAONSILL_HOME/lib:$LD_LIBRARY_PATH
+  $ export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+ 
+ (4-4) LaonSill을 실행한다.
+  $ LaonSillServer -v 
+
+ ※ LaonSill 바이너리 설치 과정중에 설정한 환경 변수들은 .bashrc, .profile등에 저장하여 
+  이후에도 유지할 수 있게 설정하는 것을 권장합니다.

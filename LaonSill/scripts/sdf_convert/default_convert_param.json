@@ -1,0 +1,59 @@
+{
+
+"ConvertMnistDataParam" : {
+    "dataSetList" : [],
+    "labelMapFilePath" : "",
+    "outFilePath" : ""
+},
+
+"MnistDataSet" : {
+    "name" : "",
+    "imageFilePath" : "",
+    "labelFilePath" : ""
+},
+
+"ConvertImageSetParam" : {
+    "imageSetList" : [],
+    "labelMapFilePath" : "",
+    "outFilePath" : "",
+    "gray" : false,
+    "shuffle" : false,
+    "multiLabel" : false,
+    "channelSeparated" : true,
+    "resizeWidth" : 0,
+    "resizeHeight" : 0,
+    "checkSize" : false,
+    "encoded" : true,
+    "encodeType" : "jpg",
+    "basePath" : "",
+    "numClasses" : 0
+},
+
+"ImageSet" : {
+    "name" : "",
+    "dataSetPath" : ""
+},
+
+"ConvertAnnoSetParam" : {
+    "imageSetList" : [],
+    "labelMapFilePath" : "",
+    "outFilePath" : "",
+    "gray" : false,
+    "shuffle" : false,
+    "multiLabel" : false,
+    "channelSeparated" : true,
+    "resizeWidth" : 0,
+    "resizeHeight" : 0,
+    "checkSize" : false,
+    "encoded" : true,
+    "encodeType" : "jpg",
+    "basePath" : "",
+    "numClasses" : 0,
+    "annoType" : "detection",
+    "labelType" : "xml",
+    "checkLabel" : true,
+    "minDim" : 0,
+    "maxDim" : 0
+}
+
+}

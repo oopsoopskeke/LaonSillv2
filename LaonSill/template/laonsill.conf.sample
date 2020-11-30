@@ -1,0 +1,9 @@
+SESS_COUNT=5
+GPU_COUNT=1
+JOB_CONSUMER_COUNT=1
+NETWORK_SAVE_DIR=/home/monhoney/LAONSILL_HOME/param
+IMAGEUTIL_SAVE_DIR=/home/monhoney/LAONSILL_HOME/output_images
+COLDLOG_DIR=/home/monhoney/LAONSILL_HOME/log
+HOTLOG_DIR=/home/monhoney/LAONSILL_HOME/log
+SYSLOG_DIR=/home/monhoney/LAONSILL_HOME/log
+BASE_DATA_DIR=/home/monhoney/LAONSILL_HOME/data

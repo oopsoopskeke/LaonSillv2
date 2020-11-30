@@ -1,0 +1,56 @@
+{
+
+"mnist" : {
+    "name" : "",
+    "type" : "mnist",
+    "desc" : "",
+    "build" : true, 
+    "dataSetList" : [
+        {
+            "name" : "",
+            "imageFilePath" : "",
+            "labelFilePath" : ""
+        }
+    ],
+    "labelMapFilePath" : "",
+    "outFilePath" : ""
+},
+
+"imageset" : {
+    "name" : "",
+    "type" : "imageset",
+    "desc" : "",
+    "build" : true,
+    "imageSetList" : [
+        {
+            "name" : "",
+            "dataSetPath" : ""
+        }
+    ],
+    "labelMapFilePath" : "",
+    "outFilePath" : "",
+    "shuffle" : true,
+    "resizeWidth" : 224,
+    "resizeHeight" : 224,
+    "encoded" : false,
+    "encodeType" : "",
+    "basePath" : ""
+},
+
+"annoset" : {
+    "name" : "",
+    "type" : "annoset",
+    "desc" : "",
+    "build" : true,
+    "imageSetList" : [
+        {
+            "name" : "",
+            "dataSetPath" : ""
+        },
+    ],
+    "labelMapFilePath" : "",
+    "outFilePath" : "",
+    "basePath" : ""
+}
+
+}

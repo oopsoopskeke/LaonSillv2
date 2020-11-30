@@ -1,0 +1,4180 @@
+{
+	"layers" :
+	[
+		{
+			"name" : "data",
+			"layer" : "DataInput",
+			"id" : 0,
+			"output" : ["data", "label"],
+	        "source" : "$(LAONSILL_HOME)/data/sdf/ilsvrc12_train_320px_encoded",
+			"dataSetName" : "train",
+			"dataTransformParam.cropSize" : 299,
+			"dataTransformParam.mean" : [104.0, 117.0, 123.0],
+			"dataTransformParam.mirror" : true,
+            "resizeParam.prob" : 1.0,
+			"resizeParam.height" : 320,
+			"resizeParam.width" : 320 
+		},
+
+		{
+			"name" : "conv1",
+			"layer" : "Conv",
+			"id" : 10,
+			"input" : ["data"],
+			"output" : ["conv1"],
+			"filterDim.filters" : 32,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.stride" : 2,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "conv1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 20,
+			"input" : ["conv1"],
+			"output" : ["conv1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "conv1/relu",
+			"layer" : "Relu",
+			"id" : 30,
+			"input" : ["conv1/bn"],
+			"output" : ["conv1/bn"]
+		},
+
+		{
+			"name" : "conv2",
+			"layer" : "Conv",
+			"id" : 40,
+			"input" : ["conv1/bn"],
+			"output" : ["conv2"],
+			"filterDim.filters" : 32,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "conv2/bn",
+			"layer" : "BatchNorm2",
+			"id" : 50,
+			"input" : ["conv2"],
+			"output" : ["conv2/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "conv2/relu",
+			"layer" : "Relu",
+			"id" : 60,
+			"input" : ["conv2/bn"],
+			"output" : ["conv2/bn"]
+		},
+
+		{
+			"name" : "conv3",
+			"layer" : "Conv",
+			"id" : 70,
+			"input" : ["conv2/bn"],
+			"output" : ["conv3"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "conv3/bn",
+			"layer" : "BatchNorm2",
+			"id" : 80,
+			"input" : ["conv3"],
+			"output" : ["conv3/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "conv3/relu",
+			"layer" : "Relu",
+			"id" : 90,
+			"input" : ["conv3/bn"],
+			"output" : ["conv3/bn"]
+		},
+
+		{
+			"name" : "pool1",
+			"layer" : "Pooling",
+			"id" : 100,
+			"input" : ["conv3/bn"],
+			"output" : ["pool1"],
+			"poolingType" : "Max",
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.stride" : 2
+		},
+
+		{
+			"name" : "conv4",
+			"layer" : "Conv",
+			"id" : 110,
+			"input" : ["pool1"],
+			"output" : ["conv4"],
+			"filterDim.filters" : 80,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "conv4/bn",
+			"layer" : "BatchNorm2",
+			"id" : 120,
+			"input" : ["conv4"],
+			"output" : ["conv4/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "conv4/relu",
+			"layer" : "Relu",
+			"id" : 130,
+			"input" : ["conv4/bn"],
+			"output" : ["conv4/bn"]
+		},
+
+		{
+			"name" : "conv5",
+			"layer" : "Conv",
+			"id" : 140,
+			"input" : ["conv4/bn"],
+			"output" : ["conv5"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.stride" : 2,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "conv5/bn",
+			"layer" : "BatchNorm2",
+			"id" : 150,
+			"input" : ["conv5"],
+			"output" : ["conv5/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "conv5/relu",
+			"layer" : "Relu",
+			"id" : 160,
+			"input" : ["conv5/bn"],
+			"output" : ["conv5/bn"]
+		},
+
+		{
+			"name" : "conv6",
+			"layer" : "Conv",
+			"id" : 170,
+			"input" : ["conv5/bn"],
+			"output" : ["conv6"],
+			"filterDim.filters" : 288,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "conv6/bn",
+			"layer" : "BatchNorm2",
+			"id" : 180,
+			"input" : ["conv6"],
+			"output" : ["conv6/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "conv6/relu",
+			"layer" : "Relu",
+			"id" : 190,
+			"input" : ["conv6/bn"],
+			"output" : ["conv6/bn"]
+		},
+
+		{
+			"name" : "3A/p1_1x1",
+			"layer" : "Conv",
+			"id" : 200,
+			"input" : ["conv6/bn"],
+			"output" : ["3A/p1_1x1"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3A/p1_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 210,
+			"input" : ["3A/p1_1x1"],
+			"output" : ["3A/p1_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3A/p1_1x1/relu",
+			"layer" : "Relu",
+			"id" : 220,
+			"input" : ["3A/p1_1x1/bn"],
+			"output" : ["3A/p1_1x1/bn"]
+		},
+
+		{
+			"name" : "3A/p2_1x1",
+			"layer" : "Conv",
+			"id" : 230,
+			"input" : ["conv6/bn"],
+			"output" : ["3A/p2_1x1"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3A/p2_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 240,
+			"input" : ["3A/p2_1x1"],
+			"output" : ["3A/p2_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3A/p2_1x1/relu",
+			"layer" : "Relu",
+			"id" : 250,
+			"input" : ["3A/p2_1x1/bn"],
+			"output" : ["3A/p2_1x1/bn"]
+		},
+
+		{
+			"name" : "3A/p2_3x3",
+			"layer" : "Conv",
+			"id" : 260,
+			"input" : ["3A/p2_1x1/bn"],
+			"output" : ["3A/p2_3x3"],
+			"filterDim.filters" : 96,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3A/p2_3x3/bn",
+			"layer" : "BatchNorm2",
+			"id" : 270,
+			"input" : ["3A/p2_3x3"],
+			"output" : ["3A/p2_3x3/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3A/p2_3x3/relu",
+			"layer" : "Relu",
+			"id" : 280,
+			"input" : ["3A/p2_3x3/bn"],
+			"output" : ["3A/p2_3x3/bn"]
+		},
+
+		{
+			"name" : "3A/p3_1x1",
+			"layer" : "Conv",
+			"id" : 290,
+			"input" : ["conv6/bn"],
+			"output" : ["3A/p3_1x1"],
+			"filterDim.filters" : 48,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3A/p3_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 300,
+			"input" : ["3A/p3_1x1"],
+			"output" : ["3A/p3_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3A/p3_1x1/relu",
+			"layer" : "Relu",
+			"id" : 310,
+			"input" : ["3A/p3_1x1/bn"],
+			"output" : ["3A/p3_1x1/bn"]
+		},
+
+		{
+			"name" : "3A/p3_3x3a",
+			"layer" : "Conv",
+			"id" : 320,
+			"input" : ["3A/p3_1x1/bn"],
+			"output" : ["3A/p3_3x3a"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3A/p3_3x3a/bn",
+			"layer" : "BatchNorm2",
+			"id" : 330,
+			"input" : ["3A/p3_3x3a"],
+			"output" : ["3A/p3_3x3a/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3A/p3_3x3a/relu",
+			"layer" : "Relu",
+			"id" : 340,
+			"input" : ["3A/p3_3x3a/bn"],
+			"output" : ["3A/p3_3x3a/bn"]
+		},
+
+		{
+			"name" : "3A/p3_3x3b",
+			"layer" : "Conv",
+			"id" : 350,
+			"input" : ["3A/p3_3x3a/bn"],
+			"output" : ["3A/p3_3x3b"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3A/p3_3x3b/bn",
+			"layer" : "BatchNorm2",
+			"id" : 360,
+			"input" : ["3A/p3_3x3b"],
+			"output" : ["3A/p3_3x3b/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3A/p3_3x3b/relu",
+			"layer" : "Relu",
+			"id" : 370,
+			"input" : ["3A/p3_3x3b/bn"],
+			"output" : ["3A/p3_3x3b/bn"]
+		},
+
+		{
+			"name" : "3A/p4_pool",
+			"layer" : "Pooling",
+			"id" : 380,
+			"input" : ["conv6/bn"],
+			"output" : ["3A/p4_pool"],
+			"poolingType" : "Avg",
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.pad" : 1
+		},
+
+		{
+			"name" : "3A/p4_1x1",
+			"layer" : "Conv",
+			"id" : 390,
+			"input" : ["3A/p4_pool"],
+			"output" : ["3A/p4_1x1"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3A/p4_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 400,
+			"input" : ["3A/p4_1x1"],
+			"output" : ["3A/p4_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3A/p4_1x1/relu",
+			"layer" : "Relu",
+			"id" : 410,
+			"input" : ["3A/p4_1x1/bn"],
+			"output" : ["3A/p4_1x1/bn"]
+		},
+
+		{
+			"name" : "3A/concat",
+			"layer" : "Concat",
+			"id" : 420,
+			"input" : [
+					"3A/p1_1x1/bn",
+					"3A/p2_3x3/bn",
+					"3A/p3_3x3b/bn",
+					"3A/p4_1x1/bn"
+			],
+			"output" : ["3A/concat"]
+		},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		{
+			"name" : "3B/p1_1x1",
+			"layer" : "Conv",
+			"id" : 430,
+			"input" : ["3A/concat"],
+			"output" : ["3B/p1_1x1"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3B/p1_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 440,
+			"input" : ["3B/p1_1x1"],
+			"output" : ["3B/p1_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3B/p1_1x1/relu",
+			"layer" : "Relu",
+			"id" : 450,
+			"input" : ["3B/p1_1x1/bn"],
+			"output" : ["3B/p1_1x1/bn"]
+		},
+
+		{
+			"name" : "3B/p2_1x1",
+			"layer" : "Conv",
+			"id" : 460,
+			"input" : ["3A/concat"],
+			"output" : ["3B/p2_1x1"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3B/p2_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 470,
+			"input" : ["3B/p2_1x1"],
+			"output" : ["3B/p2_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3B/p2_1x1/relu",
+			"layer" : "Relu",
+			"id" : 480,
+			"input" : ["3B/p2_1x1/bn"],
+			"output" : ["3B/p2_1x1/bn"]
+		},
+
+		{
+			"name" : "3B/p2_3x3",
+			"layer" : "Conv",
+			"id" : 490,
+			"input" : ["3B/p2_1x1/bn"],
+			"output" : ["3B/p2_3x3"],
+			"filterDim.filters" : 96,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3B/p2_3x3/bn",
+			"layer" : "BatchNorm2",
+			"id" : 500,
+			"input" : ["3B/p2_3x3"],
+			"output" : ["3B/p2_3x3/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3B/p2_3x3/relu",
+			"layer" : "Relu",
+			"id" : 510,
+			"input" : ["3B/p2_3x3/bn"],
+			"output" : ["3B/p2_3x3/bn"]
+		},
+
+		{
+			"name" : "3B/p3_1x1",
+			"layer" : "Conv",
+			"id" : 520,
+			"input" : ["3A/concat"],
+			"output" : ["3B/p3_1x1"],
+			"filterDim.filters" : 48,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3B/p3_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 530,
+			"input" : ["3B/p3_1x1"],
+			"output" : ["3B/p3_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3B/p3_1x1/relu",
+			"layer" : "Relu",
+			"id" : 540,
+			"input" : ["3B/p3_1x1/bn"],
+			"output" : ["3B/p3_1x1/bn"]
+		},
+
+		{
+			"name" : "3B/p3_3x3a",
+			"layer" : "Conv",
+			"id" : 550,
+			"input" : ["3B/p3_1x1/bn"],
+			"output" : ["3B/p3_3x3a"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3B/p3_3x3a/bn",
+			"layer" : "BatchNorm2",
+			"id" : 560,
+			"input" : ["3B/p3_3x3a"],
+			"output" : ["3B/p3_3x3a/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3B/p3_3x3a/relu",
+			"layer" : "Relu",
+			"id" : 570,
+			"input" : ["3B/p3_3x3a/bn"],
+			"output" : ["3B/p3_3x3a/bn"]
+		},
+
+		{
+			"name" : "3B/p3_3x3b",
+			"layer" : "Conv",
+			"id" : 580,
+			"input" : ["3B/p3_3x3a/bn"],
+			"output" : ["3B/p3_3x3b"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3B/p3_3x3b/bn",
+			"layer" : "BatchNorm2",
+			"id" : 590,
+			"input" : ["3B/p3_3x3b"],
+			"output" : ["3B/p3_3x3b/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3B/p3_3x3b/relu",
+			"layer" : "Relu",
+			"id" : 600,
+			"input" : ["3B/p3_3x3b/bn"],
+			"output" : ["3B/p3_3x3b/bn"]
+		},
+
+		{
+			"name" : "3B/p4_pool",
+			"layer" : "Pooling",
+			"id" : 610,
+			"input" : ["3A/concat"],
+			"output" : ["3B/p4_pool"],
+			"poolingType" : "Avg",
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.pad" : 1
+		},
+
+		{
+			"name" : "3B/p4_1x1",
+			"layer" : "Conv",
+			"id" : 620,
+			"input" : ["3B/p4_pool"],
+			"output" : ["3B/p4_1x1"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3B/p4_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 630,
+			"input" : ["3B/p4_1x1"],
+			"output" : ["3B/p4_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3B/p4_1x1/relu",
+			"layer" : "Relu",
+			"id" : 640,
+			"input" : ["3B/p4_1x1/bn"],
+			"output" : ["3B/p4_1x1/bn"]
+		},
+
+		{
+			"name" : "3B/concat",
+			"layer" : "Concat",
+			"id" : 650,
+			"input" : [
+					"3B/p1_1x1/bn",
+					"3B/p2_3x3/bn",
+					"3B/p3_3x3b/bn",
+					"3B/p4_1x1/bn"
+			],
+			"output" : ["3B/concat"]
+		},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
+		{
+			"name" : "3C/p1_1x1",
+			"layer" : "Conv",
+			"id" : 660,
+			"input" : ["3B/concat"],
+			"output" : ["3C/p1_1x1"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3C/p1_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 670,
+			"input" : ["3C/p1_1x1"],
+			"output" : ["3C/p1_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3C/p1_1x1/relu",
+			"layer" : "Relu",
+			"id" : 680,
+			"input" : ["3C/p1_1x1/bn"],
+			"output" : ["3C/p1_1x1/bn"]
+		},
+
+		{
+			"name" : "3C/p2_1x1",
+			"layer" : "Conv",
+			"id" : 690,
+			"input" : ["3B/concat"],
+			"output" : ["3C/p2_1x1"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3C/p2_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 700,
+			"input" : ["3C/p2_1x1"],
+			"output" : ["3C/p2_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3C/p2_1x1/relu",
+			"layer" : "Relu",
+			"id" : 710,
+			"input" : ["3C/p2_1x1/bn"],
+			"output" : ["3C/p2_1x1/bn"]
+		},
+
+		{
+			"name" : "3C/p2_3x3",
+			"layer" : "Conv",
+			"id" : 720,
+			"input" : ["3C/p2_1x1/bn"],
+			"output" : ["3C/p2_3x3"],
+			"filterDim.filters" : 96,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3C/p2_3x3/bn",
+			"layer" : "BatchNorm2",
+			"id" : 730,
+			"input" : ["3C/p2_3x3"],
+			"output" : ["3C/p2_3x3/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3C/p2_3x3/relu",
+			"layer" : "Relu",
+			"id" : 740,
+			"input" : ["3C/p2_3x3/bn"],
+			"output" : ["3C/p2_3x3/bn"]
+		},
+
+		{
+			"name" : "3C/p3_1x1",
+			"layer" : "Conv",
+			"id" : 750,
+			"input" : ["3B/concat"],
+			"output" : ["3C/p3_1x1"],
+			"filterDim.filters" : 48,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3C/p3_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 760,
+			"input" : ["3C/p3_1x1"],
+			"output" : ["3C/p3_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3C/p3_1x1/relu",
+			"layer" : "Relu",
+			"id" : 770,
+			"input" : ["3C/p3_1x1/bn"],
+			"output" : ["3C/p3_1x1/bn"]
+		},
+
+		{
+			"name" : "3C/p3_3x3a",
+			"layer" : "Conv",
+			"id" : 780,
+			"input" : ["3C/p3_1x1/bn"],
+			"output" : ["3C/p3_3x3a"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3C/p3_3x3a/bn",
+			"layer" : "BatchNorm2",
+			"id" : 790,
+			"input" : ["3C/p3_3x3a"],
+			"output" : ["3C/p3_3x3a/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3C/p3_3x3a/relu",
+			"layer" : "Relu",
+			"id" : 800,
+			"input" : ["3C/p3_3x3a/bn"],
+			"output" : ["3C/p3_3x3a/bn"]
+		},
+
+		{
+			"name" : "3C/p3_3x3b",
+			"layer" : "Conv",
+			"id" : 810,
+			"input" : ["3C/p3_3x3a/bn"],
+			"output" : ["3C/p3_3x3b"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3C/p3_3x3b/bn",
+			"layer" : "BatchNorm2",
+			"id" : 820,
+			"input" : ["3C/p3_3x3b"],
+			"output" : ["3C/p3_3x3b/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3C/p3_3x3b/relu",
+			"layer" : "Relu",
+			"id" : 830,
+			"input" : ["3C/p3_3x3b/bn"],
+			"output" : ["3C/p3_3x3b/bn"]
+		},
+
+		{
+			"name" : "3C/p4_pool",
+			"layer" : "Pooling",
+			"id" : 840,
+			"input" : ["3B/concat"],
+			"output" : ["3C/p4_pool"],
+			"poolingType" : "Avg",
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.pad" : 1
+		},
+
+		{
+			"name" : "3C/p4_1x1",
+			"layer" : "Conv",
+			"id" : 850,
+			"input" : ["3C/p4_pool"],
+			"output" : ["3C/p4_1x1"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3C/p4_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 860,
+			"input" : ["3C/p4_1x1"],
+			"output" : ["3C/p4_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3C/p4_1x1/relu",
+			"layer" : "Relu",
+			"id" : 870,
+			"input" : ["3C/p4_1x1/bn"],
+			"output" : ["3C/p4_1x1/bn"]
+		},
+
+		{
+			"name" : "3C/concat",
+			"layer" : "Concat",
+			"id" : 880,
+			"input" : [
+					"3C/p1_1x1/bn",
+					"3C/p2_3x3/bn",
+					"3C/p3_3x3b/bn",
+					"3C/p4_1x1/bn"
+			],
+			"output" : ["3C/concat"]
+		},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		{
+			"name" : "3R/p1_1x1",
+			"layer" : "Conv",
+			"id" : 890,
+			"input" : ["3C/concat"],
+			"output" : ["3R/p1_1x1"],
+			"filterDim.filters" : 64,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3R/p1_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 900,
+			"input" : ["3R/p1_1x1"],
+			"output" : ["3R/p1_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3R/p1_1x1/relu",
+			"layer" : "Relu",
+			"id" : 910,
+			"input" : ["3R/p1_1x1/bn"],
+			"output" : ["3R/p1_1x1/bn"]
+		},
+
+		{
+			"name" : "3R/p1_3x3a",
+			"layer" : "Conv",
+			"id" : 920,
+			"input" : ["3R/p1_1x1/bn"],
+			"output" : ["3R/p1_3x3a"],
+			"filterDim.filters" : 96,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3R/p1_3x3a/bn",
+			"layer" : "BatchNorm2",
+			"id" : 930,
+			"input" : ["3R/p1_3x3a"],
+			"output" : ["3R/p1_3x3a/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3R/p1_3x3a/relu",
+			"layer" : "Relu",
+			"id" : 940,
+			"input" : ["3R/p1_3x3a/bn"],
+			"output" : ["3R/p1_3x3a/bn"]
+		},
+
+		{
+			"name" : "3R/p1_3x3b",
+			"layer" : "Conv",
+			"id" : 950,
+			"input" : ["3R/p1_3x3a/bn"],
+			"output" : ["3R/p1_3x3b"],
+			"filterDim.filters" : 96,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.stride" : 2,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3R/p1_3x3b/bn",
+			"layer" : "BatchNorm2",
+			"id" : 960,
+			"input" : ["3R/p1_3x3b"],
+			"output" : ["3R/p1_3x3b/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3R/p1_3x3b/relu",
+			"layer" : "Relu",
+			"id" : 970,
+			"input" : ["3R/p1_3x3b/bn"],
+			"output" : ["3R/p1_3x3b/bn"]
+		},
+
+		{
+			"name" : "3R/p2_3x3",
+			"layer" : "Conv",
+			"id" : 980,
+			"input" : ["3C/concat"],
+			"output" : ["3R/p2_3x3"],
+			"filterDim.filters" : 384,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.stride" : 2,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "3R/p2_3x3/bn",
+			"layer" : "BatchNorm2",
+			"id" : 990,
+			"input" : ["3R/p2_3x3"],
+			"output" : ["3R/p2_3x3/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "3R/p2_3x3/relu",
+			"layer" : "Relu",
+			"id" : 1000,
+			"input" : ["3R/p2_3x3/bn"],
+			"output" : ["3R/p2_3x3/bn"]
+		},
+
+		{
+			"name" : "3R/p3_pool",
+			"layer" : "Pooling",
+			"id" : 1010,
+			"input" : ["3C/concat"],
+			"output" : ["3R/p3_pool"],
+			"poolingType" : "Max",
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.stride" : 2 
+		},
+
+		{
+			"name" : "3R/concat",
+			"layer" : "Concat",
+			"id" : 1020,
+			"input" : [
+					"3R/p1_3x3b/bn",
+					"3R/p2_3x3/bn",
+					"3R/p3_pool"
+			],
+			"output" : ["3R/concat"]
+		},
+
+		{
+			"name" : "loss1/pool",
+			"layer" : "Pooling",
+			"id" : 1030,
+			"input" : ["3R/concat"],
+			"output" : ["loss1/pool"],
+			"poolingType" : "Avg",
+			"poolDim.rows" : 5,
+			"poolDim.cols" : 5,
+			"poolDim.stride" : 3 
+		},
+
+		{
+			"name" : "loss1/conv",
+			"layer" : "Conv",
+			"id" : 1040,
+			"input" : ["loss1/pool"],
+			"output" : ["loss1/conv"],
+			"filterDim.filters" : 128,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "loss1/conv/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1050,
+			"input" : ["loss1/conv"],
+			"output" : ["loss1/conv/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "loss1/conv/relu",
+			"layer" : "Relu",
+			"id" : 1060,
+			"input" : ["loss1/conv/bn"],
+			"output" : ["loss1/conv/bn"]
+		},
+
+		{
+			"name" : "loss1/fc1",
+			"layer" : "FullyConnected",
+			"id" : 1070,
+			"input" : ["loss1/conv/bn"],
+			"output" : ["loss1/fc1"],
+			"nOut" : 1024,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "loss1/relu",
+			"layer" : "Relu",
+			"id" : 1080,
+			"input" : ["loss1/fc1"],
+			"output" : ["loss1/fc1"]
+		},
+
+		{
+			"name" : "loss1/fc2",
+			"layer" : "FullyConnected",
+			"id" : 1090,
+			"input" : ["loss1/fc1"],
+			"output" : ["loss1/fc2"],
+			"nOut" : 1000,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "loss1/loss",
+			"layer" : "SoftmaxWithLoss",
+			"id" : 1100,
+			"input" : ["loss1/fc2", "label"],
+			"output" : ["loss1/loss"],
+			"propDown" : [true, false],
+			"softmaxAxis" : 2,
+			"lossWeight" : 0.3,
+			"innerLayer" :
+			[
+				{
+					"name" : "inner_softmax",
+					"id" : 7001,
+					"layer" : "Softmax",
+					"input" : ["inner_softmax_7001_input"],
+					"output" : ["inner_softmax_7001_output"],
+					"softmaxAxis" : 2
+				}
+			]	
+		},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		{
+			"name" : "4A/p1_1x1",
+			"layer" : "Conv",
+			"id" : 1110,
+			"input" : ["3R/concat"],
+			"output" : ["4A/p1_1x1"],
+			"filterDim.filters" : 192, 
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4A/p1_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1120,
+			"input" : ["4A/p1_1x1"],
+			"output" : ["4A/p1_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4A/p1_1x1/relu",
+			"layer" : "Relu",
+			"id" : 1130,
+			"input" : ["4A/p1_1x1/bn"],
+			"output" : ["4A/p1_1x1/bn"]
+		},
+
+		{
+			"name" : "4A/p2_1x1",
+			"layer" : "Conv",
+			"id" : 1140,
+			"input" : ["3R/concat"],
+			"output" : ["4A/p2_1x1"],
+			"filterDim.filters" : 128,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4A/p2_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1150,
+			"input" : ["4A/p2_1x1"],
+			"output" : ["4A/p2_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4A/p2_1x1/relu",
+			"layer" : "Relu",
+			"id" : 1160,
+			"input" : ["4A/p2_1x1/bn"],
+			"output" : ["4A/p2_1x1/bn"]
+		},
+
+		{
+			"name" : "4A/p2_1x7",
+			"layer" : "Conv",
+			"id" : 1170,
+			"input" : ["4A/p2_1x1/bn"],
+			"output" : ["4A/p2_1x7"],
+			"filterDim.filters" : 128,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 7,
+			"filterDim.pad_w" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4A/p2_1x7/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1180,
+			"input" : ["4A/p2_1x7"],
+			"output" : ["4A/p2_1x7/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4A/p2_1x7/relu",
+			"layer" : "Relu",
+			"id" : 1190,
+			"input" : ["4A/p2_1x7/bn"],
+			"output" : ["4A/p2_1x7/bn"]
+		},
+
+		{
+			"name" : "4A/p2_7x1",
+			"layer" : "Conv",
+			"id" : 1200,
+			"input" : ["4A/p2_1x7/bn"],
+			"output" : ["4A/p2_7x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4A/p2_7x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1210,
+			"input" : ["4A/p2_7x1"],
+			"output" : ["4A/p2_7x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4A/p2_7x1/relu",
+			"layer" : "Relu",
+			"id" : 1220,
+			"input" : ["4A/p2_7x1/bn"],
+			"output" : ["4A/p2_7x1/bn"]
+		},
+
+		{
+			"name" : "4A/p3_1x1",
+			"layer" : "Conv",
+			"id" : 1230,
+			"input" : ["3R/concat"],
+			"output" : ["4A/p3_1x1"],
+			"filterDim.filters" : 128,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4A/p3_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1240,
+			"input" : ["4A/p3_1x1"],
+			"output" : ["4A/p3_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4A/p3_1x1/relu",
+			"layer" : "Relu",
+			"id" : 1250,
+			"input" : ["4A/p3_1x1/bn"],
+			"output" : ["4A/p3_1x1/bn"]
+		},
+
+		{
+			"name" : "4A/p3_1x7a",
+			"layer" : "Conv",
+			"id" : 1260,
+			"input" : ["4A/p3_1x1/bn"],
+			"output" : ["4A/p3_1x7a"],
+			"filterDim.filters" : 128,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 7,
+			"filterDim.pad_w" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4A/p3_1x7a/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1270,
+			"input" : ["4A/p3_1x7a"],
+			"output" : ["4A/p3_1x7a/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4A/p3_1x7a/relu",
+			"layer" : "Relu",
+			"id" : 1280,
+			"input" : ["4A/p3_1x7a/bn"],
+			"output" : ["4A/p3_1x7a/bn"]
+		},
+
+		{
+			"name" : "4A/p3_7x1a",
+			"layer" : "Conv",
+			"id" : 1290,
+			"input" : ["4A/p3_1x7a/bn"],
+			"output" : ["4A/p3_7x1a"],
+			"filterDim.filters" : 128,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4A/p3_7x1a/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1300,
+			"input" : ["4A/p3_7x1a"],
+			"output" : ["4A/p3_7x1a/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4A/p3_7x1a/relu",
+			"layer" : "Relu",
+			"id" : 1310,
+			"input" : ["4A/p3_7x1a/bn"],
+			"output" : ["4A/p3_7x1a/bn"]
+		},
+
+		{
+			"name" : "4A/p3_1x7b",
+			"layer" : "Conv",
+			"id" : 1320,
+			"input" : ["4A/p3_7x1a/bn"],
+			"output" : ["4A/p3_1x7b"],
+			"filterDim.filters" : 128,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 7,
+			"filterDim.pad_w" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4A/p3_1x7b/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1330,
+			"input" : ["4A/p3_1x7b"],
+			"output" : ["4A/p3_1x7b/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4A/p3_1x7b/relu",
+			"layer" : "Relu",
+			"id" : 1340,
+			"input" : ["4A/p3_1x7b/bn"],
+			"output" : ["4A/p3_1x7b/bn"]
+		},
+
+		{
+			"name" : "4A/p3_7x1b",
+			"layer" : "Conv",
+			"id" : 1350,
+			"input" : ["4A/p3_1x7b/bn"],
+			"output" : ["4A/p3_7x1b"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4A/p3_7x1b/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1360,
+			"input" : ["4A/p3_7x1b"],
+			"output" : ["4A/p3_7x1b/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4A/p3_7x1b/relu",
+			"layer" : "Relu",
+			"id" : 1370,
+			"input" : ["4A/p3_7x1b/bn"],
+			"output" : ["4A/p3_7x1b/bn"]
+		},
+
+		{
+			"name" : "4A/p4_pool",
+			"layer" : "Pooling",
+			"id" : 1380,
+			"input" : ["3R/concat"],
+			"output" : ["4A/p4_pool"],
+			"poolingType" : "Avg",
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.pad" : 1
+		},
+
+		{
+			"name" : "4A/p4_1x1",
+			"layer" : "Conv",
+			"id" : 1390,
+			"input" : ["4A/p4_pool"],
+			"output" : ["4A/p4_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4A/p4_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1400,
+			"input" : ["4A/p4_1x1"],
+			"output" : ["4A/p4_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4A/p4_1x1/relu",
+			"layer" : "Relu",
+			"id" : 1410,
+			"input" : ["4A/p4_1x1/bn"],
+			"output" : ["4A/p4_1x1/bn"]
+		},
+
+		{
+			"name" : "4A/concat",
+			"layer" : "Concat",
+			"id" : 1420,
+			"input" : [
+					"4A/p1_1x1/bn",
+					"4A/p2_7x1/bn",
+					"4A/p3_7x1b/bn",
+					"4A/p4_1x1/bn"
+			],
+			"output" : ["4A/concat"]
+		},
+
+		{
+			"name" : "4B/p1_1x1",
+			"layer" : "Conv",
+			"id" : 1430,
+			"input" : ["4A/concat"],
+			"output" : ["4B/p1_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4B/p1_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1440,
+			"input" : ["4B/p1_1x1"],
+			"output" : ["4B/p1_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4B/p1_1x1/relu",
+			"layer" : "Relu",
+			"id" : 1450,
+			"input" : ["4B/p1_1x1/bn"],
+			"output" : ["4B/p1_1x1/bn"]
+		},
+
+		{
+			"name" : "4B/p2_1x1",
+			"layer" : "Conv",
+			"id" : 1460,
+			"input" : ["4A/concat"],
+			"output" : ["4B/p2_1x1"],
+			"filterDim.filters" : 160,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4B/p2_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1470,
+			"input" : ["4B/p2_1x1"],
+			"output" : ["4B/p2_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4B/p2_1x1/relu",
+			"layer" : "Relu",
+			"id" : 1480,
+			"input" : ["4B/p2_1x1/bn"],
+			"output" : ["4B/p2_1x1/bn"]
+		},
+
+		{
+			"name" : "4B/p2_1x7",
+			"layer" : "Conv",
+			"id" : 1490,
+			"input" : ["4B/p2_1x1/bn"],
+			"output" : ["4B/p2_1x7"],
+			"filterDim.filters" : 160,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 7,
+			"filterDim.pad_w" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4B/p2_1x7/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1500,
+			"input" : ["4B/p2_1x7"],
+			"output" : ["4B/p2_1x7/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4B/p2_1x7/relu",
+			"layer" : "Relu",
+			"id" : 1510,
+			"input" : ["4B/p2_1x7/bn"],
+			"output" : ["4B/p2_1x7/bn"]
+		},
+
+		{
+			"name" : "4B/p2_7x1",
+			"layer" : "Conv",
+			"id" : 1520,
+			"input" : ["4B/p2_1x7/bn"],
+			"output" : ["4B/p2_7x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4B/p2_7x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1530,
+			"input" : ["4B/p2_7x1"],
+			"output" : ["4B/p2_7x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4B/p2_7x1/relu",
+			"layer" : "Relu",
+			"id" : 1540,
+			"input" : ["4B/p2_7x1/bn"],
+			"output" : ["4B/p2_7x1/bn"]
+		},
+
+		{
+			"name" : "4B/p3_1x1",
+			"layer" : "Conv",
+			"id" : 1550,
+			"input" : ["4A/concat"],
+			"output" : ["4B/p3_1x1"],
+			"filterDim.filters" : 160,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4B/p3_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1560,
+			"input" : ["4B/p3_1x1"],
+			"output" : ["4B/p3_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4B/p3_1x1/relu",
+			"layer" : "Relu",
+			"id" : 1570,
+			"input" : ["4B/p3_1x1/bn"],
+			"output" : ["4B/p3_1x1/bn"]
+		},
+
+		{
+			"name" : "4B/p3_1x7a",
+			"layer" : "Conv",
+			"id" : 1580,
+			"input" : ["4B/p3_1x1/bn"],
+			"output" : ["4B/p3_1x7a"],
+			"filterDim.filters" : 160,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 7,
+			"filterDim.pad_w" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4B/p3_1x7a/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1590,
+			"input" : ["4B/p3_1x7a"],
+			"output" : ["4B/p3_1x7a/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4B/p3_1x7a/relu",
+			"layer" : "Relu",
+			"id" : 1600,
+			"input" : ["4B/p3_1x7a/bn"],
+			"output" : ["4B/p3_1x7a/bn"]
+		},
+
+		{
+			"name" : "4B/p3_7x1a",
+			"layer" : "Conv",
+			"id" : 1610,
+			"input" : ["4B/p3_1x7a/bn"],
+			"output" : ["4B/p3_7x1a"],
+			"filterDim.filters" : 160,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4B/p3_7x1a/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1620,
+			"input" : ["4B/p3_7x1a"],
+			"output" : ["4B/p3_7x1a/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4B/p3_7x1a/relu",
+			"layer" : "Relu",
+			"id" : 1630,
+			"input" : ["4B/p3_7x1a/bn"],
+			"output" : ["4B/p3_7x1a/bn"]
+		},
+
+		{
+			"name" : "4B/p3_1x7b",
+			"layer" : "Conv",
+			"id" : 1640,
+			"input" : ["4B/p3_7x1a/bn"],
+			"output" : ["4B/p3_1x7b"],
+			"filterDim.filters" : 160,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 7,
+			"filterDim.pad_w" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4B/p3_1x7b/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1650,
+			"input" : ["4B/p3_1x7b"],
+			"output" : ["4B/p3_1x7b/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4B/p3_1x7b/relu",
+			"layer" : "Relu",
+			"id" : 1660,
+			"input" : ["4B/p3_1x7b/bn"],
+			"output" : ["4B/p3_1x7b/bn"]
+		},
+
+		{
+			"name" : "4B/p3_7x1b",
+			"layer" : "Conv",
+			"id" : 1670,
+			"input" : ["4B/p3_1x7b/bn"],
+			"output" : ["4B/p3_7x1b"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4B/p3_7x1b/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1680,
+			"input" : ["4B/p3_7x1b"],
+			"output" : ["4B/p3_7x1b/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4B/p3_7x1b/relu",
+			"layer" : "Relu",
+			"id" : 1690,
+			"input" : ["4B/p3_7x1b/bn"],
+			"output" : ["4B/p3_7x1b/bn"]
+		},
+
+		{
+			"name" : "4B/p4_pool",
+			"layer" : "Pooling",
+			"id" : 1700,
+			"input" : ["4A/concat"],
+			"output" : ["4B/p4_pool"],
+			"poolingType" : "Avg",
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.pad" : 1
+		},
+
+		{
+			"name" : "4B/p4_1x1",
+			"layer" : "Conv",
+			"id" : 1710,
+			"input" : ["4B/p4_pool"],
+			"output" : ["4B/p4_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4B/p4_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1720,
+			"input" : ["4B/p4_1x1"],
+			"output" : ["4B/p4_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4B/p4_1x1/relu",
+			"layer" : "Relu",
+			"id" : 1730,
+			"input" : ["4B/p4_1x1/bn"],
+			"output" : ["4B/p4_1x1/bn"]
+		},
+
+		{
+			"name" : "4B/concat",
+			"layer" : "Concat",
+			"id" : 1740,
+			"input" : [
+					"4B/p1_1x1/bn",
+					"4B/p2_7x1/bn",
+					"4B/p3_7x1b/bn",
+					"4B/p4_1x1/bn"
+			],
+			"output" : ["4B/concat"]
+		},
+
+		{
+			"name" : "4C/p1_1x1",
+			"layer" : "Conv",
+			"id" : 1750,
+			"input" : ["4B/concat"],
+			"output" : ["4C/p1_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4C/p1_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1760,
+			"input" : ["4C/p1_1x1"],
+			"output" : ["4C/p1_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4C/p1_1x1/relu",
+			"layer" : "Relu",
+			"id" : 1770,
+			"input" : ["4C/p1_1x1/bn"],
+			"output" : ["4C/p1_1x1/bn"]
+		},
+
+		{
+			"name" : "4C/p2_1x1",
+			"layer" : "Conv",
+			"id" : 1780,
+			"input" : ["4B/concat"],
+			"output" : ["4C/p2_1x1"],
+			"filterDim.filters" : 160,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4C/p2_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1790,
+			"input" : ["4C/p2_1x1"],
+			"output" : ["4C/p2_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4C/p2_1x1/relu",
+			"layer" : "Relu",
+			"id" : 1800,
+			"input" : ["4C/p2_1x1/bn"],
+			"output" : ["4C/p2_1x1/bn"]
+		},
+
+		{
+			"name" : "4C/p2_1x7",
+			"layer" : "Conv",
+			"id" : 1810,
+			"input" : ["4C/p2_1x1/bn"],
+			"output" : ["4C/p2_1x7"],
+			"filterDim.filters" : 160,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 7,
+			"filterDim.pad_w" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4C/p2_1x7/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1820,
+			"input" : ["4C/p2_1x7"],
+			"output" : ["4C/p2_1x7/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4C/p2_1x7/relu",
+			"layer" : "Relu",
+			"id" : 1830,
+			"input" : ["4C/p2_1x7/bn"],
+			"output" : ["4C/p2_1x7/bn"]
+		},
+
+		{
+			"name" : "4C/p2_7x1",
+			"layer" : "Conv",
+			"id" : 1840,
+			"input" : ["4C/p2_1x7/bn"],
+			"output" : ["4C/p2_7x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4C/p2_7x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1850,
+			"input" : ["4C/p2_7x1"],
+			"output" : ["4C/p2_7x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4C/p2_7x1/relu",
+			"layer" : "Relu",
+			"id" : 1860,
+			"input" : ["4C/p2_7x1/bn"],
+			"output" : ["4C/p2_7x1/bn"]
+		},
+
+		{
+			"name" : "4C/p3_1x1",
+			"layer" : "Conv",
+			"id" : 1870,
+			"input" : ["4B/concat"],
+			"output" : ["4C/p3_1x1"],
+			"filterDim.filters" : 160,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4C/p3_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1880,
+			"input" : ["4C/p3_1x1"],
+			"output" : ["4C/p3_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4C/p3_1x1/relu",
+			"layer" : "Relu",
+			"id" : 1890,
+			"input" : ["4C/p3_1x1/bn"],
+			"output" : ["4C/p3_1x1/bn"]
+		},
+
+		{
+			"name" : "4C/p3_1x7a",
+			"layer" : "Conv",
+			"id" : 1900,
+			"input" : ["4C/p3_1x1/bn"],
+			"output" : ["4C/p3_1x7a"],
+			"filterDim.filters" : 160,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 7,
+			"filterDim.pad_w" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4C/p3_1x7a/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1910,
+			"input" : ["4C/p3_1x7a"],
+			"output" : ["4C/p3_1x7a/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4C/p3_1x7a/relu",
+			"layer" : "Relu",
+			"id" : 1920,
+			"input" : ["4C/p3_1x7a/bn"],
+			"output" : ["4C/p3_1x7a/bn"]
+		},
+
+		{
+			"name" : "4C/p3_7x1a",
+			"layer" : "Conv",
+			"id" : 1930,
+			"input" : ["4C/p3_1x7a/bn"],
+			"output" : ["4C/p3_7x1a"],
+			"filterDim.filters" : 160,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4C/p3_7x1a/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1940,
+			"input" : ["4C/p3_7x1a"],
+			"output" : ["4C/p3_7x1a/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4C/p3_7x1a/relu",
+			"layer" : "Relu",
+			"id" : 1950,
+			"input" : ["4C/p3_7x1a/bn"],
+			"output" : ["4C/p3_7x1a/bn"]
+		},
+
+		{
+			"name" : "4C/p3_1x7b",
+			"layer" : "Conv",
+			"id" : 1960,
+			"input" : ["4C/p3_7x1a/bn"],
+			"output" : ["4C/p3_1x7b"],
+			"filterDim.filters" : 160,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 7,
+			"filterDim.pad_w" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4C/p3_1x7b/bn",
+			"layer" : "BatchNorm2",
+			"id" : 1970,
+			"input" : ["4C/p3_1x7b"],
+			"output" : ["4C/p3_1x7b/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4C/p3_1x7b/relu",
+			"layer" : "Relu",
+			"id" : 1980,
+			"input" : ["4C/p3_1x7b/bn"],
+			"output" : ["4C/p3_1x7b/bn"]
+		},
+
+		{
+			"name" : "4C/p3_7x1b",
+			"layer" : "Conv",
+			"id" : 1990,
+			"input" : ["4C/p3_1x7b/bn"],
+			"output" : ["4C/p3_7x1b"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4C/p3_7x1b/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2000,
+			"input" : ["4C/p3_7x1b"],
+			"output" : ["4C/p3_7x1b/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4C/p3_7x1b/relu",
+			"layer" : "Relu",
+			"id" : 2010,
+			"input" : ["4C/p3_7x1b/bn"],
+			"output" : ["4C/p3_7x1b/bn"]
+		},
+
+		{
+			"name" : "4C/p4_pool",
+			"layer" : "Pooling",
+			"id" : 2020,
+			"input" : ["4B/concat"],
+			"output" : ["4C/p4_pool"],
+			"poolingType" : "Avg",
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.pad" : 1
+		},
+
+		{
+			"name" : "4C/p4_1x1",
+			"layer" : "Conv",
+			"id" : 2030,
+			"input" : ["4C/p4_pool"],
+			"output" : ["4C/p4_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4C/p4_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2040,
+			"input" : ["4C/p4_1x1"],
+			"output" : ["4C/p4_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4C/p4_1x1/relu",
+			"layer" : "Relu",
+			"id" : 2050,
+			"input" : ["4C/p4_1x1/bn"],
+			"output" : ["4C/p4_1x1/bn"]
+		},
+
+		{
+			"name" : "4C/concat",
+			"layer" : "Concat",
+			"id" : 2060,
+			"input" : [
+					"4C/p1_1x1/bn",
+					"4C/p2_7x1/bn",
+					"4C/p3_7x1b/bn",
+					"4C/p4_1x1/bn"
+			],
+			"output" : ["4C/concat"]
+		},
+
+		{
+			"name" : "4D/p1_1x1",
+			"layer" : "Conv",
+			"id" : 2070,
+			"input" : ["4C/concat"],
+			"output" : ["4D/p1_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4D/p1_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2080,
+			"input" : ["4D/p1_1x1"],
+			"output" : ["4D/p1_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4D/p1_1x1/relu",
+			"layer" : "Relu",
+			"id" : 2090,
+			"input" : ["4D/p1_1x1/bn"],
+			"output" : ["4D/p1_1x1/bn"]
+		},
+
+		{
+			"name" : "4D/p2_1x1",
+			"layer" : "Conv",
+			"id" : 2100,
+			"input" : ["4C/concat"],
+			"output" : ["4D/p2_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4D/p2_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2110,
+			"input" : ["4D/p2_1x1"],
+			"output" : ["4D/p2_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4D/p2_1x1/relu",
+			"layer" : "Relu",
+			"id" : 2120,
+			"input" : ["4D/p2_1x1/bn"],
+			"output" : ["4D/p2_1x1/bn"]
+		},
+
+		{
+			"name" : "4D/p2_1x7",
+			"layer" : "Conv",
+			"id" : 2130,
+			"input" : ["4D/p2_1x1/bn"],
+			"output" : ["4D/p2_1x7"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 7,
+			"filterDim.pad_w" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4D/p2_1x7/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2140,
+			"input" : ["4D/p2_1x7"],
+			"output" : ["4D/p2_1x7/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4D/p2_1x7/relu",
+			"layer" : "Relu",
+			"id" : 2150,
+			"input" : ["4D/p2_1x7/bn"],
+			"output" : ["4D/p2_1x7/bn"]
+		},
+
+		{
+			"name" : "4D/p2_7x1",
+			"layer" : "Conv",
+			"id" : 2160,
+			"input" : ["4D/p2_1x7/bn"],
+			"output" : ["4D/p2_7x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4D/p2_7x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2170,
+			"input" : ["4D/p2_7x1"],
+			"output" : ["4D/p2_7x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4D/p2_7x1/relu",
+			"layer" : "Relu",
+			"id" : 2180,
+			"input" : ["4D/p2_7x1/bn"],
+			"output" : ["4D/p2_7x1/bn"]
+		},
+
+		{
+			"name" : "4D/p3_1x1",
+			"layer" : "Conv",
+			"id" : 2190,
+			"input" : ["4C/concat"],
+			"output" : ["4D/p3_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4D/p3_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2200,
+			"input" : ["4D/p3_1x1"],
+			"output" : ["4D/p3_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4D/p3_1x1/relu",
+			"layer" : "Relu",
+			"id" : 2210,
+			"input" : ["4D/p3_1x1/bn"],
+			"output" : ["4D/p3_1x1/bn"]
+		},
+
+		{
+			"name" : "4D/p3_1x7a",
+			"layer" : "Conv",
+			"id" : 2220,
+			"input" : ["4D/p3_1x1/bn"],
+			"output" : ["4D/p3_1x7a"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 7,
+			"filterDim.pad_w" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4D/p3_1x7a/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2230,
+			"input" : ["4D/p3_1x7a"],
+			"output" : ["4D/p3_1x7a/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4D/p3_1x7a/relu",
+			"layer" : "Relu",
+			"id" : 2240,
+			"input" : ["4D/p3_1x7a/bn"],
+			"output" : ["4D/p3_1x7a/bn"]
+		},
+
+		{
+			"name" : "4D/p3_7x1a",
+			"layer" : "Conv",
+			"id" : 2250,
+			"input" : ["4D/p3_1x7a/bn"],
+			"output" : ["4D/p3_7x1a"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4D/p3_7x1a/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2260,
+			"input" : ["4D/p3_7x1a"],
+			"output" : ["4D/p3_7x1a/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4D/p3_7x1a/relu",
+			"layer" : "Relu",
+			"id" : 2270,
+			"input" : ["4D/p3_7x1a/bn"],
+			"output" : ["4D/p3_7x1a/bn"]
+		},
+
+		{
+			"name" : "4D/p3_1x7b",
+			"layer" : "Conv",
+			"id" : 2280,
+			"input" : ["4D/p3_7x1a/bn"],
+			"output" : ["4D/p3_1x7b"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 7,
+			"filterDim.pad_w" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4D/p3_1x7b/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2290,
+			"input" : ["4D/p3_1x7b"],
+			"output" : ["4D/p3_1x7b/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4D/p3_1x7b/relu",
+			"layer" : "Relu",
+			"id" : 2300,
+			"input" : ["4D/p3_1x7b/bn"],
+			"output" : ["4D/p3_1x7b/bn"]
+		},
+
+		{
+			"name" : "4D/p3_7x1b",
+			"layer" : "Conv",
+			"id" : 2310,
+			"input" : ["4D/p3_1x7b/bn"],
+			"output" : ["4D/p3_7x1b"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4D/p3_7x1b/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2320,
+			"input" : ["4D/p3_7x1b"],
+			"output" : ["4D/p3_7x1b/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4D/p3_7x1b/relu",
+			"layer" : "Relu",
+			"id" : 2330,
+			"input" : ["4D/p3_7x1b/bn"],
+			"output" : ["4D/p3_7x1b/bn"]
+		},
+
+		{
+			"name" : "4D/p4_pool",
+			"layer" : "Pooling",
+			"id" : 2340,
+			"input" : ["4C/concat"],
+			"output" : ["4D/p4_pool"],
+			"poolingType" : "Avg",
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.pad" : 1
+		},
+
+		{
+			"name" : "4D/p4_1x1",
+			"layer" : "Conv",
+			"id" : 2350,
+			"input" : ["4D/p4_pool"],
+			"output" : ["4D/p4_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4D/p4_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2360,
+			"input" : ["4D/p4_1x1"],
+			"output" : ["4D/p4_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4D/p4_1x1/relu",
+			"layer" : "Relu",
+			"id" : 2370,
+			"input" : ["4D/p4_1x1/bn"],
+			"output" : ["4D/p4_1x1/bn"]
+		},
+
+		{
+			"name" : "4D/concat",
+			"layer" : "Concat",
+			"id" : 2380,
+			"input" : [
+					"4D/p1_1x1/bn",
+					"4D/p2_7x1/bn",
+					"4D/p3_7x1b/bn",
+					"4D/p4_1x1/bn"
+			],
+			"output" : ["4D/concat"]
+		},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		{
+			"name" : "4E/p1_1x1",
+			"layer" : "Conv",
+			"id" : 2390,
+			"input" : ["4D/concat"],
+			"output" : ["4E/p1_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4E/p1_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2400,
+			"input" : ["4E/p1_1x1"],
+			"output" : ["4E/p1_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4E/p1_1x1/relu",
+			"layer" : "Relu",
+			"id" : 2410,
+			"input" : ["4E/p1_1x1/bn"],
+			"output" : ["4E/p1_1x1/bn"]
+		},
+
+		{
+			"name" : "4E/p2_1x1",
+			"layer" : "Conv",
+			"id" : 2420,
+			"input" : ["4D/concat"],
+			"output" : ["4E/p2_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4E/p2_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2430,
+			"input" : ["4E/p2_1x1"],
+			"output" : ["4E/p2_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4E/p2_1x1/relu",
+			"layer" : "Relu",
+			"id" : 2440,
+			"input" : ["4E/p2_1x1/bn"],
+			"output" : ["4E/p2_1x1/bn"]
+		},
+
+		{
+			"name" : "4E/p2_1x7",
+			"layer" : "Conv",
+			"id" : 2450,
+			"input" : ["4E/p2_1x1/bn"],
+			"output" : ["4E/p2_1x7"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 7,
+			"filterDim.pad_w" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4E/p2_1x7/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2460,
+			"input" : ["4E/p2_1x7"],
+			"output" : ["4E/p2_1x7/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4E/p2_1x7/relu",
+			"layer" : "Relu",
+			"id" : 2470,
+			"input" : ["4E/p2_1x7/bn"],
+			"output" : ["4E/p2_1x7/bn"]
+		},
+
+		{
+			"name" : "4E/p2_7x1",
+			"layer" : "Conv",
+			"id" : 2480,
+			"input" : ["4E/p2_1x7/bn"],
+			"output" : ["4E/p2_7x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4E/p2_7x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2490,
+			"input" : ["4E/p2_7x1"],
+			"output" : ["4E/p2_7x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4E/p2_7x1/relu",
+			"layer" : "Relu",
+			"id" : 2500,
+			"input" : ["4E/p2_7x1/bn"],
+			"output" : ["4E/p2_7x1/bn"]
+		},
+
+		{
+			"name" : "4E/p3_1x1",
+			"layer" : "Conv",
+			"id" : 2510,
+			"input" : ["4D/concat"],
+			"output" : ["4E/p3_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4E/p3_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2520,
+			"input" : ["4E/p3_1x1"],
+			"output" : ["4E/p3_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4E/p3_1x1/relu",
+			"layer" : "Relu",
+			"id" : 2530,
+			"input" : ["4E/p3_1x1/bn"],
+			"output" : ["4E/p3_1x1/bn"]
+		},
+
+		{
+			"name" : "4E/p3_1x7a",
+			"layer" : "Conv",
+			"id" : 2540,
+			"input" : ["4E/p3_1x1/bn"],
+			"output" : ["4E/p3_1x7a"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 7,
+			"filterDim.pad_w" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4E/p3_1x7a/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2550,
+			"input" : ["4E/p3_1x7a"],
+			"output" : ["4E/p3_1x7a/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4E/p3_1x7a/relu",
+			"layer" : "Relu",
+			"id" : 2560,
+			"input" : ["4E/p3_1x7a/bn"],
+			"output" : ["4E/p3_1x7a/bn"]
+		},
+
+		{
+			"name" : "4E/p3_7x1a",
+			"layer" : "Conv",
+			"id" : 2570,
+			"input" : ["4E/p3_1x7a/bn"],
+			"output" : ["4E/p3_7x1a"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4E/p3_7x1a/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2580,
+			"input" : ["4E/p3_7x1a"],
+			"output" : ["4E/p3_7x1a/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4E/p3_7x1a/relu",
+			"layer" : "Relu",
+			"id" : 2590,
+			"input" : ["4E/p3_7x1a/bn"],
+			"output" : ["4E/p3_7x1a/bn"]
+		},
+
+		{
+			"name" : "4E/p3_1x7b",
+			"layer" : "Conv",
+			"id" : 2600,
+			"input" : ["4E/p3_7x1a/bn"],
+			"output" : ["4E/p3_1x7b"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 7,
+			"filterDim.pad_w" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4E/p3_1x7b/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2610,
+			"input" : ["4E/p3_1x7b"],
+			"output" : ["4E/p3_1x7b/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4E/p3_1x7b/relu",
+			"layer" : "Relu",
+			"id" : 2620,
+			"input" : ["4E/p3_1x7b/bn"],
+			"output" : ["4E/p3_1x7b/bn"]
+		},
+
+		{
+			"name" : "4E/p3_7x1b",
+			"layer" : "Conv",
+			"id" : 2630,
+			"input" : ["4E/p3_1x7b/bn"],
+			"output" : ["4E/p3_7x1b"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4E/p3_7x1b/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2640,
+			"input" : ["4E/p3_7x1b"],
+			"output" : ["4E/p3_7x1b/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4E/p3_7x1b/relu",
+			"layer" : "Relu",
+			"id" : 2650,
+			"input" : ["4E/p3_7x1b/bn"],
+			"output" : ["4E/p3_7x1b/bn"]
+		},
+
+		{
+			"name" : "4E/p4_pool",
+			"layer" : "Pooling",
+			"id" : 2660,
+			"input" : ["4D/concat"],
+			"output" : ["4E/p4_pool"],
+			"poolingType" : "Avg",
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.pad" : 1
+		},
+
+		{
+			"name" : "4E/p4_1x1",
+			"layer" : "Conv",
+			"id" : 2670,
+			"input" : ["4E/p4_pool"],
+			"output" : ["4E/p4_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4E/p4_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2680,
+			"input" : ["4E/p4_1x1"],
+			"output" : ["4E/p4_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4E/p4_1x1/relu",
+			"layer" : "Relu",
+			"id" : 2690,
+			"input" : ["4E/p4_1x1/bn"],
+			"output" : ["4E/p4_1x1/bn"]
+		},
+
+		{
+			"name" : "4E/concat",
+			"layer" : "Concat",
+			"id" : 2700,
+			"input" : [
+					"4E/p1_1x1/bn",
+					"4E/p2_7x1/bn",
+					"4E/p3_7x1b/bn",
+					"4E/p4_1x1/bn"
+			],
+			"output" : ["4E/concat"]
+		},
+
+		{
+			"name" : "4R/p1_1x1",
+			"layer" : "Conv",
+			"id" : 2710,
+			"input" : ["4E/concat"],
+			"output" : ["4R/p1_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4R/p1_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2720,
+			"input" : ["4R/p1_1x1"],
+			"output" : ["4R/p1_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4R/p1_1x1/relu",
+			"layer" : "Relu",
+			"id" : 2730,
+			"input" : ["4R/p1_1x1/bn"],
+			"output" : ["4R/p1_1x1/bn"]
+		},
+
+		{
+			"name" : "4R/p1_3x3",
+			"layer" : "Conv",
+			"id" : 2740,
+			"input" : ["4R/p1_1x1/bn"],
+			"output" : ["4R/p1_3x3"],
+			"filterDim.filters" : 320,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.stride" : 2,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4R/p1_3x3/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2750,
+			"input" : ["4R/p1_3x3"],
+			"output" : ["4R/p1_3x3/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4R/p1_3x3/relu",
+			"layer" : "Relu",
+			"id" : 2760,
+			"input" : ["4R/p1_3x3/bn"],
+			"output" : ["4R/p1_3x3/bn"]
+		},
+
+		{
+			"name" : "4R/p2_1x1",
+			"layer" : "Conv",
+			"id" : 2770,
+			"input" : ["4E/concat"],
+			"output" : ["4R/p2_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4R/p2_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2780,
+			"input" : ["4R/p2_1x1"],
+			"output" : ["4R/p2_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4R/p2_1x1/relu",
+			"layer" : "Relu",
+			"id" : 2790,
+			"input" : ["4R/p2_1x1/bn"],
+			"output" : ["4R/p2_1x1/bn"]
+		},
+
+		{
+			"name" : "4R/p2_1x7",
+			"layer" : "Conv",
+			"id" : 2800,
+			"input" : ["4R/p2_1x1/bn"],
+			"output" : ["4R/p2_1x7"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 7,
+			"filterDim.pad_w" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4R/p2_1x7/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2810,
+			"input" : ["4R/p2_1x7"],
+			"output" : ["4R/p2_1x7/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4R/p2_1x7/relu",
+			"layer" : "Relu",
+			"id" : 2820,
+			"input" : ["4R/p2_1x7/bn"],
+			"output" : ["4R/p2_1x7/bn"]
+		},
+
+		{
+			"name" : "4R/p2_7x1",
+			"layer" : "Conv",
+			"id" : 2830,
+			"input" : ["4R/p2_1x7/bn"],
+			"output" : ["4R/p2_7x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 3,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4R/p2_7x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2840,
+			"input" : ["4R/p2_7x1"],
+			"output" : ["4R/p2_7x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4R/p2_7x1/relu",
+			"layer" : "Relu",
+			"id" : 2850,
+			"input" : ["4R/p2_7x1/bn"],
+			"output" : ["4R/p2_7x1/bn"]
+		},
+
+		{
+			"name" : "4R/p2_3x3",
+			"layer" : "Conv",
+			"id" : 2860,
+			"input" : ["4R/p2_7x1/bn"],
+			"output" : ["4R/p2_3x3"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.stride" : 2,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "4R/p2_3x3/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2870,
+			"input" : ["4R/p2_3x3"],
+			"output" : ["4R/p2_3x3/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "4R/p2_3x3/relu",
+			"layer" : "Relu",
+			"id" : 2880,
+			"input" : ["4R/p2_3x3/bn"],
+			"output" : ["4R/p2_3x3/bn"]
+		},
+
+		{
+			"name" : "4R/p3_pool",
+			"layer" : "Pooling",
+			"id" : 2890,
+			"input" : ["4E/concat"],
+			"output" : ["4R/p3_pool"],
+			"poolingType" : "Max",
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.stride" : 2 
+		},
+
+		{
+			"name" : "4R/concat",
+			"layer" : "Concat",
+			"id" : 2900,
+			"input" : [
+					"4R/p1_3x3/bn",
+					"4R/p2_3x3/bn",
+					"4R/p3_pool"
+			],
+			"output" : ["4R/concat"]
+		},
+
+		{
+			"name" : "loss2/pool",
+			"layer" : "Pooling",
+			"id" : 2910,
+			"input" : ["4R/concat"],
+			"output" : ["loss2/pool"],
+			"poolingType" : "Avg",
+			"poolDim.rows" : 5,
+			"poolDim.cols" : 5,
+			"poolDim.stride" : 3 
+		},
+
+		{
+			"name" : "loss2/conv",
+			"layer" : "Conv",
+			"id" : 2920,
+			"input" : ["loss2/pool"],
+			"output" : ["loss2/conv"],
+			"filterDim.filters" : 128,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "loss2/conv/bn",
+			"layer" : "BatchNorm2",
+			"id" : 2930,
+			"input" : ["loss2/conv"],
+			"output" : ["loss2/conv/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "loss2/conv/relu",
+			"layer" : "Relu",
+			"id" : 2940,
+			"input" : ["loss2/conv/bn"],
+			"output" : ["loss2/conv/bn"]
+		},
+
+		{
+			"name" : "loss2/fc1",
+			"layer" : "FullyConnected",
+			"id" : 2950,
+			"input" : ["loss2/conv/bn"],
+			"output" : ["loss2/fc1"],
+			"nOut" : 1024,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "loss2/relu",
+			"layer" : "Relu",
+			"id" : 2960,
+			"input" : ["loss2/fc1"],
+			"output" : ["loss2/fc1"]
+		},
+
+		{
+			"name" : "loss2/fc2",
+			"layer" : "FullyConnected",
+			"id" : 2970,
+			"input" : ["loss2/fc1"],
+			"output" : ["loss2/fc2"],
+			"nOut" : 1000,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "loss2/loss",
+			"layer" : "SoftmaxWithLoss",
+			"id" : 2980,
+			"input" : ["loss2/fc2", "label"],
+			"output" : ["loss2/loss"],
+			"propDown" : [true, false],
+			"softmaxAxis" : 2,
+			"lossWeight" : 0.3,
+			"innerLayer" :
+			[
+				{
+					"name" : "inner_softmax",
+					"id" : 7002,
+					"layer" : "Softmax",
+					"input" : ["inner_softmax_7002_input"],
+					"output" : ["inner_softmax_7002_output"],
+					"softmaxAxis" : 2
+				}
+			]	
+		},
+
+
+
+
+
+
+
+
+
+
+
+
+
+		{
+			"name" : "5A/p1_1x1",
+			"layer" : "Conv",
+			"id" : 2990,
+			"input" : ["4R/concat"],
+			"output" : ["5A/p1_1x1"],
+			"filterDim.filters" : 320, 
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5A/p1_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3000,
+			"input" : ["5A/p1_1x1"],
+			"output" : ["5A/p1_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5A/p1_1x1/relu",
+			"layer" : "Relu",
+			"id" : 3010,
+			"input" : ["5A/p1_1x1/bn"],
+			"output" : ["5A/p1_1x1/bn"]
+		},
+
+		{
+			"name" : "5A/p2_1x1",
+			"layer" : "Conv",
+			"id" : 3020,
+			"input" : ["4R/concat"],
+			"output" : ["5A/p2_1x1"],
+			"filterDim.filters" : 384,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5A/p2_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3030,
+			"input" : ["5A/p2_1x1"],
+			"output" : ["5A/p2_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5A/p2_1x1/relu",
+			"layer" : "Relu",
+			"id" : 3040,
+			"input" : ["5A/p2_1x1/bn"],
+			"output" : ["5A/p2_1x1/bn"]
+		},
+
+		{
+			"name" : "5A/p2_1x3",
+			"layer" : "Conv",
+			"id" : 3050,
+			"input" : ["5A/p2_1x1/bn"],
+			"output" : ["5A/p2_1x3"],
+			"filterDim.filters" : 384,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 3,
+			"filterDim.pad_w" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5A/p2_1x3/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3060,
+			"input" : ["5A/p2_1x3"],
+			"output" : ["5A/p2_1x3/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5A/p2_1x3/relu",
+			"layer" : "Relu",
+			"id" : 3070,
+			"input" : ["5A/p2_1x3/bn"],
+			"output" : ["5A/p2_1x3/bn"]
+		},
+
+		{
+			"name" : "5A/p2_3x1",
+			"layer" : "Conv",
+			"id" : 3080,
+			"input" : ["5A/p2_1x1/bn"],
+			"output" : ["5A/p2_3x1"],
+			"filterDim.filters" : 384,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5A/p2_3x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3090,
+			"input" : ["5A/p2_3x1"],
+			"output" : ["5A/p2_3x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5A/p2_3x1/relu",
+			"layer" : "Relu",
+			"id" : 3100,
+			"input" : ["5A/p2_3x1/bn"],
+			"output" : ["5A/p2_3x1/bn"]
+		},
+
+		{
+			"name" : "5A/p2_concat",
+			"layer" : "Concat",
+			"id" : 3110,
+			"input" : [
+					"5A/p2_1x3/bn",
+					"5A/p2_3x1/bn"
+			],
+			"output" : ["5A/p2_concat"]
+		},
+
+		{
+			"name" : "5A/p3_1x1",
+			"layer" : "Conv",
+			"id" : 3120,
+			"input" : ["4R/concat"],
+			"output" : ["5A/p3_1x1"],
+			"filterDim.filters" : 448,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5A/p3_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3130,
+			"input" : ["5A/p3_1x1"],
+			"output" : ["5A/p3_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5A/p3_1x1/relu",
+			"layer" : "Relu",
+			"id" : 3140,
+			"input" : ["5A/p3_1x1/bn"],
+			"output" : ["5A/p3_1x1/bn"]
+		},
+
+		{
+			"name" : "5A/p3_3x3",
+			"layer" : "Conv",
+			"id" : 3150,
+			"input" : ["5A/p3_1x1/bn"],
+			"output" : ["5A/p3_3x3"],
+			"filterDim.filters" : 384,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5A/p3_3x3/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3160,
+			"input" : ["5A/p3_3x3"],
+			"output" : ["5A/p3_3x3/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5A/p3_3x3/relu",
+			"layer" : "Relu",
+			"id" : 3170,
+			"input" : ["5A/p3_3x3/bn"],
+			"output" : ["5A/p3_3x3/bn"]
+		},
+
+		{
+			"name" : "5A/p3_1x3",
+			"layer" : "Conv",
+			"id" : 3180,
+			"input" : ["5A/p3_3x3/bn"],
+			"output" : ["5A/p3_1x3"],
+			"filterDim.filters" : 384,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 3,
+			"filterDim.pad_w" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5A/p3_1x3/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3190,
+			"input" : ["5A/p3_1x3"],
+			"output" : ["5A/p3_1x3/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5A/p3_1x3/relu",
+			"layer" : "Relu",
+			"id" : 3200,
+			"input" : ["5A/p3_1x3/bn"],
+			"output" : ["5A/p3_1x3/bn"]
+		},
+
+		{
+			"name" : "5A/p3_3x1",
+			"layer" : "Conv",
+			"id" : 3210,
+			"input" : ["5A/p3_3x3/bn"],
+			"output" : ["5A/p3_3x1"],
+			"filterDim.filters" : 384,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5A/p3_3x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3220,
+			"input" : ["5A/p3_3x1"],
+			"output" : ["5A/p3_3x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5A/p3_3x1/relu",
+			"layer" : "Relu",
+			"id" : 3230,
+			"input" : ["5A/p3_3x1/bn"],
+			"output" : ["5A/p3_3x1/bn"]
+		},
+
+		{
+			"name" : "5A/p3_concat",
+			"layer" : "Concat",
+			"id" : 3240,
+			"input" : [
+					"5A/p3_1x3/bn",
+					"5A/p3_3x1/bn"
+			],
+			"output" : ["5A/p3_concat"]
+		},
+
+		{
+			"name" : "5A/p4_pool",
+			"layer" : "Pooling",
+			"id" : 3250,
+			"input" : ["4R/concat"],
+			"output" : ["5A/p4_pool"],
+			"poolingType" : "Avg",
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.pad" : 1
+		},
+
+		{
+			"name" : "5A/p4_1x1",
+			"layer" : "Conv",
+			"id" : 3260,
+			"input" : ["5A/p4_pool"],
+			"output" : ["5A/p4_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5A/p4_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3270,
+			"input" : ["5A/p4_1x1"],
+			"output" : ["5A/p4_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5A/p4_1x1/relu",
+			"layer" : "Relu",
+			"id" : 3280,
+			"input" : ["5A/p4_1x1/bn"],
+			"output" : ["5A/p4_1x1/bn"]
+		},
+
+		{
+			"name" : "5A/concat",
+			"layer" : "Concat",
+			"id" : 3290,
+			"input" : [
+					"5A/p1_1x1/bn",
+					"5A/p2_concat",
+					"5A/p3_concat",
+					"5A/p4_1x1/bn"
+			],
+			"output" : ["5A/concat"]
+		},
+
+		{
+			"name" : "5B/p1_1x1",
+			"layer" : "Conv",
+			"id" : 3300,
+			"input" : ["5A/concat"],
+			"output" : ["5B/p1_1x1"],
+			"filterDim.filters" : 320,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5B/p1_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3310,
+			"input" : ["5B/p1_1x1"],
+			"output" : ["5B/p1_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5B/p1_1x1/relu",
+			"layer" : "Relu",
+			"id" : 3320,
+			"input" : ["5B/p1_1x1/bn"],
+			"output" : ["5B/p1_1x1/bn"]
+		},
+
+		{
+			"name" : "5B/p2_1x1",
+			"layer" : "Conv",
+			"id" : 3330,
+			"input" : ["5A/concat"],
+			"output" : ["5B/p2_1x1"],
+			"filterDim.filters" : 384,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5B/p2_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3340,
+			"input" : ["5B/p2_1x1"],
+			"output" : ["5B/p2_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5B/p2_1x1/relu",
+			"layer" : "Relu",
+			"id" : 3350,
+			"input" : ["5B/p2_1x1/bn"],
+			"output" : ["5B/p2_1x1/bn"]
+		},
+
+		{
+			"name" : "5B/p2_1x3",
+			"layer" : "Conv",
+			"id" : 3360,
+			"input" : ["5B/p2_1x1/bn"],
+			"output" : ["5B/p2_1x3"],
+			"filterDim.filters" : 384,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 3,
+			"filterDim.pad_w" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5B/p2_1x3/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3370,
+			"input" : ["5B/p2_1x3"],
+			"output" : ["5B/p2_1x3/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5B/p2_1x3/relu",
+			"layer" : "Relu",
+			"id" : 3380,
+			"input" : ["5B/p2_1x3/bn"],
+			"output" : ["5B/p2_1x3/bn"]
+		},
+
+		{
+			"name" : "5B/p2_3x1",
+			"layer" : "Conv",
+			"id" : 3390,
+			"input" : ["5B/p2_1x1/bn"],
+			"output" : ["5B/p2_3x1"],
+			"filterDim.filters" : 384,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5B/p2_3x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3400,
+			"input" : ["5B/p2_3x1"],
+			"output" : ["5B/p2_3x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5B/p2_3x1/relu",
+			"layer" : "Relu",
+			"id" : 3410,
+			"input" : ["5B/p2_3x1/bn"],
+			"output" : ["5B/p2_3x1/bn"]
+		},
+
+		{
+			"name" : "5B/p2_concat",
+			"layer" : "Concat",
+			"id" : 3420,
+			"input" : [
+					"5B/p2_1x3/bn",
+					"5B/p2_3x1/bn"
+			],
+			"output" : ["5B/p2_concat"]
+		},
+
+		{
+			"name" : "5B/p3_1x1",
+			"layer" : "Conv",
+			"id" : 3430,
+			"input" : ["5A/concat"],
+			"output" : ["5B/p3_1x1"],
+			"filterDim.filters" : 448,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5B/p3_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3440,
+			"input" : ["5B/p3_1x1"],
+			"output" : ["5B/p3_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5B/p3_1x1/relu",
+			"layer" : "Relu",
+			"id" : 3450,
+			"input" : ["5B/p3_1x1/bn"],
+			"output" : ["5B/p3_1x1/bn"]
+		},
+
+		{
+			"name" : "5B/p3_3x3",
+			"layer" : "Conv",
+			"id" : 3460,
+			"input" : ["5B/p3_1x1/bn"],
+			"output" : ["5B/p3_3x3"],
+			"filterDim.filters" : 384,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.pad" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5B/p3_3x3/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3470,
+			"input" : ["5B/p3_3x3"],
+			"output" : ["5B/p3_3x3/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5B/p3_3x3/relu",
+			"layer" : "Relu",
+			"id" : 3480,
+			"input" : ["5B/p3_3x3/bn"],
+			"output" : ["5B/p3_3x3/bn"]
+		},
+
+		{
+			"name" : "5B/p3_1x3",
+			"layer" : "Conv",
+			"id" : 3490,
+			"input" : ["5B/p3_3x3/bn"],
+			"output" : ["5B/p3_1x3"],
+			"filterDim.filters" : 384,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 3,
+			"filterDim.pad_w" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5B/p3_1x3/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3500,
+			"input" : ["5B/p3_1x3"],
+			"output" : ["5B/p3_1x3/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5B/p3_1x3/relu",
+			"layer" : "Relu",
+			"id" : 3510,
+			"input" : ["5B/p3_1x3/bn"],
+			"output" : ["5B/p3_1x3/bn"]
+		},
+
+		{
+			"name" : "5B/p3_3x1",
+			"layer" : "Conv",
+			"id" : 3520,
+			"input" : ["5B/p3_3x3/bn"],
+			"output" : ["5B/p3_3x1"],
+			"filterDim.filters" : 384,
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 1,
+			"filterDim.pad_h" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5B/p3_3x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3530,
+			"input" : ["5B/p3_3x1"],
+			"output" : ["5B/p3_3x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5B/p3_3x1/relu",
+			"layer" : "Relu",
+			"id" : 3540,
+			"input" : ["5B/p3_3x1/bn"],
+			"output" : ["5B/p3_3x1/bn"]
+		},
+
+		{
+			"name" : "5B/p3_concat",
+			"layer" : "Concat",
+			"id" : 3550,
+			"input" : [
+					"5B/p3_1x3/bn",
+					"5B/p3_3x1/bn"
+			],
+			"output" : ["5B/p3_concat"]
+		},
+
+		{
+			"name" : "5B/p4_pool",
+			"layer" : "Pooling",
+			"id" : 3560,
+			"input" : ["5A/concat"],
+			"output" : ["5B/p4_pool"],
+			"poolingType" : "Avg",
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.pad" : 1
+		},
+
+		{
+			"name" : "5B/p4_1x1",
+			"layer" : "Conv",
+			"id" : 3570,
+			"input" : ["5B/p4_pool"],
+			"output" : ["5B/p4_1x1"],
+			"filterDim.filters" : 192,
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"weightFiller.type" : "Xavier",
+			"biasTerm" : false
+		},
+
+		{
+			"name" : "5B/p4_1x1/bn",
+			"layer" : "BatchNorm2",
+			"id" : 3580,
+			"input" : ["5B/p4_1x1"],
+			"output" : ["5B/p4_1x1/bn"],
+			"movingAverageFraction" : 0.9,
+			"eps" : 0.0001,
+			"scaleBias" : true
+		},
+
+		{
+			"name" : "5B/p4_1x1/relu",
+			"layer" : "Relu",
+			"id" : 3590,
+			"input" : ["5B/p4_1x1/bn"],
+			"output" : ["5B/p4_1x1/bn"]
+		},
+
+		{
+			"name" : "5B/concat",
+			"layer" : "Concat",
+			"id" : 3600,
+			"input" : [
+					"5B/p1_1x1/bn",
+					"5B/p2_concat",
+					"5B/p3_concat",
+					"5B/p4_1x1/bn"
+			],
+			"output" : ["5B/concat"]
+		},
+
+		{
+			"name" : "loss/pool",
+			"layer" : "Pooling",
+			"id" : 3610,
+			"input" : ["5B/concat"],
+			"output" : ["loss/pool"],
+			"poolingType" : "Avg",
+			"poolDim.rows" : 7,
+			"poolDim.cols" : 7
+		},
+
+		{
+			"name" : "loss/fc",
+			"layer" : "FullyConnected",
+			"id" : 3620,
+			"input" : ["loss/pool"],
+			"output" : ["loss/fc"],
+			"nOut" : 1000,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "loss",
+			"layer" : "SoftmaxWithLoss",
+			"id" : 3630,
+			"input" : ["loss/fc", "label"],
+			"output" : ["loss"],
+			"propDown" : [true, false],
+			"softmaxAxis" : 2,
+			"innerLayer" :
+			[
+				{
+					"name" : "inner_softmax",
+					"id" : 7003,
+					"layer" : "Softmax",
+					"input" : ["inner_softmax_7003_input"],
+					"output" : ["inner_softmax_7003_output"],
+					"softmaxAxis" : 2
+				}
+			]	
+		}
+	],
+
+	"configs" :
+	{
+		"batchSize" : 2,
+		"epochs" : 8, 
+		"lossLayer" : ["loss1/loss", "loss2/loss", "loss"],
+		"testInterval" : 100,
+		"saveInterval" : 10000,
+		"savePathPrefix" : "", 
+		
+		"baseLearningRate" : 0.05,
+
+		"lrPolicy" : "Poly",
+		"maxIterations" : 2400000,
+		"power" : 2.0,
+		"momentum" : 0.9,
+		"weightDecay" : 0.0002,
+
+		"optimizer" : "Momentum",
+        "measureLayer" : ["loss"],
+
+        "keepSaveIntervalModelCount" : 4,
+        "keepSaveBestModel" : false,
+        "keepSaveBestModelStartIterNum" : 10000
+	}
+
+}

@@ -1,0 +1,594 @@
+{
+    "layers" :
+    [
+        {
+            "name" : "data",
+            "layer" : "MultiLabelDataInput",
+            "id" : 0,
+            "output" : ["data", "label"],
+            "source" : "$(LAONSILL_HOME)/data/sdf/pascalvoc_multilabel/",
+            "labelCount" : 20
+        },
+
+        {
+            "name" : "conv1_1",
+            "layer" : "Conv",
+            "id" : 1,
+            "input" : ["data"],
+            "output" : ["conv1_1"],
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2,
+            "filterDim.rows" : 3,
+            "filterDim.cols" : 3,
+            "filterDim.channels" : 3,
+            "filterDim.filters" : 64,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 1
+        },
+
+        {
+            "name" : "relu1_1",
+            "layer" : "Relu",
+            "id" : 2,
+            "input" : ["conv1_1"],
+            "output" : ["conv1_1"]
+        },
+
+        {
+            "name" : "conv1_2",
+            "layer" : "Conv",
+            "id" : 3,
+            "input" : ["conv1_1"],
+            "output" : ["conv1_2"],
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2,
+            "filterDim.rows" : 3,
+            "filterDim.cols" : 3,
+            "filterDim.channels" : 64,
+            "filterDim.filters" : 64,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 1
+        },
+
+        {
+            "name" : "relu1_2",
+            "layer" : "Relu",
+            "id" : 4,
+            "input" : ["conv1_2"],
+            "output" : ["conv1_2"]
+        },
+
+        {
+            "name" : "pool1",
+            "layer" : "Pooling",
+            "id" : 5,
+            "input" : ["conv1_2"],
+            "output" : ["pool1"],
+            "poolDim.rows" : 2,
+            "poolDim.cols" : 2,
+            "poolDim.pad" : 0,
+            "poolDim.stride" : 2,
+            "poolingType" : "Max"
+        },
+
+        {
+            "name" : "conv2_1",
+            "layer" : "Conv",
+            "id" : 6,
+            "input" : ["pool1"],
+            "output" : ["conv2_1"],
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2,
+            "filterDim.rows" : 3,
+            "filterDim.cols" : 3,
+            "filterDim.channels" : 64,
+            "filterDim.filters" : 128,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 1
+        },
+
+        {
+            "name" : "relu2_1",
+            "layer" : "Relu",
+            "id" : 7,
+            "input" : ["conv2_1"],
+            "output" : ["conv2_1"]
+        },
+
+        {
+            "name" : "conv2_2",
+            "layer" : "Conv",
+            "id" : 8,
+            "input" : ["conv2_1"],
+            "output" : ["conv2_2"],
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2,
+            "filterDim.rows" : 3,
+            "filterDim.cols" : 3,
+            "filterDim.channels" : 128,
+            "filterDim.filters" : 128,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 1
+        },
+
+        {
+            "name" : "relu2_2",
+            "layer" : "Relu",
+            "id" : 9,
+            "input" : ["conv2_2"],
+            "output" : ["conv2_2"]
+        },
+
+        {
+            "name" : "pool2",
+            "layer" : "Pooling",
+            "id" : 10,
+            "input" : ["conv2_2"],
+            "output" : ["pool2"],
+            "poolDim.rows" : 2,
+            "poolDim.cols" : 2,
+            "poolDim.pad" : 0,
+            "poolDim.stride" : 2,
+            "poolingType" : "Max"
+        },
+
+        {
+            "name" : "conv3_1",
+            "layer" : "Conv",
+            "id" : 11,
+            "input" : ["pool2"],
+            "output" : ["conv3_1"],
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2,
+            "filterDim.rows" : 3,
+            "filterDim.cols" : 3,
+            "filterDim.channels" : 128,
+            "filterDim.filters" : 256,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 1
+        },
+
+        {
+            "name" : "relu3_1",
+            "layer" : "Relu",
+            "id" : 12,
+            "input" : ["conv3_1"],
+            "output" : ["conv3_1"]
+        },
+
+        {
+            "name" : "conv3_2",
+            "layer" : "Conv",
+            "id" : 13,
+            "input" : ["conv3_1"],
+            "output" : ["conv3_2"],
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2,
+            "filterDim.rows" : 3,
+            "filterDim.cols" : 3,
+            "filterDim.channels" : 256, 
+            "filterDim.filters" : 256,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 1
+        },
+
+        {
+            "name" : "relu3_2",
+            "layer" : "Relu",
+            "id" : 14,
+            "input" : ["conv3_2"],
+            "output" : ["conv3_2"]
+        },
+
+        {
+            "name" : "conv3_3",
+            "layer" : "Conv",
+            "id" : 15,
+            "input" : ["conv3_2"],
+            "output" : ["conv3_3"],
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2,
+            "filterDim.rows" : 3,
+            "filterDim.cols" : 3,
+            "filterDim.channels" : 256,
+            "filterDim.filters" : 256,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 1
+        },
+
+        {
+            "name" : "relu3_3",
+            "layer" : "Relu",
+            "id" : 16,
+            "input" : ["conv3_3"],
+            "output" : ["conv3_3"]
+        },
+
+        {
+            "name" : "conv3_4",
+            "layer" : "Conv",
+            "id" : 17,
+            "input" : ["conv3_3"],
+            "output" : ["conv3_4"],
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2,
+            "filterDim.rows" : 3,
+            "filterDim.cols" : 3,
+            "filterDim.channels" : 256, 
+            "filterDim.filters" : 256,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 1
+        },
+
+        {
+            "name" : "relu3_4",
+            "layer" : "Relu",
+            "id" : 18,
+            "input" : ["conv3_4"],
+            "output" : ["conv3_4"]
+        },
+
+        {
+            "name" : "pool3",
+            "layer" : "Pooling",
+            "id" : 19,
+            "input" : ["conv3_4"],
+            "output" : ["pool3"],
+            "poolDim.rows" : 2,
+            "poolDim.cols" : 2,
+            "poolDim.pad" : 0,
+            "poolDim.stride" : 2,
+            "poolingType" : "Max"
+        },
+
+        {
+            "name" : "conv4_1",
+            "layer" : "Conv",
+            "id" : 20,
+            "input" : ["pool3"],
+            "output" : ["conv4_1"],
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2,
+            "filterDim.rows" : 3,
+            "filterDim.cols" : 3,
+            "filterDim.channels" : 256,
+            "filterDim.filters" : 512,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 1
+        },
+
+        {
+            "name" : "relu4_1",
+            "layer" : "Relu",
+            "id" : 21,
+            "input" : ["conv4_1"],
+            "output" : ["conv4_1"]
+        },
+
+        {
+            "name" : "conv4_2",
+            "layer" : "Conv",
+            "id" : 22,
+            "input" : ["conv4_1"],
+            "output" : ["conv4_2"],
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2,
+            "filterDim.rows" : 3,
+            "filterDim.cols" : 3,
+            "filterDim.channels" : 512, 
+            "filterDim.filters" : 512,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 1
+        },
+
+        {
+            "name" : "relu4_2",
+            "layer" : "Relu",
+            "id" : 23,
+            "input" : ["conv4_2"],
+            "output" : ["conv4_2"]
+        },
+
+        {
+            "name" : "conv4_3",
+            "layer" : "Conv",
+            "id" : 24,
+            "input" : ["conv4_2"],
+            "output" : ["conv4_3"],
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2,
+            "filterDim.rows" : 3,
+            "filterDim.cols" : 3,
+            "filterDim.channels" : 512,
+            "filterDim.filters" : 512,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 1
+        },
+
+        {
+            "name" : "relu4_3",
+            "layer" : "Relu",
+            "id" : 25,
+            "input" : ["conv4_3"],
+            "output" : ["conv4_3"]
+        },
+
+        {
+            "name" : "conv4_4",
+            "layer" : "Conv",
+            "id" : 26,
+            "input" : ["conv4_3"],
+            "output" : ["conv4_4"],
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2,
+            "filterDim.rows" : 3,
+            "filterDim.cols" : 3,
+            "filterDim.channels" : 512, 
+            "filterDim.filters" : 512,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 1
+        },
+
+        {
+            "name" : "relu4_4",
+            "layer" : "Relu",
+            "id" : 27,
+            "input" : ["conv4_4"],
+            "output" : ["conv4_4"]
+        },
+
+        {
+            "name" : "pool4",
+            "layer" : "Pooling",
+            "id" : 28,
+            "input" : ["conv4_4"],
+            "output" : ["pool4"],
+            "poolDim.rows" : 2,
+            "poolDim.cols" : 2,
+            "poolDim.pad" : 0,
+            "poolDim.stride" : 2,
+            "poolingType" : "Max"
+        },
+
+        {
+            "name" : "conv5_1",
+            "layer" : "Conv",
+            "id" : 29,
+            "input" : ["pool4"],
+            "output" : ["conv5_1"],
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2,
+            "filterDim.rows" : 3,
+            "filterDim.cols" : 3,
+            "filterDim.channels" : 512,
+            "filterDim.filters" : 512,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 1
+        },
+
+        {
+            "name" : "relu5_1",
+            "layer" : "Relu",
+            "id" : 30,
+            "input" : ["conv5_1"],
+            "output" : ["conv5_1"]
+        },
+
+        {
+            "name" : "conv5_2",
+            "layer" : "Conv",
+            "id" : 31,
+            "input" : ["conv5_1"],
+            "output" : ["conv5_2"],
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2,
+            "filterDim.rows" : 3,
+            "filterDim.cols" : 3,
+            "filterDim.channels" : 512, 
+            "filterDim.filters" : 512,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 1
+        },
+
+        {
+            "name" : "relu5_2",
+            "layer" : "Relu",
+            "id" : 32,
+            "input" : ["conv5_2"],
+            "output" : ["conv5_2"]
+        },
+
+        {
+            "name" : "conv5_3",
+            "layer" : "Conv",
+            "id" : 33,
+            "input" : ["conv5_2"],
+            "output" : ["conv5_3"],
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2,
+            "filterDim.rows" : 3,
+            "filterDim.cols" : 3,
+            "filterDim.channels" : 512,
+            "filterDim.filters" : 512,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 1
+        },
+
+        {
+            "name" : "relu5_3",
+            "layer" : "Relu",
+            "id" : 34,
+            "input" : ["conv5_3"],
+            "output" : ["conv5_3"]
+        },
+
+        {
+            "name" : "conv5_4",
+            "layer" : "Conv",
+            "id" : 35,
+            "input" : ["conv5_3"],
+            "output" : ["conv5_4"],
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2,
+            "filterDim.rows" : 3,
+            "filterDim.cols" : 3,
+            "filterDim.channels" : 512, 
+            "filterDim.filters" : 512,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 1
+        },
+
+        {
+            "name" : "relu5_4",
+            "layer" : "Relu",
+            "id" : 36,
+            "input" : ["conv5_4"],
+            "output" : ["conv5_4"]
+        },
+
+        {
+            "name" : "pool5",
+            "layer" : "Pooling",
+            "id" : 37,
+            "input" : ["conv5_4"],
+            "output" : ["pool5"],
+            "poolDim.rows" : 2,
+            "poolDim.cols" : 2,
+            "poolDim.pad" : 0,
+            "poolDim.stride" : 2,
+            "poolingType" : "Max"
+        },
+
+        {
+            "name" : "fc6",
+            "layer" : "FullyConnected",
+            "id" : 38,
+            "input" : ["pool5"],
+            "output" : ["fc6"],
+            "nOut" : 4096,
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2
+        },
+
+        {
+            "name" : "dropout6",
+            "layer" : "DropOut",
+            "id" : 39,
+            "input" : ["fc6"],
+            "output" : ["fc6"],
+            "probability" : "0.5"
+        },
+
+        {
+            "name" : "relu6",
+            "layer" : "Relu",
+            "id" : 40,
+            "input" : ["fc6"],
+            "output" : ["fc6"]
+        },
+
+        {
+            "name" : "fc7",
+            "layer" : "FullyConnected",
+            "id" : 41,
+            "input" : ["fc6"],
+            "output" : ["fc7"],
+            "nOut" : 4096,
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2
+        },
+
+        {
+            "name" : "dropout7",
+            "layer" : "DropOut",
+            "id" : 42,
+            "input" : ["fc7"],
+            "output" : ["fc7"],
+            "probability" : "0.5"
+        },
+
+        {
+            "name" : "relu7",
+            "layer" : "Relu",
+            "id" : 43,
+            "input" : ["fc7"],
+            "output" : ["fc7"]
+        },
+
+        {
+            "name" : "fc8",
+            "layer" : "FullyConnected",
+            "id" : 44,
+            "input" : ["fc7"],
+            "output" : ["fc8"],
+            "nOut" : 20,
+            "weightFiller.type" : "Xavier",
+            "weightFiller.value" : 0.1,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.2
+        },
+
+        {
+            "name" : "loss",
+            "layer" : "CrossEntropyWithLoss",
+            "id" : 45,
+            "input" : ["fc8", "label"],
+            "output" : ["loss"],
+            "withSigmoid" : true
+        }
+    ],
+
+    "configs" :
+    {
+        "batchSize" : 32,
+        "epochs" : 1000,
+        "lossLayer" : ["loss"],
+        "saveInterval" : 1000000,
+        "testInterval" : 100,
+        "savePathPrefix" : "",
+        "baseLearningRate" : 0.001,
+        "stepSize" : 50000,
+        "weightDecay" : 0.0005,
+        "momentum" : 0.9,
+        "clipGradientsLevel" : 0.0,
+        "gamma" : 0.0001,
+        "lrPolicy" : "Fixed",
+        "optimizer" : "Momentum"
+    }
+}

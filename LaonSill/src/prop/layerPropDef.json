@@ -1,0 +1,2148 @@
+{
+
+"Base" :
+{
+    "DESC" : "base layer",
+    "PARENT" : "",
+    "LEVEL" : 0,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" :
+        [
+            ["id", "uint32_t", "0"],
+            ["name", "std::string", "\"\""],
+            ["input", "std::vector<std::string>", ""],
+            ["output", "std::vector<std::string>", ""],
+            ["propDown", "std::vector<bool>", ""],
+            ["donate", "bool", "false"],
+            ["receive", "bool", "false"],
+            ["donatorID", "int", "-1"],
+            ["learnable", "bool", "false"],
+            ["innerLayerIDs", "std::vector<int>", ""],
+            ["defaultPropDown", "std::vector<bool>", ""],
+            ["updateGrad", "bool", "true"],
+            ["activation", "LayerActivation", "LayerActivation::AllActivation"]
+        ],
+		"KEYVARS" : ["id", "name", "input", "output"]
+},
+
+"Input":
+{
+    "DESC" : "input layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" :
+        [
+            ["mean", "std::vector<float>", ""],
+			["scale", "float", "1.0"],
+            ["source", "std::string", "\"\""],
+            ["sourceType", "std::string", "\"\""],
+			["numTrainPack", "uint32_t", "1"],
+			["numTestPack", "uint32_t", "1"]
+        ],
+    "KEYVARS" : ["source", "mean"]
+},
+
+"Loss":
+{
+    "DESC" : "loss layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" :
+        [
+            ["lossWeight", "float", "1.0"],
+            ["hasIgnoreLabel", "bool", "false"],
+            ["ignoreLabel", "int", "-1"],
+            ["hasNormalize", "bool", "false"],
+            ["normalize", "bool", "false"],
+            ["hasNormalization", "bool", "false"],
+            ["normalization", "NormalizationMode", "NormalizationMode::Valid"]
+        ],
+    "KEYVARS" : []        
+},
+
+"Measure":
+{
+    "DESC" : "measure layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : [],
+    "KEYVARS" : []        
+},
+
+"Learnable":
+{
+    "DESC" : "learnable layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+        [
+            ["decayedBeta1", "float", "1.0"], 
+            ["decayedBeta2", "float", "1.0"]
+        ],
+    "KEYVARS" : []        
+},
+
+"Conv" : 
+{
+    "DESC" : "convolution layer",
+    "PARENT" : "Learnable",
+    "LEVEL" : 2,
+    "LEARN" : 2,
+    "PROPDOWN" : [],
+    "VARS" : 
+        [   
+            ["deconv", "bool", "false"],
+            ["deconvExtraCell", "int", "0"],
+            ["filterDim", "filter_dim", "{1, 1, 1, 1, 0, 0, 0, 1, 1}",
+                [
+                    ["rows", "uint32_t"], 
+                    ["cols", "uint32_t"],
+                    ["channels", "uint32_t"],
+                    ["filters", "uint32_t"],
+                    ["pad", "uint32_t"],
+					["pad_h", "uint32_t"],
+					["pad_w", "uint32_t"],
+                    ["stride", "uint32_t"],
+                    ["dilation", "uint32_t"]
+                ]
+            ],
+            ["weightUpdateParam", "update_param", "{1.0, 1.0}",
+                [
+                    ["lr_mult", "double"],
+                    ["decay_mult", "double"]
+                ]
+            ],
+            ["biasUpdateParam", "update_param", "{1.0, 1.0}",
+                [
+                    ["lr_mult", "double"],
+                    ["decay_mult", "double"]
+                ]
+            ],
+            ["weightFiller", "param_filler<float>", "{ParamFillerType::Constant, 0.0, 0.0, 1.0}",
+                [
+                    ["type", "ParamFillerType"],
+                    ["value", "double"],
+					["mean", "double"],
+					["std", "double"]
+                ]
+            ],
+            ["biasFiller", "param_filler<float>", "{ParamFillerType::Constant, 0.0, 0.0, 1.0}",
+                [
+                    ["type", "ParamFillerType"],
+                    ["value", "double"],
+					["mean", "double"],
+					["std", "double"]
+                ]
+            ],
+			["biasTerm", "bool", "true"]
+        ],
+    "KEYVARS" : ["filterDim", "weightUpdataParam", "biasUpdateParam", "weightFiller", "biasFiller"]
+},
+
+"FullyConnected" :
+{
+    "DESC" : "fully connected layer",
+    "PARENT" : "Learnable",
+    "LEVEL" : 2,
+    "LEARN" : 2,
+    "PROPDOWN" : [],
+    "VARS" : 
+        [   
+            ["nOut", "int", "0"],
+            ["weightUpdateParam", "update_param", "{1.0, 1.0}",
+                [
+                    ["lr_mult", "double"],
+                    ["decay_mult", "double"]
+                ]
+            ],
+            ["biasUpdateParam", "update_param", "{1.0, 1.0}",
+                [
+                    ["lr_mult", "double"],
+                    ["decay_mult", "double"]
+                ]
+            ],
+            ["weightFiller", "param_filler<float>", "{ParamFillerType::Constant, 0.0, 0.0, 1.0}",
+                [
+                    ["type", "ParamFillerType"],
+                    ["value", "double"],
+					["mean", "double"],
+					["std", "double"]
+                ]
+            ],
+            ["biasFiller", "param_filler<float>", "{ParamFillerType::Constant, 0.0, 0.0, 1.0}",
+                [
+                    ["type", "ParamFillerType"],
+                    ["value", "double"],
+					["mean", "double"],
+					["std", "double"]
+                ]
+            ],
+            ["axis", "int", "1"]
+        ],
+    "KEYVARS" : ["nOut", "weightUpdateParam", "biasUpdateParam", "weightFiller", "biasFiller"]
+},
+
+"ILSVRCInput" :
+{
+    "DESC" : "ILSVRC input layer",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+        [   
+            ["imageDir", "std::string", "\"\""],
+            ["resizeImage", "bool", "false"],
+            ["resizedImageRow", "int", "0"],
+            ["resizedImageCol", "int", "0"]
+        ],
+    "KEYVARS" : ["imageDir"]
+},
+
+"CelebAInput" :
+{
+    "DESC" : "CelebA input layer",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+        [
+            ["imageDir", "std::string", "\"\""],
+            ["cropImage", "bool", "false"],
+            ["cropLen", "int", "0"],
+            ["resizeImage", "bool", "false"],
+            ["resizedImageRow", "int", "0"],
+            ["resizedImageCol", "int", "0"]
+        ],
+    "KEYVARS" : ["imageDir"]
+},
+
+"KistiInput" :
+{
+    "DESC" : "KISTI project input layer",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+        [
+            ["imageDir", "std::string", "\"\""],
+            ["resizedImageRow", "int", "KISTIDATA_DEFAULT_RESIZED_ROW_SIZE"],
+            ["resizedImageCol", "int", "KISTIDATA_DEFAULT_RESIZED_COL_SIZE"],
+            ["labelCount", "int", "1000"],
+            ["useKistiPolicy", "bool", "true"],
+            ["train", "bool", "true"]
+        ],
+    "KEYVARS" : ["imageDir", "labelCount"]
+},
+
+"NoiseInput" :
+{
+    "DESC" : "Noise input layer",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+        [
+            ["noiseDepth", "int", "100"],
+            ["noiseRangeLow", "double", "-1.0"],
+            ["noiseRangeHigh", "double", "1.0"],
+            ["useLinearTrans", "bool", "false"],
+            ["tranChannels", "int", "1"],
+            ["tranRows", "int", "1"],
+            ["tranCols", "int", "1"],
+            ["tranMean", "double", "0.0"],
+            ["tranVariance", "double", "1.0"],
+            ["regenerateNoise", "bool", "true"]
+        ],
+    "KEYVARS" : ["noiseDepth"]
+},
+
+"VOCPascalInput" :
+{
+    "DESC" : "VOC PASCAL input layer",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+        [
+            ["imageDir", "std::string", "\"\""],
+            ["resizedImageRow", "int", "0"],
+            ["resizedImageCol", "int", "0"],
+            ["resizeImage", "bool", "false"]
+        ],
+    "KEYVARS" : ["imageDir"]
+},
+
+"YOLOInput" :
+{
+    "DESC" : "YOLO input layer",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+        [
+            ["imageDir", "std::string", "\"\""],
+            ["resizedImageRow", "int", "0"],
+            ["resizedImageCol", "int", "0"],
+            ["resizeImage", "bool", "false"],
+            ["dataTransformParam", "DataTransformParam", "{}",
+                [
+                    ["scale", "float"],
+                    ["mirror", "bool"],
+                    ["mean", "std::vector<float>"],
+                    ["cropSize", "int"],
+                    ["cropH", "int"],
+                    ["cropW", "int"]
+                ]
+            ],
+		    ["dataSetName", "std::string", "\"\""],
+            ["resizeParam", "ResizeParam", "{}",
+                [
+                    ["prob", "float"],
+                    ["resizeMode", "ResizeMode"],
+                    ["height", "uint32_t"],
+                    ["width", "uint32_t"],
+                    ["heightScale", "uint32_t"],
+                    ["widthScale", "uint32_t"],
+                    ["padMode", "PadMode"],
+                    ["padValue", "std::vector<float>"],
+                    ["interpMode0", "InterpMode"],
+                    ["interpMode1", "InterpMode"],
+                    ["interpMode2", "InterpMode"],
+                    ["interpMode3", "InterpMode"],
+                    ["interpMode4", "InterpMode"]
+                ]
+            ],
+            ["gtBoxMax", "int", "30"],
+		    ["labelMapFile", "std::string", "\"\""],
+		    ["annoType", "AnnotationType", "AnnotationType::BBOX"]
+        ],
+    "KEYVARS" : ["imageDir"]
+},
+
+"BatchNorm" :
+{
+    "DESC" : "batch normalization layer",
+    "PARENT" : "Learnable",
+    "LEVEL" : 2,
+    "LEARN" : 2,
+    "PROPDOWN" : [],
+    "VARS" : 
+        [   
+            ["epsilon", "double", "0.0001"],
+            ["train", "bool", "true"],
+            ["useChannelOnly", "bool", "false"]
+        ],
+    "KEYVARS" : ["train"]
+
+},
+
+"BatchNorm2" :
+{
+    "DESC" : "batch normalization layer",
+    "PARENT" : "Learnable",
+    "LEVEL" : 2,
+    "LEARN" : 2,
+    "PROPDOWN" : [],
+    "VARS" : 
+        [   
+            ["useGlobalStats", "BatchNormUseGlobal", "DependOnNetStat"],
+            ["movingAverageFraction", "float", "0.999"],
+            ["eps", "float", "1e-5"],
+            ["scaleFiller", "param_filler<float>", "{ParamFillerType::Constant, 1.0, 0.0, 1.0}",
+                [
+                    ["type", "ParamFillerType"],
+                    ["value", "double"],
+					["mean", "double"],
+					["std", "double"]
+                ]
+            ],
+            ["biasFiller", "param_filler<float>", "{ParamFillerType::Constant, 0.0, 0.0, 1.0}",
+                [
+                    ["type", "ParamFillerType"],
+                    ["value", "double"],
+					["mean", "double"],
+					["std", "double"]
+                ]
+            ],
+            ["scaleBias", "bool", "true"]
+        ],
+    "KEYVARS" : []
+
+},
+
+"BatchNorm3" :
+{
+    "DESC" : "batch normalization layer",
+    "PARENT" : "Learnable",
+    "LEVEL" : 2,
+    "LEARN" : 2,
+    "PROPDOWN" : [],
+    "VARS" : 
+        [   
+            ["useGlobalStats", "bool", "false"],
+            ["movingAverageFraction", "float", "0.999"],
+            ["eps", "float", "1e-5"]
+        ],
+    "KEYVARS" : []
+
+},
+
+"Scale" :
+{
+    "DESC" : "scale layer",
+    "PARENT" : "Learnable",
+    "LEVEL" : 2,
+    "LEARN" : 2,
+    "PROPDOWN" : [],
+    "VARS" : 
+        [   
+            ["axis", "int", "1"],
+            ["numAxes", "int", "1"],
+            ["biasTerm", "bool", "false"],
+            ["filler", "param_filler<float>", "{ParamFillerType::Constant, 1.0, 0.0, 1.0}",
+                [
+                    ["type", "ParamFillerType"],
+                    ["value", "double"],
+					["mean", "double"],
+					["std", "double"]
+                ]
+            ],
+            ["biasFiller", "param_filler<float>", "{ParamFillerType::Constant, 0.0, 0.0, 1.0}",
+                [
+                    ["type", "ParamFillerType"],
+                    ["value", "double"],
+					["mean", "double"],
+					["std", "double"]
+                ]
+            ]
+        ],
+    "KEYVARS" : []
+
+},
+
+"Bias" :
+{
+    "DESC" : "bias layer",
+    "PARENT" : "Learnable",
+    "LEVEL" : 2,
+    "LEARN" : 2,
+    "PROPDOWN" : [],
+    "VARS" : 
+        [   
+            ["axis", "int", "1"],
+            ["numAxes", "int", "1"],
+            ["filler", "param_filler<float>", "{ParamFillerType::Constant, 0.0, 0.0, 1.0}",
+                [
+                    ["type", "ParamFillerType"],
+                    ["value", "double"],
+					["mean", "double"],
+					["std", "double"]
+                ]
+            ]
+        ],
+    "KEYVARS" : []
+
+},
+
+"SoftmaxWithLoss" :
+{
+    "DESC" : "softmax with loss layer",
+    "PARENT" : "Loss",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [true, false],
+    "VARS" :
+        [
+            ["softmaxAxis", "uint32_t", "2"]
+        ],
+    "KEYVARS" : []        
+},
+
+"CrossEntropyWithLoss" :
+{
+    "DESC" : "crosss entropy with loss layer",
+    "PARENT" : "Loss",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" :
+        [
+            ["targetValue", "float", "0.0"],
+            ["withSigmoid", "bool", "false"]
+        ],
+    "KEYVARS" : []
+},
+
+"YOLOLoss" :
+{
+    "DESC" : "YOLO loss layer",
+    "PARENT" : "Loss",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" :
+        [
+            ["numClasses", "int", "21"],
+            ["noobj", "float", "1.0"],
+            ["coord", "float", "1.0"],
+            ["obj", "float", "5.0"],
+            ["class", "float", "1.0"],
+            ["reward", "float", "0.3"],
+            ["iouThresh", "float", "0.7"]
+        ],
+    "KEYVARS" : []
+},
+
+"YOLORegion" :
+{
+    "DESC" : "YOLO region layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" :
+        [
+            ["numClasses", "int", "21"],
+            ["softmax", "bool", "true"],
+            ["anchors", "std::vector<float>", ""]
+        ],
+    "KEYVARS" : []
+},
+
+"YOLOPassThru" :
+{
+    "DESC" : "YOLO pass thru layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+        [
+            ["stride", "int", "2"],
+            ["reverse", "bool", "false"]
+        ],
+    "KEYVARS" : []
+},
+
+"YOLOOutput" :
+{
+    "DESC" : "YOLO output layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+        [
+            ["numClasses", "int", "21"],
+            ["scoreThresh", "float", "0.3"],
+            ["nmsIOUThresh", "float", "0.5"]
+        ],
+    "KEYVARS" : []
+},
+
+"Split" :
+{
+    "DESC" : "split layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : [],
+    "KEYVARS" : []
+},
+
+"Relu" :
+{
+    "DESC" : "relu layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" :
+        [
+            ["useLeaky", "bool", "false"],
+            ["leaky", "double", "0.0"]
+        ],
+    "KEYVARS" : []
+},
+
+"Sigmoid2" :
+{
+    "DESC" : "sigmoid 2 layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : [],
+    "KEYVARS" : []
+},
+
+"DropOut" : 
+{
+    "DESC" : "dropout layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" :
+        [
+            ["probability", "double", "0.5"],
+            ["scale", "double", "0.0"]
+        ],
+    "KEYVARS" : ["probability"]
+},
+
+"HyperTangent" : 
+{
+    "DESC" : "hyper tangent layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : [],
+    "KEYVARS" : []
+},
+
+"DepthConcat" : 
+{
+    "DESC" : "depth concat layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : [],
+    "KEYVARS" : []    
+},
+
+"DummyInput" : 
+{
+    "DESC" : "dummy input layer",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+				[
+					["shapes", "std::vector<uint32_t>", ""],
+					["numClasses", "uint32_t", "1"],
+					["numTrainData", "uint32_t", "1"],
+					["numTestData", "uint32_t", "1"]
+				],
+    "KEYVARS" : ["shapes", "numClasses", "numTrainData"]				
+},
+
+"LRN" : 
+{
+    "DESC" : "lrn layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+				[
+				    ["lrnDim", "lrn_dim", "{5, 0.0001, 0.75, 2.0}",
+				    	[
+				    		["local_size", "uint32_t"],
+				    		["alpha", "double"],
+				    		["beta", "double"],
+				    		["k", "double"]
+				    	]
+				    ]
+				],
+    "KEYVARS" : ["lrnDim"]				
+},
+
+"Pooling" : 
+{
+    "DESC" : "pooling layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+		[
+			["poolDim", "pool_dim", "{1, 1, 0, 1}",
+				[
+						["rows", "uint32_t"],
+						["cols", "uint32_t"],
+						["pad", "uint32_t"],
+						["stride", "uint32_t"]
+				]
+			],
+			["poolingType", "PoolingType", "PoolingType::Max"],
+			["globalPooling", "bool", "false"]
+		],
+    "KEYVARS" : ["poolDim", "poolingType"]			
+},
+
+"Reshape" : 
+{
+    "DESC" : "reshape layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+				[
+				    ["shape", "std::vector<int>", ""]
+				],
+    "KEYVARS" : ["shapes"]			
+},
+
+"SmoothL1Loss" : 
+{
+    "DESC" : "smooth l1 loss layer",
+    "PARENT" : "Loss",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	    ["sigma", "float", "1.0"],
+	    ["firstAxis", "uint32_t", "0"]
+	],
+		"KEYVARS" : ["sigma"]
+},
+
+"DummyLoss" : 
+{
+    "DESC" : "dummy loss layer",
+    "PARENT" : "Loss",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	],
+		"KEYVARS" : []
+},
+
+"Softmax" : 
+{
+    "DESC" : "softmax layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	    ["softmaxAxis", "uint32_t", "2"]
+	],
+	  "KEYVARS" : []
+},
+
+"AnchorTarget" : 
+{
+    "DESC" : "anchor target layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	    ["featStride", "uint32_t", "16"],
+	    ["allowedBorder", "uint32_t", "0"],
+	    ["scales", "std::vector<uint32_t>", "{8, 16, 32}"]
+	],
+		"KEYVARS" : ["featStride", "allowedBorder", "scales"]
+},
+
+"FrcnnTestOutput" : 
+{
+    "DESC" : "frcnn test output layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	    ["maxPerImage", "uint32_t", "100"],
+	    ["confThresh", "float", "0.5"],
+	    ["nmsThresh", "float", "0.1"],
+	    ["vis", "bool", "false"],
+	    ["savePath", "std::string", "\"\""],
+	    ["labelMapPath", "std::string", "\"\""],
+		["outputResult", "bool", "true"],
+		["needNorm", "bool", "false"],
+		["numClasses", "int", "0"]
+	],
+		"KEYVARS" : ["maxPerImage", "confThresh", "nmsThresh", "savePath", "labelMapPath"]
+},
+
+"FrcnnTestLiveOutput" : 
+{
+    "DESC" : "frcnn test live output layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	    ["confThresh", "float", "0.5"],
+	    ["nmsThresh", "float", "0.1"],
+		["numClasses", "int", "0"]
+	],
+		"KEYVARS" : ["confThresh", "nmsThresh"]
+},
+
+"FrcnnTestVideoOutput" : 
+{
+    "DESC" : "frcnn test video output layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	    ["maxPerImage", "uint32_t", "100"],
+	    ["confThresh", "float", "0.5"],
+	    ["nmsThresh", "float", "0.1"],
+	    ["vis", "bool", "false"],
+	    ["savePath", "std::string", "\"\""],
+	    ["labelMapPath", "std::string", "\"\""]
+	],
+    "KEYVARS" : ["maxPerImage", "confThresh", "nmsThresh", "savePath", "labelMapPath"]	
+},
+
+"Proposal" : 
+{
+    "DESC" : "proposal layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	    ["featStride", "uint32_t", "16"],
+	    ["scales", "std::vector<uint32_t>", "{8, 16, 32}"]
+	],
+		"KEYVARS" : ["featStride", "scales"]
+},
+
+"ProposalTarget" : 
+{
+    "DESC" : "proposal target layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	    ["numClasses", "uint32_t", "0"]
+	],
+		"KEYVARS" : ["numClasses"]
+},
+
+"RoIInput" : 
+{
+    "DESC" : "roi input layer",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	    ["numClasses", "uint32_t", "0"],
+		["imageSet", "std::string", "\"\""],
+		["dataName", "std::string", "\"\""],
+		["dataPath", "std::string", "\"\""],
+		["labelMapPath", "std::string", "\"\""],
+	    ["pixelMeans", "std::vector<float>", ""]
+	],
+		"KEYVARS" : ["numClasses", "imageSet", "dataName", "dataPath", "labelMapPath", "pixelMeans"]
+},
+
+"RoIData" : 
+{
+    "DESC" : "roi data layer",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	    ["numClasses", "uint32_t", "0"],
+		["dataSetName", "std::string", "\"\""],
+		["dataTransformParam", "DataTransformParam", "{}",
+			[
+				["scale", "float"],
+				["mirror", "bool"],
+				["mean", "std::vector<float>"],
+				["cropSize", "int"],
+				["cropH", "int"],
+				["cropW", "int"]
+			]
+		],
+		["resizeParam", "ResizeParam", "{}",
+			[
+				["prob", "float"],
+				["resizeMode", "ResizeMode"],
+				["height", "uint32_t"],
+				["width", "uint32_t"],
+				["heightScale", "uint32_t"],
+				["widthScale", "uint32_t"],
+				["padMode", "PadMode"],
+				["padValue", "std::vector<float>"],
+				["interpMode0", "InterpMode"],
+				["interpMode1", "InterpMode"],
+				["interpMode2", "InterpMode"],
+				["interpMode3", "InterpMode"],
+				["interpMode4", "InterpMode"]
+			]
+		]
+	],
+	"KEYVARS" : []
+},
+
+"RoIPooling" : 
+{
+    "DESC" : "roi pooling layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	    ["pooledW", "uint32_t", "6"],
+	    ["pooledH", "uint32_t", "6"],
+	    ["spatialScale", "float", "0.0625"]
+	],
+		"KEYVARS" : ["pooledW", "pooledH", "spatialScale"]
+},
+
+"RoITestInput" : 
+{
+    "DESC" : "roi test input",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	    ["numClasses", "uint32_t", "0"],
+		["imageSet", "std::string", "\"\""],
+		["dataName", "std::string", "\"\""],
+		["dataPath", "std::string", "\"\""],
+		["labelMapPath", "std::string", "\"\""],
+	    ["pixelMeans", "std::vector<float>", ""]
+	],
+		"KEYVARS" : ["numClasses", "imageSet", "dataName", "dataPath", "labelMapPath", "pixelMeans"]
+},
+
+"RoITestLiveInput" : 
+{
+    "DESC" : "roi test live input",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	    ["pixelMeans", "std::vector<float>", ""]
+	],
+		"KEYVARS" : ["pixelMeans"]
+},
+
+"RoITestVideoInput" : 
+{
+    "DESC" : "roi test video input",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	    ["numClasses", "uint32_t", "0"],
+		["videoPath", "std::string", "\"\""],
+		["fps", "int", "10"],
+	    ["pixelMeans", "std::vector<float>", ""]
+	],
+		"KEYVARS" : ["numClasses", "videoPath", "pixelMeans"]
+},
+
+"CustomInput" :
+{
+    "DESC" : "custom input",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+    [
+        ["inputElemCounts", "std::vector<int>", ""],
+        ["trainDataCount", "int", "1"]
+    ],
+    "KEYVARS" : ["inputElemCounts", "trainDataCount"]
+},
+
+"DataInput" : 
+{
+    "DESC" : "data input layer",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["dataSetName", "std::string", "\"\""],
+		["dataTransformParam", "DataTransformParam", "{}",
+			[
+				["scale", "float"],
+				["mean", "std::vector<float>"],
+				["mirror", "bool"],
+				["cropSize", "int"],
+				["cropH", "int"],
+				["cropW", "int"]
+			]
+		],
+		["resizeParam", "ResizeParam", "{}",
+			[
+				["prob", "float"],
+				["resizeMode", "ResizeMode"],
+				["height", "uint32_t"],
+				["width", "uint32_t"],
+				["heightScale", "uint32_t"],
+				["widthScale", "uint32_t"],
+				["padMode", "PadMode"],
+				["padValue", "std::vector<float>"],
+				["interpMode0", "InterpMode"],
+				["interpMode1", "InterpMode"],
+				["interpMode2", "InterpMode"],
+				["interpMode3", "InterpMode"],
+				["interpMode4", "InterpMode"]
+			]
+		]
+	],
+    "KEYVARS" : []
+},
+
+"LiveDataInput" : 
+{
+    "DESC" : "data live input layer",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	    ["pixelMeans", "std::vector<float>", ""],
+        ["rows", "int", "224"],
+        ["cols", "int", "224"],
+        ["channels", "int", "3"],
+
+		["dataTransformParam", "DataTransformParam", "{}",
+			[
+				["scale", "float"],
+				["mirror", "bool"],
+				["mean", "std::vector<float>"],
+				["cropSize", "int"],
+				["cropH", "int"],
+				["cropW", "int"]
+			]
+		],
+
+		["resizeParam", "ResizeParam", "{}",
+			[
+				["prob", "float"],
+				["resizeMode", "ResizeMode"],
+				["height", "uint32_t"],
+				["width", "uint32_t"],
+				["heightScale", "uint32_t"],
+				["widthScale", "uint32_t"],
+				["padMode", "PadMode"],
+				["padValue", "std::vector<float>"],
+				["interpMode0", "InterpMode"],
+				["interpMode1", "InterpMode"],
+				["interpMode2", "InterpMode"],
+				["interpMode3", "InterpMode"],
+				["interpMode4", "InterpMode"]
+			]
+		]
+	],
+    "KEYVARS" : []
+},
+
+"MultiLabelDataInput" : 
+{
+    "DESC" : "multiple labels data input layer",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["labelCount", "int", "0"],
+		["dataSetName", "std::string", "\"\""]
+	],
+    "KEYVARS" : ["labelCount"]
+},
+
+"Accuracy" : 
+{
+    "DESC" : "accuracy layer",
+    "PARENT" : "Measure",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+    [
+        ["topK", "uint32_t", "1"],
+        ["axis", "int", "1"],
+        ["ignoreLabel", "int", "-1"]
+    ],
+	"KEYVARS" : ["topK"]    
+},
+
+"ImageSegData" : 
+{
+    "DESC" : "image seg data input layer",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [false, false, false],
+    "VARS" : 
+	[
+		["mirror", "bool", "false"],
+		["cropSize", "int", "0"],
+		["imageSource", "std::string", "\"\""],
+		["listSource", "std::string", "\"\""],
+		["shuffle", "bool", "false"],
+		["ignoreLabel", "int", "255"],
+		["labelType", "LabelType", "LabelType::PIXEL"],
+		["dataTransformParam", "DataTransformParam", "{}",
+			[
+				["mean", "std::vector<float>"],
+				["scale", "float"],
+				["cropSize", "int"],
+				["mirror", "bool"]
+			]
+		]
+	],
+    "KEYVARS" : ["labelCount"]
+},
+
+"ElementWise" : 
+{
+    "DESC" : "element wise layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["operation", "ElementWiseOp", "ElementWiseOp::SUM"],
+		["coeff", "std::vector<float>", ""],
+		["stableProdGrad", "bool", "true"]
+	],
+    "KEYVARS" : ["elementWiseOp"]
+},
+
+"Interpolation" : 
+{
+    "DESC" : "interpolation layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["height", "int", "0"],
+		["width", "int", "0"],
+		["zoomFactor", "int", "1"],
+		["shrinkFactor", "int", "1"],
+		["padBeg", "int", "0"],
+		["padEnd", "int", "0"]
+	],
+    "KEYVARS" : []
+},
+
+"SegAccuracy" : 
+{
+    "DESC" : "segmentation accuracy layer",
+    "PARENT" : "Measure",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["metric", "AccuracyMetric", "AccuracyMetric::PixelAccuracy"],
+		["ignoreLabel", "std::vector<int>", ""],
+		["reset", "bool", "true"]
+	],
+    "KEYVARS" : []
+},
+
+
+"Silence" : 
+{
+    "DESC" : "silence layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	],
+    "KEYVARS" : []
+},
+
+
+"Recall" : 
+{
+    "DESC" : "recall layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["numClasses", "int", "2"],
+		["confidence", "float", "0.5"],
+		["targetClass", "int", "1"],
+        ["mean", "std::vector<float>", ""],
+        ["outputPath", "std::string", "\"\""]
+	],
+    "KEYVARS" : []
+},
+
+"AnnotationData" : 
+{
+    "DESC" : "annotation data layer",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+	    ["imageHeight", "uint32_t", "300"],
+		["imageWidth", "uint32_t", "300"],
+		["imageSetPath", "std::string", "\"\""],
+		["baseDataPath", "std::string", "\"\""],
+		["labelMapPath", "std::string", "\"\""],
+		["shuffle", "bool", "false"],
+		["flip", "bool", "false"],
+		["live", "bool", "false"]
+	],
+		"KEYVARS" : []
+},
+
+"AnnotatedData" : 
+{
+    "DESC" : "annotated data layer",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["dataSetName", "std::string", "\"\""],
+		["dataTransformParam", "DataTransformParam", "{}",
+			[
+				["scale", "float"],
+				["mirror", "bool"],
+				["mean", "std::vector<float>"],
+				["cropSize", "int"],
+				["cropH", "int"],
+				["cropW", "int"]
+			]
+		],
+		["resizeParam", "ResizeParam", "{}",
+			[
+				["prob", "float"],
+				["resizeMode", "ResizeMode"],
+				["height", "uint32_t"],
+				["width", "uint32_t"],
+				["heightScale", "uint32_t"],
+				["widthScale", "uint32_t"],
+				["padMode", "PadMode"],
+				["padValue", "std::vector<float>"],
+				["interpMode0", "InterpMode"],
+				["interpMode1", "InterpMode"],
+				["interpMode2", "InterpMode"],
+				["interpMode3", "InterpMode"],
+				["interpMode4", "InterpMode"]
+			]
+		],
+		["distortParam", "DistortionParam", "{}",
+			[
+				["brightnessProb", "float"],
+				["brightnessDelta", "float"],
+				["contrastProb", "float"],
+				["contrastLower", "float"],
+				["contrastUpper", "float"],
+				["hueProb", "float"],
+				["hueDelta", "float"],
+				["saturationProb", "float"],
+				["saturationLower", "float"],
+				["saturationUpper", "float"],
+				["randomOrderProb", "float"]
+			]
+		],
+		["expandParam", "ExpansionParam", "{}",
+			[
+				["prob", "float"],
+				["maxExpandRatio", "float"]
+			]
+		],
+		["noiseParam", "NoiseParam", "{}",
+			[
+				["prob", "float"],
+				["histEq", "bool"],
+				["inverse", "bool"],
+				["decolorize", "bool"],
+				["gaussBlur", "bool"],
+				["jpeg", "float"],
+				["posterize", "bool"],
+				["erode", "bool"],
+				["clahe", "bool"],
+				["convertToHSV", "bool"],
+				["convertToLAB", "bool"]
+			]
+		],
+		["emitConstraint", "EmitConstraint", "{}",
+			[
+				["emitType", "EmitType"],
+				["emitOverlap", "float"]
+			]
+		],
+		["batchSampler0", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler1", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler2", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler3", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler4", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler5", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler6", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler7", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler8", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler9", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["labelMapFile", "std::string", "\"\""],
+		["annoType", "AnnotationType", "AnnotationType::ANNO_NONE"]
+	],
+		"KEYVARS" : []
+},
+
+"AnnotatedLiveData" : 
+{
+    "DESC" : "annotated live data layer",
+    "PARENT" : "Input",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["dataSetName", "std::string", "\"\""],
+		["dataTransformParam", "DataTransformParam", "{}",
+			[
+				["scale", "float"],
+				["mirror", "bool"],
+				["mean", "std::vector<float>"],
+				["cropSize", "int"],
+				["cropH", "int"],
+				["cropW", "int"]
+			]
+		],
+		["resizeParam", "ResizeParam", "{}",
+			[
+				["prob", "float"],
+				["resizeMode", "ResizeMode"],
+				["height", "uint32_t"],
+				["width", "uint32_t"],
+				["heightScale", "uint32_t"],
+				["widthScale", "uint32_t"],
+				["padMode", "PadMode"],
+				["padValue", "std::vector<float>"],
+				["interpMode0", "InterpMode"],
+				["interpMode1", "InterpMode"],
+				["interpMode2", "InterpMode"],
+				["interpMode3", "InterpMode"],
+				["interpMode4", "InterpMode"]
+			]
+		],
+		["distortParam", "DistortionParam", "{}",
+			[
+				["brightnessProb", "float"],
+				["brightnessDelta", "float"],
+				["contrastProb", "float"],
+				["contrastLower", "float"],
+				["contrastUpper", "float"],
+				["hueProb", "float"],
+				["hueDelta", "float"],
+				["saturationProb", "float"],
+				["saturationLower", "float"],
+				["saturationUpper", "float"],
+				["randomOrderProb", "float"]
+			]
+		],
+		["expandParam", "ExpansionParam", "{}",
+			[
+				["prob", "float"],
+				["maxExpandRatio", "float"]
+			]
+		],
+		["noiseParam", "NoiseParam", "{}",
+			[
+				["prob", "float"],
+				["histEq", "bool"],
+				["inverse", "bool"],
+				["decolorize", "bool"],
+				["gaussBlur", "bool"],
+				["jpeg", "float"],
+				["posterize", "bool"],
+				["erode", "bool"],
+				["clahe", "bool"],
+				["convertToHSV", "bool"],
+				["convertToLAB", "bool"]
+			]
+		],
+		["emitConstraint", "EmitConstraint", "{}",
+			[
+				["emitType", "EmitType"],
+				["emitOverlap", "float"]
+			]
+		],
+		["batchSampler0", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler1", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler2", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler3", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler4", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler5", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler6", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler7", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler8", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["batchSampler9", "BatchSampler", "{true, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 100}",
+			[
+				["useOriginalImage", "bool"],
+				["minScale", "float"],
+				["maxScale", "float"],
+				["minAspectRatio", "float"],
+				["maxAspectRatio", "float"],
+				["minJaccardOverlap", "float"],
+				["maxJaccardOverlap", "float"],
+				["minSampleCoverage", "float"],
+				["maxSampleCoverage", "float"],
+				["minObjectCoverage", "float"],
+				["maxObjectCoverage", "float"],
+				["maxSample", "uint32_t"],
+				["maxTrials", "uint32_t"]
+			]
+		],
+		["labelMapFile", "std::string", "\"\""],
+		["annoType", "AnnotationType", "AnnotationType::ANNO_NONE"],
+		["camIndex", "int", "0"],
+		["camResWidth", "int", "1280"],
+		["camResHeight", "int", "720"]
+
+
+	],
+		"KEYVARS" : []
+},
+"Normalize" : 
+{
+    "DESC" : "normalize layer",
+    "PARENT" : "Learnable",
+    "LEVEL" : 2,
+    "LEARN" : 2,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["acrossSpatial", "bool", "true"],
+		["scaleFiller", "param_filler<float>", "{ParamFillerType::Constant, 0.0, 0.0, 1.0}",
+			[
+				["type", "ParamFillerType"],
+				["value", "double"],
+				["mean", "double"],
+				["std", "double"]
+			]
+		],
+		["channelShared", "bool", "true"],
+		["eps", "float", "1e-10"]
+	],
+    "KEYVARS" : []
+},
+
+"Permute" : 
+{
+    "DESC" : "permute layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["order", "std::vector<uint32_t>", ""]
+	],
+    "KEYVARS" : []
+},
+
+"Flatten" : 
+{
+    "DESC" : "flatten layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["axis", "int", "1"],
+		["endAxis", "int", "3"]
+	],
+    "KEYVARS" : []
+},
+
+"PriorBox" : 
+{
+    "DESC" : "prior box layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["minSize", "std::vector<float>", ""],
+		["maxSize", "std::vector<float>", ""],
+		["aspectRatio", "std::vector<float>", ""],
+		["flip", "bool", "true"],
+		["clip", "bool", "false"],
+		["variance", "std::vector<float>", ""],
+		["imgSize", "int", "-1"],
+		["imgH", "int", "-1"],
+		["imgW", "int", "-1"],
+		["step", "float", "-1.0"],
+		["stepH", "float", "-1.0"],
+		["stepW", "float", "-1.0"],
+		["offset", "float", "0.5"]
+	],
+    "KEYVARS" : []
+},
+
+"Concat" : 
+{
+    "DESC" : "concat layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["axis", "int", "1"],
+		["concatDim", "uint32_t", "1"]
+	],
+    "KEYVARS" : []
+},
+
+"MultiBoxLoss" :
+{
+    "DESC" : "multi box loss layer",
+    "PARENT" : "Loss",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" :
+	[
+		["locLossType", "LocLossType", "LocLossType::SMOOTH_L1"],
+		["confLossType", "ConfLossType", "ConfLossType::SOFTMAX"],
+		["locWeight", "float", "1.0"],
+		["numClasses", "uint32_t", "0"],
+		["shareLocation", "bool", "true"],
+		["matchType", "MatchType", "MatchType::PER_PREDICTION"],
+		["overlapThreshold", "float", "0.5"],
+		["usePriorForMatching", "bool", "true"],
+		["backgroundLabelId", "uint32_t", "0"],
+		["useDifficultGt", "bool", "true"],
+		["doNegMining", "bool", "false"],
+		["negPosRatio", "float", "3.0"],
+		["negOverlap", "float", "0.5"],
+		["codeType", "CodeType", "CodeType::CORNER"],
+		["encodeVarianceInTarget", "bool", "false"],
+		["mapObjectToAgnostic", "bool", "false"],
+		["ignoreCrossBoundaryBBox", "bool", "false"],
+		["bpInside", "bool", "false"],
+		["miningType", "MiningType", "MiningType::MAX_NEGATIVE"],
+		["nmsParam", "NonMaximumSuppressionParam", "{0.3, 0, 1.0}", 
+			[
+				["nmsThreshold", "float"],
+				["topK", "int"],
+				["eta", "float"]
+			]
+		],
+		["sampleSize", "int", "64"],
+		["usePriorForNMS", "bool", "false"]
+	],
+    "KEYVARS" : []
+},
+
+"DetectionOutput" : 
+{
+    "DESC" : "detection output layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["numClasses", "uint32_t", "0"],
+		["shareLocation", "bool", "true"],
+		["backgroundLabelId", "int", "0"],
+		["nmsParam", "NonMaximumSuppressionParam", "{0.3, 0, 1.0}", 
+			[
+				["nmsThreshold", "float"],
+				["topK", "int"],
+				["eta", "float"]
+			]
+		],
+		["saveOutputParam", "SaveOutputParam", "{\"\", \"\", \"\", \"\", \"\", 0}",
+			[
+				["outputDirectory", "std::string"],
+				["outputNamePrefix", "std::string"],
+				["outputFormat", "std::string"],
+				["labelMapFile", "std::string"],
+				["nameSizeFile", "std::string"],
+				["numTestImage", "int"]
+			]
+		],
+
+		["resizeParam", "ResizeParam", "{}",
+			[
+				["prob", "float"],
+				["resizeMode", "ResizeMode"],
+				["height", "uint32_t"],
+				["width", "uint32_t"],
+				["heightScale", "uint32_t"],
+				["widthScale", "uint32_t"],
+				["padMode", "PadMode"],
+				["padValue", "std::vector<float>"],
+				["interpMode0", "InterpMode"],
+				["interpMode1", "InterpMode"],
+				["interpMode2", "InterpMode"],
+				["interpMode3", "InterpMode"],
+				["interpMode4", "InterpMode"]
+			]
+		],
+		["codeType", "CodeType", "CodeType::CORNER"],
+		["varianceEncodedInTarget", "bool", "false"],
+		["keepTopK", "int", "-1"],
+		["confidenceThreshold", "float", "0.0"],
+		["visualize", "bool", "false"],
+		["visualizeThreshold", "float", "0.0"],
+		["saveFile", "std::string", "\"\""]
+	],
+    "KEYVARS" : []
+},
+
+"DetectionOutputLive" :
+{
+    "DESC" : "detection output live layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["numClasses", "uint32_t", "0"],
+		["shareLocation", "bool", "true"],
+		["backgroundLabelId", "int", "0"],
+		["nmsParam", "NonMaximumSuppressionParam", "{0.3, 0, 1.0}", 
+			[
+				["nmsThreshold", "float"],
+				["topK", "int"],
+				["eta", "float"]
+			]
+		],
+		["saveOutputParam", "SaveOutputParam", "{\"\", \"\", \"\", \"\", \"\", 0}",
+			[
+				["outputDirectory", "std::string"],
+				["outputNamePrefix", "std::string"],
+				["outputFormat", "std::string"],
+				["labelMapFile", "std::string"],
+				["nameSizeFile", "std::string"],
+				["numTestImage", "int"]
+			]
+		],
+
+		["resizeParam", "ResizeParam", "{}",
+			[
+				["prob", "float"],
+				["resizeMode", "ResizeMode"],
+				["height", "uint32_t"],
+				["width", "uint32_t"],
+				["heightScale", "uint32_t"],
+				["widthScale", "uint32_t"],
+				["padMode", "PadMode"],
+				["padValue", "std::vector<float>"],
+				["interpMode0", "InterpMode"],
+				["interpMode1", "InterpMode"],
+				["interpMode2", "InterpMode"],
+				["interpMode3", "InterpMode"],
+				["interpMode4", "InterpMode"]
+			]
+		],
+		["codeType", "CodeType", "CodeType::CORNER"],
+		["varianceEncodedInTarget", "bool", "false"],
+		["keepTopK", "int", "-1"],
+		["confidenceThreshold", "float", "0.0"],
+		["visualize", "bool", "false"],
+		["visualizeThreshold", "float", "0.0"],
+		["saveFile", "std::string", "\"\""],
+		["wtThresh", "float", "0.3"],
+		["woThresh", "float", "0.1"],
+		["woMargin", "float", "0.05"],
+		["woRand", "int", "50"]
+	],
+    "KEYVARS" : []
+},
+
+"DetectionEvaluate" : 
+{
+    "DESC" : "detection evaluate layer",
+    "PARENT" : "Measure",
+    "LEVEL" : 2,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["numClasses", "uint32_t", "0"],
+		["backgroundLabelId", "int", "0"],
+		["overlapThreshold", "float", "0.5"],
+		["evaluateDifficultGt", "bool", "true"],
+		["nameSizeFile", "std::string", "\"\""],
+		["apVersion", "std::string", "\"Integral\""],
+		["resizeParam", "ResizeParam", "{}",
+			[
+				["prob", "float"],
+				["resizeMode", "ResizeMode"],
+				["height", "uint32_t"],
+				["width", "uint32_t"],
+				["heightScale", "uint32_t"],
+				["widthScale", "uint32_t"],
+				["padMode", "PadMode"],
+				["padValue", "std::vector<float>"],
+				["interpMode0", "InterpMode"],
+				["interpMode1", "InterpMode"],
+				["interpMode2", "InterpMode"],
+				["interpMode3", "InterpMode"],
+				["interpMode4", "InterpMode"]
+			]
+		]
+	],
+    "KEYVARS" : []
+},
+
+"GlobalPooling" : 
+{
+    "DESC" : "global pooling layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : [],
+	"KEYVARS" : []
+},
+
+"ClsOutfile" : 
+{
+    "DESC" : "classification output file layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		["numClasses", "uint32_t", "0"],
+		["dataSetFile", "std::string", "\"\""],
+		["outFilePath", "std::string", "\"\""]
+	],
+    "KEYVARS" : []
+},
+
+"DataAugmentation" : 
+{
+    "DESC" : "Data Augmentation layer",
+    "PARENT" : "Base",
+    "LEVEL" : 1,
+    "LEARN" : 0,
+    "PROPDOWN" : [],
+    "VARS" : 
+	[
+		
+		["fliplr", "AugmentationParam", "{0.0}",
+			[
+				["probability", "float"]
+			]
+		],
+		["flipud", "AugmentationParam", "{0.0}",
+			[
+				["probability", "float"]
+			]
+		],
+		["scale", "AugmentationParam", "{0.0}",
+			[
+				["probability", "float"],
+				["x", "std::vector<float>"],
+				["y", "std::vector<float>"]
+			]
+		],
+		["rotation", "AugmentationParam", "{0.0}",
+			[
+				["probability", "float"],
+				["angle", "std::vector<float>"]
+			]
+		],
+		["translate", "AugmentationParam", "{0.0}",
+			[
+				["probability", "float"],
+				["x", "std::vector<float>"],
+				["y", "std::vector<float>"]
+			]
+		],
+		["shear", "AugmentationParam", "{0.0}",
+			[
+				["probability", "float"],
+				["angle", "std::vector<float>"]
+			]
+		],
+		["filtering", "AugmentationParam", "{0.0}",
+			[
+				["probability", "float"],
+				["filterType", "std::string"],
+				["kernelSize", "std::vector<int>"],
+				["sharpen", "std::vector<float>"]
+			]
+		],
+		["noise", "AugmentationParam", "{0.0}",
+			[
+				["probability", "float"],
+				["noiseType", "std::string"],
+				["std", "float"],
+				["mean", "float"],
+				["amount", "float"],
+				["min_max", "std::vector<float>"]
+			]
+		],
+		["interpolation", "std::string", "\"linear\""],
+		["fillMode", "std::string", "\"\""],
+		["filled", "float", "0.0"]
+
+	],
+    "KEYVARS" : []
+}
+
+}

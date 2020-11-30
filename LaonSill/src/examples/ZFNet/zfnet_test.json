@@ -1,0 +1,284 @@
+{
+	"layers" :
+	[
+		{
+	        "name" : "data",
+	        "layer" : "DataInput",
+	        "id" : 0,
+	        "output" : ["data", "label"],
+	        "source" : "$(LAONSILL_HOME)/data/sdf/ilsvrc12_val_224px/",
+			"dataTransformParam.mean" : [172.49, 172.94, 179.25],
+			"resizeParam.height" : 227,
+			"resizeParam.width" : 227
+	    },
+
+		{
+			"name" : "conv1",
+			"layer" : "Conv",
+			"id" : 10,
+			"input" : ["data"],
+			"output" : ["conv1"],
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 7,
+			"filterDim.channels" : 3,
+			"filterDim.filters" : 96,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 2,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+		{
+			"name" : "relu1",
+			"layer" : "Relu",
+			"id" : 20,
+			"input" : ["conv1"],
+			"output" : ["conv1"]
+		},
+
+		{
+			"name" : "pool1",
+			"layer" : "Pooling",
+			"id" : 25,
+			"input" : ["conv1"],
+			"output" : ["pool1"],
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 2,
+			"poolingType" : "Max"
+		},
+
+		{
+			"name" : "conv2",
+			"layer" : "Conv",
+			"id" : 30,
+			"input" : ["pool1"],
+			"output" : ["conv2"],
+			"filterDim.rows" : 5,
+			"filterDim.cols" : 5,
+			"filterDim.channels" : 96,
+			"filterDim.filters" : 256,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 2,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+		{
+			"name" : "relu2",
+			"layer" : "Relu",
+			"id" : 40,
+			"input" : ["conv2"],
+			"output" : ["conv2"]
+		},
+
+		{
+			"name" : "pool2",
+			"layer" : "Pooling",
+			"id" : 50,
+			"input" : ["conv2"],
+			"output" : ["pool2"],
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 2,
+			"poolingType" : "Max"
+		},
+
+		{
+			"name" : "conv3",
+			"layer" : "Conv",
+			"id" : 60,
+			"input" : ["pool2"],
+			"output" : ["conv3"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 384,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+		{
+			"name" : "relu3",
+			"layer" : "Relu",
+			"id" : 70,
+			"input" : ["conv3"],
+			"output" : ["conv3"]
+		},
+
+		{
+			"name" : "conv4",
+			"layer" : "Conv",
+			"id" : 80,
+			"input" : ["conv3"],
+			"output" : ["conv4"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 384,
+			"filterDim.filters" : 384,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+		{
+			"name" : "relu4",
+			"layer" : "Relu",
+			"id" : 90,
+			"input" : ["conv4"],
+			"output" : ["conv4"]
+		},
+		
+		{
+			"name" : "conv5",
+			"layer" : "Conv",
+			"id" : 100,
+			"input" : ["conv4"],
+			"output" : ["conv5"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 384,
+			"filterDim.filters" : 256,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+		{
+			"name" : "relu5",
+			"layer" : "Relu",
+			"id" : 110,
+			"input" : ["conv5"],
+			"output" : ["conv5"]
+		},
+
+		{
+			"name" : "pool5",
+			"layer" : "Pooling",
+			"id" : 120,
+			"input" : ["conv5"],
+			"output" : ["pool5"],
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 2,
+			"poolingType" : "Max"
+		},
+
+
+		{
+			"name" : "fc6",
+			"layer" : "FullyConnected",
+			"id" : 130,
+			"input" : ["pool5"],
+			"output" : ["fc6"],
+			"nOut" : 4096,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2		
+		},
+
+		{
+			"name" : "relu6",
+			"layer" : "Relu",
+			"id" : 140,
+			"input" : ["fc6"],
+			"output" : ["fc6"]
+		},
+
+		{
+			"name" : "fc7",
+			"layer" : "FullyConnected",
+			"id" : 150,
+			"input" : ["fc6"],
+			"output" : ["fc7"],
+			"nOut" : 4096,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2	
+		},
+
+		{
+			"name" : "relu7",
+			"layer" : "Relu",
+			"id" : 160,
+			"input" : ["fc7"],
+			"output" : ["fc7"]
+		},
+
+		{
+			"name" : "fc8",
+			"layer" : "FullyConnected",
+			"id" : 180,
+			"input" : ["fc7"],
+			"output" : ["fc8"],
+			"nOut" : 1000,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+		
+
+        {
+            "name": "accuracy", 
+            "layer": "Accuracy", 
+            "id": 200, 
+            "input": ["fc8", "label"], 
+            "output": ["accuracy"], 
+            "propDown": [false, false], 
+            "topK": 5, 
+            "axis": 2
+        }
+	],
+
+	"configs" :
+	{
+		"batchSize" : 256,
+		"epochs" : 1, 
+	    "loadPath" : "$(LAONSILL_HOME)/param/ZFNET_205400.param",
+		"status" : "Test"
+	}
+}

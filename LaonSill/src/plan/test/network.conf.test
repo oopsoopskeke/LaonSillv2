@@ -1,0 +1,74 @@
+{
+    "layers" :
+    [
+        {
+            "name" : "input",
+            "layer" : "ILSVRCInput",
+            "id" : 0,
+            "output" : ["data", "label"],
+            "imageDir" : "/data/ilsvrc12_train",
+            "resizeImage" : true,
+            "resizedImageRow" : 224,
+            "resizedImageCol" : 224
+        },
+
+        {
+            "name" : "conv1",
+            "layer" : "Conv",
+            "id" : 1,
+            "input" : ["data"],
+            "output" : ["conv1"],
+            "filterDim.rows" : 7,
+            "filterDim.cols" : 7,
+            "filterDim.channels" : 3,
+            "filterDim.filters" : 4,
+            "filterDim.stride" : 4,
+            "weightUpdateParam.lr_mult" : 2.0
+        },
+
+        {
+            "name" : "relu1",
+            "layer" : "Relu",
+            "id" : 2,
+            "input" : ["conv1"],
+            "output" : ["conv1"]
+        },
+
+        {
+            "name" : "fc1",
+            "layer" : "FullyConnected",
+            "id" : 3,
+            "input" : ["conv1"],
+            "output" : ["fc1"],
+            "nOut" : 1000,
+            "weightFiller.type" : "Gaussian"
+        },
+
+        {
+            "name" : "softmax",
+            "layer" : "SoftmaxWithLoss",
+            "id" : 6,
+            "input" : ["fc1", "label"],
+            "output" : ["loss"],
+            "innerLayer" : 
+            [
+                {
+                    "name" : "softmaxInnerLayer",
+                    "id" : 7000,
+                    "layer" : "Softmax",
+                    "input" : ["prob"],
+                    "output" : ["softmaxInnerLayer1"]
+                }
+            ]
+        }
+    ],
+
+    "configs" :
+    {
+        "batchSize" : 4,
+        "epochs" : 4,
+        "lossLayer" : ["softmax"],
+        "gamma" : 0.1,
+        "miniBatch" : 50
+    }
+}

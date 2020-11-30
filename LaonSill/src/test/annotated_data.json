@@ -1,0 +1,88 @@
+{
+	"name" : "data",
+	"layer" : "AnnotatedData",
+	"id" : 0,
+	"output" : ["data", "label"],
+
+	"dataTransformParam.mirror" : true,
+	"dataTransformParam.mean" : [104.0, 117.0, 123.0],
+
+	"resizeParam.prob" : 1.0,
+	"resizeParam.resizeMode" : "WARP",
+	"resizeParam.height" : 300,
+	"resizeParam.width" : 300,
+	"resizeParam.interpMode" : ["LINEAR"],
+
+	"emitConstraint.emitType" : "CENTER",
+
+	"distortParam.brightnessProb" : 1.0,
+	"distortParam.brightnessDelta" : 32.0,
+	"distortParam.contrastProb" : 1.0,
+	"distortParam.contrastLower" : 0.5,
+	"distortParam.contrastUpper" : 1.5,
+	"distortParam.hueProb" : 1.0,
+	"distortParam.hueDelta" : 18.0,
+	"distortParam.saturationProb" : 1.0,
+	"distortParam.saturationLower" : 0.5,
+	"distortParam.saturationUpper" : 1.5,
+	"distortParam.randomOrderProb" : 0.0,
+
+	"expandParam.prob" : 1.0,
+	"expandParam.maxExpandRatio" : 4.0,
+
+	"source" : "/home/jkim/Dev/SOOOA_HOME/data/sdf/voc2007_train_sdf/",
+
+	"batchSampler0.maxSample" : 1,
+	"batchSampler0.maxTrials" : 1,
+
+	"batchSampler1.minScale" : 0.300000011921,
+	"batchSampler1.maxScale" : 1.0,
+	"batchSampler1.minAspectRatio" : 0.5,
+	"batchSampler1.maxAspectRatio" : 2.0,
+	"batchSampler1.minJaccardOverlap" : 0.10000000149,
+	"batchSampler1.maxSample" : 1,
+	"batchSampler1.maxTrials" : 50,
+
+	"batchSampler2.minScale" : 0.300000011921,
+	"batchSampler2.maxScale" : 1.0,
+	"batchSampler2.minAspectRatio" : 0.5,
+	"batchSampler2.maxAspectRatio" : 2.0,
+	"batchSampler2.minJaccardOverlap" : 0.300000011921,
+	"batchSampler2.maxSample" : 1,
+	"batchSampler2.maxTrials" : 50,
+
+	"batchSampler3.minScale" : 0.300000011921,
+	"batchSampler3.maxScale" : 1.0,
+	"batchSampler3.minAspectRatio" : 0.5,
+	"batchSampler3.maxAspectRatio" : 2.0,
+	"batchSampler3.minJaccardOverlap" : 0.5,
+	"batchSampler3.maxSample" : 1,
+	"batchSampler3.maxTrials" : 50,
+
+	"batchSampler4.minScale" : 0.300000011921,
+	"batchSampler4.maxScale" : 1.0,
+	"batchSampler4.minAspectRatio" : 0.5,
+	"batchSampler4.maxAspectRatio" : 2.0,
+	"batchSampler4.minJaccardOverlap" : 0.699999988079,
+	"batchSampler4.maxSample" : 1,
+	"batchSampler4.maxTrials" : 50,
+
+	"batchSampler5.minScale" : 0.300000011921,
+	"batchSampler5.maxScale" : 1.0,
+	"batchSampler5.minAspectRatio" : 0.5,
+	"batchSampler5.maxAspectRatio" : 2.0,
+	"batchSampler5.minJaccardOverlap" : 0.899999976158,
+	"batchSampler5.maxSample" : 1,
+	"batchSampler5.maxTrials" : 50,
+
+	"batchSampler6.minScale" : 0.300000011921,
+	"batchSampler6.maxScale" : 1.0,
+	"batchSampler6.minAspectRatio" : 0.5,
+	"batchSampler6.maxAspectRatio" : 2.0,
+	"batchSampler6.minJaccardOverlap" : 1.0,
+	"batchSampler6.maxSample" : 1,
+	"batchSampler6.maxTrials" : 50,
+
+	"labelMapFile" : "/home/jkim/Dev/git/soooa/SoooA/src/examples/SSD/labelmap_voc.prototxt",
+	"annoType" : "BBOX"
+}

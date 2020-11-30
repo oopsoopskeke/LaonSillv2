@@ -1,0 +1,125 @@
+[ Install LaonSill on Centos7 ]
+
+(1) Centos7 설치
+     "개발 및 창조를 위한 워크스테이션" 선택
+         "추가개발", "호환성 라이브러리", "개발용도구", "플랫폼개발", "Python" 추가 선택
+
+(2) CUDA, CUDNN 설치
+ (2-1) https://developer.nvidia.com/cuda-toolkit-archive에서 "CUDA Toolkit 8.0 GA2" 선택 
+  => 아래의 옵션 선택 후 Base Installer와 Patch 2 다운로드
+   Operatting System: Linux 
+   Architecture: x86_64
+   Distribution: CentOS
+   Version: 7
+   Installer Type: runfile (local)
+
+ (2-2) nouveau 비활성화
+ $ sudo vi /etc/modprobe.d/blacklist-nouveau.conf
+   [blacklist-nouveau.conf]
+   blacklist nouveau
+   options nouveau modeset=0
+ $ sudo dracut --force
+
+ (2-3) 콘솔 모드로 부팅을 하게 부트모드를 변경한 후에 재부팅
+ $ sudo systemctl set-default multi-user.target
+ $ sudo reboot
+
+ (2-4) CUDA설치
+ $ sudo sh cuda_8.0.61_375.26_linux.run
+   => 인스톨러 진행 과정중에 OPENGL, nvidia-xconfig 설정은 No로 나머지는 모두 Yes 혹은 default 
+      값으로 선택한다.
+ $ sudo sh cuda_8.0.61.2_linux-run
+   => 패치 적용
+   => accept 및 default 값으로 선택한다.
+
+ (2-5) GUI 모드로 부팅을 하게 부트모드를 변경한 후에 재부팅
+ $ sudo systemctl set-default graphical.target
+ $ sudo reboot
+
+ (2-6) CUDNN 6.0 다운로드 (https://developer.nvidia.com/cudnn)
+  => "Download" 선택 (Join 후 Login 필요)
+  => "Download cuDNN v6.0 (April 27, 2017), for CUDA 8.0" 선택
+  => "cuDNN v6.0 Library for Linux" 선택하여 다운로드
+
+ (2-7) CUDNN 압축을 풀고, include, lib을 cuda에 덮어씌운다.
+ $ tar zxvf cudnn-8.0-linux-x86-v6.0.tgz
+ $ sudo cp cuda/include/* /usr/local/cuda/include/.
+ $ sudo cp -a cuda/lib64/* /usr/local/cuda/lib64/.
+
+ (2-8) device query를 빌드해서 실행하여 정상적인 결과가 나오는지 확인한다.
+ $ cd ~/NVIDIA_CUDA-8.0_Samples/1_Utilities/deviceQuery
+ $ make
+ $ ./deviceQuery
+
+※  참고로 본 내용은 http://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#abstract에도 나와 있습니다.
+
+(3) opencv 설치
+ (3-1) http://docs.opencv.org/2.4/doc/tutorials/introduction/linux_install/linux_install.html를 참고하여 설치
+  $ wget https://github.com/opencv/opencv/archive/2.4.13.3.tar.gz
+  $ tar zxvf 2.4.13.3.tar.gz
+  $ cd opencv-2.4.13.3
+  $ mkdir release
+  $ cd release
+  $ cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+  $ make -j12
+  $ sudo make install
+
+(4) LaonSill 바이너리 (LaonSill_RevXXXXXX.tar.gz) 설치
+ (4-1) $HOME(/root)에 압축을 풀고, 그 위치에 LAONSILL_HOME 환경 변수를 설정한다.
+  $ tar zxvf LaonSill_RevXXXXXX.tar.gz  (XXXXXX : LaonSill Revision Number)
+  $ export LAONSILL_HOME=$HOME/LAONSILL_HOME
+
+ (4-2) laonsill.conf를 자신의 환경에 맞게 수정한다.
+  => $LAONSILL_HOME의 경로에 맞게 수정한다.
+ 
+ (4-3) bin경로와 library경로를 등록한다.
+  $ export PATH=$LAONSILL_HOME/bin:$PATH
+  $ export LD_LIBRARY_PATH=$LAONSILL_HOME/lib:$LD_LIBRARY_PATH
+  $ export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+  $ export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+
+ (4-4) library 경로를 추가한다.
+  $ sudo vi /etc/ld.so.conf
+   [ld.so.conf]
+   /usr/local/lib
+  $ sudo ldconfig
+ 
+ (4-5) LaonSill을 실행한다.
+  $ LaonSillServer -v 
+
+ ※ LaonSill 바이너리 설치 과정중에 설정한 환경 변수들은 .bashrc, .profile등에 저장하여 
+  이후에도 유지할 수 있게 설정하는 것을 권장합니다.
+
+(5) (Optional) 테스트 데이터 (dist.tar.gz) 배포
+ (5-0) 테스트용 적은 수의 샘플 이미지와 SDF 파일 및 학습용 param 파일을 포함하고 있어 처음 설치 후 테스트 진행을 목적으로 배포한다.
+
+ (5-1) $HOME (/root)에 압축을 풀고 데이터를 $LAONSILL_HOME으로 복사한다.
+  $ tar zxvf dist.tar.gz
+  $ cd dist
+  $ ./dist.sh
+
+ (5-2) 결과로 아래의 파일들이 $LAONSILL_HOME의 위치로 배포된다.  
+  => 학습 및 테스트용 SDF 
+  - $LAONSILL_HOME/data/sdf/plantynet_train_0.25
+  - $LAONSILL_HOME/data/sdf/plantynet_test_0.25
+  => SDF 생성용 이미지와 이미지 목록 파일
+  - $LAONSILL_HOME/data/image/black
+  - $LAONSILL_HOME/data/image/white
+  - $LAONSILL_HOME/data/image/train.txt
+  - $LAONSILL_HOME/data/image/test.txt
+  => 학습 및 테스트용 param 파일
+  - $LAONSILL_HOME/param/VGG16_PRE_TRAINED.param
+  - $LAONSILL_HOME/param/VGG16_PLANTYNET_TRAINED.param
+
+ (5-3) 학습 및 테스트 SDF 파일을 생성한다.
+  - $ cd $LAONSILL_HOME
+  - $ ./bin/convert_imageset.py --dataset ./data/image/train.txt --basedir ./data/image --outdir ./data/sdf/plantynet_train_0.25 --shuffle True
+  - $ ./bin/convert_imageset.py --dataset ./data/image/test.txt --basedir ./data/image --outdir ./data/sdf/plantynet_test_0.25 --shuffle False 
+
+ (5-4) 학습 및 테스트를 진행한다.
+  - $ cd $LAONSILL_HOME
+  - $ ./bin/LaonSillServer -f ./network_def/vgg16_plantynet_train.json
+  - $ ./bin/LaonSillServer -f ./network_def/vgg16_plantynet_test.json
+
+
+

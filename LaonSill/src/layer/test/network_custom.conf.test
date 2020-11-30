@@ -1,0 +1,50 @@
+{
+    "layers" :
+    [
+        {
+            "name" : "input",
+            "layer" : "CustomInput",
+            "id" : 0,
+            "output" : ["data", "label"],
+            "inputElemCounts" : [5, 1],
+            "trainDataCount" : 4
+        },
+
+        {
+            "name" : "fc1",
+            "layer" : "FullyConnected",
+            "id" : 3,
+            "input" : ["data"],
+            "output" : ["fc1"],
+            "nOut" : 10,
+            "weightFiller.type" : "Gaussian"
+        },
+
+        {
+            "name" : "softmax",
+            "layer" : "SoftmaxWithLoss",
+            "id" : 6,
+            "input" : ["fc1", "label"],
+            "output" : ["loss"],
+            "innerLayer" : 
+            [
+                {
+                    "name" : "softmaxInnerLayer",
+                    "id" : 7000,
+                    "layer" : "Softmax",
+                    "input" : ["prob"],
+                    "output" : ["softmaxInnerLayer1"]
+                }
+            ]
+        }
+    ],
+
+    "configs" :
+    {
+        "batchSize" : 4,
+        "epochs" : 4,
+        "lossLayer" : ["softmax"],
+        "gamma" : 0.1,
+        "miniBatch" : 0
+    }
+}

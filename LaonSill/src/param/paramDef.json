@@ -1,0 +1,623 @@
+{
+
+"SESS_COUNT" : 
+{
+    "DESC" : "specify session thread count.",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "UINT32",
+    "DEFAULT" : 8 
+},
+
+"JOB_CONSUMER_COUNT" : 
+{
+    "DESC" : "specify job consumer thread count.",
+    "MANDATORY" : false,
+    "MUTABLE" : true,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "UINT32",
+    "DEFAULT" : 8 
+},
+
+"NETWORK_SAVE_DIR" : 
+{
+    "DESC" : "specify network save directory.",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "CHAR(1024)",
+    "DEFAULT" : ""
+},
+
+"STATFILE_OUTPUT_DIR" : 
+{
+    "DESC" : "specify statfile output directory.",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "CHAR(1024)",
+    "DEFAULT" : ""
+},
+
+"COLDLOG_DIR" : 
+{
+    "DESC" : "specify cold log directory. if it is not set, it will set to $LAONSILL_HOME/log.",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "CHAR(1024)",
+    "DEFAULT" : ""
+},
+
+"HOTLOG_DIR" : 
+{
+    "DESC" : "specify hot log directory. if it is not set, it will set to $LAONSILL_HOME/log.",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "CHAR(1024)",
+    "DEFAULT" : ""
+},
+
+"SYSLOG_DIR" : 
+{
+    "DESC" : "specify system log directory. if it is not set, it will set to $LAONSILL_HOME/log.",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "CHAR(1024)",
+    "DEFAULT" : ""
+},
+
+"COLDLOG_LEVEL" : 
+{
+    "DESC" : "specify level of cold log",
+    "MANDATORY" : false,
+    "MUTABLE" : true,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 2
+},
+
+"HOTLOG_BUFFERSIZE" : 
+{
+    "DESC" : "specify buffer size of hot log. Note that total used memory is HOTLOG_BUFFERSIZE * thread count.",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "UINT64",
+    "DEFAULT" : 4194304
+},
+
+"HOTLOG_SLOTSIZE" : 
+{
+    "DESC" : "specify slot size of hot log. It should be least common divisor of HOTLOG_BUFFERSIZE and the greatest common divisor of 512",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "UINT64",
+    "DEFAULT" : 512
+},
+
+"HOTLOG_FLUSH_SLOTCOUNT" : 
+{
+    "DESC" : "specify flushing slot count of hot log.",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "UINT32",
+    "DEFAULT" : 2048
+},
+
+"HOTLOG_FLUSH_CYCLE_MSEC" : 
+{
+    "DESC" : "A Hot Log Flusher flushes regularly. This parameter indicates its cycle time(ms).",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "UINT32",
+    "DEFAULT" : 3000
+},
+
+"SLEEP_WHEN_ASSERTED" : 
+{
+    "DESC" : "This parameter determinces whether to sleep when a assertion occurs",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "BOOL",
+    "DEFAULT" : false
+},
+
+"JOBSCOPE_CLOCKTYPE" : 
+{
+    "DESC" : "specify clocktype of job-scope SPERF module. 0: CLOCK_THREAD_CPUTIME_ID, 1: CLOCK_MONOTONIC, 2: CLOCK_MONOTONIC_COARSE",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 0
+},
+
+"VERSION_MAJOR" : 
+{
+    "DESC" : "specify major version number",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 0
+},
+
+"VERSION_MINOR" : 
+{
+    "DESC" : "specify minor version number",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 1
+},
+
+"VERSION_PATCH" : 
+{
+    "DESC" : "specify minor version number",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 0
+},
+
+"BASE_DATA_DIR" : 
+{
+    "DESC" : "specify base data directory.",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "CHAR(1024)",
+    "DEFAULT" : "/data/train_pack/"
+},
+
+"DQN_REPLAY_MEMORY_ELEM_COUNT" : 
+{
+    "DESC" : "specify elem count of replay memory structure of deep Q network algorithm",
+    "MANDATORY" : false,
+    "MUTABLE" : true,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 50
+},
+
+"BROKER_ADHOC_SESS_STARTS" : 
+{
+    "DESC" : "specify start number of adhoc session of broker module",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 100000 
+},
+
+"BROKER_ADHOC_SESS_COUNT" : 
+{
+    "DESC" : "specify adhoc session count of broker module",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 1000
+},
+
+"GPU_COUNT" : 
+{
+    "DESC" : "specify GPU device count.",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "UINT32",
+    "DEFAULT" : 2 
+},
+
+"IMAGEUTIL_SAVE_DIR" : 
+{
+    "DESC" : "specify image util module's save directory.",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "CHAR(1024)",
+    "DEFAULT" : ""
+},
+
+"PLOTING_OPTION" : 
+{
+    "DESC" : "specify plotting option",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "BOOL",
+    "DEFAULT" : true
+},
+
+"MASTER_NODE" : 
+{
+    "DESC" : "specify master node",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "BOOL",
+    "DEFAULT" : true
+},
+
+"CLUSTER_MODE" : 
+{
+    "DESC" : "specify whether server supports cluster mode or not",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "BOOL",
+    "DEFAULT" : false
+},
+
+"CLUSTER_CONF_PATH" : 
+{
+    "DESC" : "specify cluster configuration file path.",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "CHAR(1024)",
+    "DEFAULT" : ""
+},
+
+"PLAN_OPT_TEST_MAX_EPOCH_COUNT" : 
+{
+    "DESC" : "specify max epoch count for plan optimizer test module.",
+    "MANDATORY" : false,
+    "MUTABLE" : true,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "UINT32",
+    "DEFAULT" : 1 
+},
+
+"PLAN_OPT_TEST_MAX_MINIBATCH_COUNT" : 
+{
+    "DESC" : "specify max mini-batch count for plan optimizer test module.",
+    "MANDATORY" : false,
+    "MUTABLE" : true,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "UINT32",
+    "DEFAULT" : 4 
+},
+
+"NODE_ID" : 
+{
+    "DESC" : "specify node ID.",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 0 
+},
+
+"PRINT_RUNLAYER_LOG" : 
+{
+    "DESC" : "specify whether server prints log of the run layer function or not",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "BOOL",
+    "DEFAULT" : false
+},
+
+"PRINT_PARAMLOG_AFTER_NETWORKLOAD" : 
+{
+    "DESC" : "specify whether server prints edge log after loading network or not",
+    "MANDATORY" : false,
+    "MUTABLE" : true,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "BOOL",
+    "DEFAULT" : false
+},
+
+"PRINT_PARAMLOG_AFTER_NETWORKSAVE" : 
+{
+    "DESC" : "specify whether server prints edge log after saving network or not",
+    "MANDATORY" : false,
+    "MUTABLE" : true,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "BOOL",
+    "DEFAULT" : false
+},
+
+"COUT_PRECISION" : 
+{
+    "DESC" : "specify cout precision",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 7 
+},
+
+"PRODUCER_PERIODIC_CHECK_TIME_MS" : 
+{
+    "DESC" : "it is the period of time the producer checks the job",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 3000 
+},
+
+"TASK_CONSUMER_PERIODIC_CHECK_TIME_MS" : 
+{
+    "DESC" : "it is the period of time the task consumer checks the job",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 1000 
+},
+
+"JOB_CONSUMER_PERIODIC_CHECK_TIME_MS" : 
+{
+    "DESC" : "it is the period of time the job consumer checks the job",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 1000 
+},
+
+"SENDER_PERIODIC_CHECK_TIME_MS" : 
+{
+    "DESC" : "it is the period of time the sender checks the job",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 1000 
+},
+
+"RECEIVER_PERIODIC_CHECK_TIME_MS" : 
+{
+    "DESC" : "it is the period of time the receiver checks the job",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 1000 
+},
+
+"TASKPOOL_ALLOCTENSOR_ELEM_COUNT" : 
+{
+    "DESC" : "specify element count of alloc tensor of the task pool",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 1000 
+},
+
+"TASKPOOL_UPDATETENSOR_ELEM_COUNT" : 
+{
+    "DESC" : "specify element count of update tensor of the task pool",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 1000 
+},
+
+"TASKPOOL_RUNPLAN_ELEM_COUNT" : 
+{
+    "DESC" : "specify element count of run plan of the task pool",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 1000 
+},
+
+"TASKPOOL_ALLOCLAYER_ELEM_COUNT" : 
+{
+    "DESC" : "specify element count of alloc layer of the task pool",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 1000 
+},
+
+"PRINT_LAYERFUNC_LOG" : 
+{
+    "DESC" : "specify whether server prints log of layer func module or not",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "BOOL",
+    "DEFAULT" : false
+},
+
+"COMMUNICATOR_REUSE_ADDR" : 
+{
+    "DESC" : "specify whether server reuse address or not",
+    "MANDATORY" : false,
+    "MUTABLE" : true,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "BOOL",
+    "DEFAULT" : false
+},
+
+"COMMUNICATOR_LISTENER_PORT" :
+{
+    "DESC" : "specify listener port of LaonSill server",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 20088
+},
+
+"SPLITLAYER_START_LAYERID" : 
+{
+    "DESC" : "specify start layer ID of split layer",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 100000 
+},
+
+"USE_INPUT_DATA_PROVIDER" : 
+{
+    "DESC" : "specify whether server uses data provider or not",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "BOOL",
+    "DEFAULT" : false
+},
+
+"INPUT_DATA_PROVIDER_ELEM_COUNT" :
+{
+    "DESC" : "specify elem count of input data provider",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 1024
+},
+
+"INPUT_DATA_PROVIDER_BLOCKING" : 
+{
+    "DESC" : "specify whether to wait until data is available",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "BOOL",
+    "DEFAULT" : false
+},
+
+"INPUT_DATA_PROVIDER_CALLER_RETRY_TIME_USEC" : 
+{
+    "DESC" : "specify retry time of caller for input data provider in microseconds",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "UINT64",
+    "DEFAULT" : 200000
+},
+
+"INPUT_DATA_PROVIDER_CALLER_WAIT_TIME_MS" : 
+{
+    "DESC" : "specify wait time of caller for input data provider in miliseconds ",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 200
+},
+
+"INPUT_DATA_PROVIDER_WAIT_TIME_MS" : 
+{
+    "DESC" : "specify wait time of input data provider in miliseconds ",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 500
+},
+
+"INPUT_DATA_PROVIDER_MEASURE_PERFORMANCE" : 
+{
+    "DESC" : "specify whether to measure performance of input data provider module",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "BOOL",
+    "DEFAULT" : false
+},
+
+"STOP_TRAIN_WHEN_GOT_NAN_LOSS" : 
+{
+    "DESC" : "specify whether to stop training when NaN loss value is happened or not",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "BOOL",
+    "DEFAULT" : false
+},
+
+"MEASURE_QUEUE_DEFAULT_SIZE" : 
+{
+    "DESC" : "specify default queue size of measure entry module",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 10000 
+},
+
+"USE_MEMORY_DUMP_WHEN_NETWORK_DESTROYED" : 
+{
+    "DESC" : "specify whether to use memory dump when the network is destroyed",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "BOOL",
+    "DEFAULT" : false
+},
+
+"CUDA_MEMPAGE_SIZE" : 
+{
+    "DESC" : "specify default memory page size of CUDA",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "INT32",
+    "DEFAULT" : 2097152
+},
+
+"UPDATER_RESET_GRADIENT" : 
+{
+    "DESC" : "specify whether to reset gradient or not",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "BOOL",
+    "DEFAULT" : true 
+},
+
+"DATAREADER_USE_PEEK_INSTEADOF_GET" : 
+{
+    "DESC" : "specify whether to use peek func instead of get func in the data reader module",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "BOOL",
+    "DEFAULT" : false 
+},
+
+"NETWORK_ADHOC_REFCOUNT_CHECKTIME_USEC" : 
+{
+    "DESC" : "specify the time(micro sec) to check adhoc reference count at network shutdown",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "UINT32",
+    "DEFAULT" : 100000 
+},
+
+"MEASURE_REFCOUNT_CHECKTIME_USEC" : 
+{
+    "DESC" : "specify the time(micro sec) to check reference count of measure module at network shutdown",
+    "MANDATORY" : false,
+    "MUTABLE" : false,
+    "SCOPE" : "SYSTEM",
+    "TYPE" : "UINT32",
+    "DEFAULT" : 100000 
+}
+
+}

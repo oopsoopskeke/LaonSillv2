@@ -1,0 +1,308 @@
+{
+
+"mnist_train_sdf" : {
+    "name" : "mnist_train_sdf",
+    "type" : "mnist",
+    "desc" : "mnist train sdf",
+    "build" : false,
+    "dataSetList" : [
+        {
+            "name" : "train",
+            "imageFilePath" : "$LAONSILL_HOME/data/mnist/train-images-idx3-ubyte",
+            "labelFilePath" : "$LAONSILL_HOME/data/mnist/train-labels-idx1-ubyte"
+        }
+    ],
+    "labelMapFilePath" : "$LAONSILL_HOME/resource/labelmap/labelmap_mnist.json",
+    "outFilePath" : "$LAONSILL_HOME/data/sdf/mnist_train_sdf"
+},
+
+"mnist_test_sdf" : {
+    "name" : "mnist_test_sdf",
+    "type" : "mnist",
+    "desc" : "mnist test sdf",
+    "build" : false,
+    "dataSetList" : [
+        {
+            "name" : "test",
+            "imageFilePath" : "$LAONSILL_HOME/data/mnist/t10k-images-idx3-ubyte",
+            "labelFilePath" : "$LAONSILL_HOME/data/mnist/t10k-labels-idx1-ubyte"
+        }
+    ],
+    "labelMapFilePath" : "$LAONSILL_HOME/resource/labelmap/labelmap_mnist.json",
+    "outFilePath" : "$LAONSILL_HOME/data/sdf/mnist_test_sdf"
+},
+
+"ilsvrc12_train_224px" : {
+    "name" : "ilsvrc12_train_224px",
+    "type" : "imageset",
+    "desc" : "ilsvrc12 train 224px",
+    "build" : false,
+    "imageSetList" : [
+        {
+            "name" : "train",
+            "dataSetPath" : "$LAONSILL_HOME/data/ilsvrc12_train/train.txt"
+        }
+    ],
+    "labelMapFilePath" : "$LAONSILL_HOME/resource/labelmap/labelmap_imagenet.json",
+    "outFilePath" : "$LAONSILL_HOME/data/sdf/ilsvrc12_train_224px",
+    "shuffle" : true,
+    "resizeWidth" : 224,
+    "resizeHeight" : 224,
+    "encoded" : false,
+    "encodeType" : "",
+    "basePath" : "$LAONSILL_HOME/data/ilsvrc12_train/images"
+},
+
+"ilsvrc12_val_224px" : {
+    "name" : "ilsvrc12_val_224px",
+    "type" : "imageset",
+    "desc" : "ilsvrc12 val 224px",
+    "build" : false,
+    "imageSetList" : [
+        {
+            "name" : "val",
+            "dataSetPath" : "$LAONSILL_HOME/data/ilsvrc12_val/val.txt"
+        }
+    ],
+    "labelMapFilePath" : "$LAONSILL_HOME/resource/labelmap/labelmap_imagenet.json",
+    "outFilePath" : "$LAONSILL_HOME/data/sdf/ilsvrc12_val_224px",
+    "shuffle" : false,
+    "resizeWidth" : 224,
+    "resizeHeight" : 224,
+    "encoded" : false,
+    "encodeType" : "",
+    "basePath" : "$LAONSILL_HOME/data/ilsvrc12_val/images"
+},
+
+"ilsvrc12_train_320px" : {
+    "name" : "ilsvrc12_train_320px",
+    "type" : "imageset",
+    "desc" : "ilsvrc12 train 320px",
+    "build" : false,
+    "imageSetList" : [
+        {
+            "name" : "train",
+            "dataSetPath" : "$LAONSILL_HOME/data/ilsvrc12_train/train.txt"
+        }
+    ],
+    "labelMapFilePath" : "$LAONSILL_HOME/resource/labelmap/labelmap_imagenet.json",
+    "outFilePath" : "$LAONSILL_HOME/data/sdf/ilsvrc12_train_320px",
+    "shuffle" : true,
+    "resizeWidth" : 320,
+    "resizeHeight" : 320,
+    "encoded" : false,
+    "encodeType" : "",
+    "basePath" : "$LAONSILL_HOME/data/ilsvrc12_train/images"
+},
+
+"ilsvrc12_val_299px" : {
+    "name" : "ilsvrc12_val_299px",
+    "type" : "imageset",
+    "desc" : "ilsvrc12 val 299px",
+    "build" : false,
+    "imageSetList" : [
+        {
+            "name" : "val",
+            "dataSetPath" : "$LAONSILL_HOME/data/ilsvrc12_val/val.txt"
+        }
+    ],
+    "labelMapFilePath" : "$LAONSILL_HOME/resource/labelmap/labelmap_imagenet.json",
+    "outFilePath" : "$LAONSILL_HOME/data/sdf/ilsvrc12_val_299px",
+    "shuffle" : false,
+    "resizeWidth" : 299,
+    "resizeHeight" : 299,
+    "encoded" : false,
+    "encodeType" : "",
+    "basePath" : "$LAONSILL_HOME/data/ilsvrc12_val/images"
+},
+
+"ilsvrc12_val_320px" : {
+    "name" : "ilsvrc12_val_320px",
+    "type" : "imageset",
+    "desc" : "ilsvrc12 val 320px",
+    "build" : false,
+    "imageSetList" : [
+        {
+            "name" : "val",
+            "dataSetPath" : "$LAONSILL_HOME/data/ilsvrc12_val/val.txt"
+        }
+    ],
+    "labelMapFilePath" : "$LAONSILL_HOME/resource/labelmap/labelmap_imagenet.json",
+    "outFilePath" : "$LAONSILL_HOME/data/sdf/ilsvrc12_val_320px",
+    "shuffle" : false,
+    "resizeWidth" : 320,
+    "resizeHeight" : 320,
+    "encoded" : false,
+    "encodeType" : "",
+    "basePath" : "$LAONSILL_HOME/data/ilsvrc12_val/images"
+},
+
+"voc2007_train_sdf" : {
+    "name" : "voc2007_train_sdf",
+    "type" : "annoset",
+    "desc" : "voc2007 train sdf",
+    "build" : false,
+    "imageSetList" : [
+        {
+            "name" : "train",
+            "dataSetPath" : "$LAONSILL_HOME/data/VOCdevkit2007/trainval.txt"
+        },
+    ],
+    "labelMapFilePath" : "$LAONSILL_HOME/resource/labelmap/labelmap_voc.json",
+    "outFilePath" : "$LAONSILL_HOME/data/sdf/voc2007_train_sdf",
+    "basePath" : "$LAONSILL_HOME/data/VOCdevkit2007/VOC2007"
+},
+
+"voc2007_test_sdf" : {
+    "name" : "voc2007_test_sdf",
+    "type" : "annoset",
+    "desc" : "voc2007 test sdf",
+    "build" : false,
+    "imageSetList" : [
+        {
+            "name" : "test",
+            "dataSetPath" : "$LAONSILL_HOME/data/VOCdevkit2007/test.txt"
+        },
+    ],
+    "labelMapFilePath" : "$LAONSILL_HOME/resource/labelmap/labelmap_voc.json",
+    "outFilePath" : "$LAONSILL_HOME/data/sdf/voc2007_test_sdf",
+    "basePath" : "$LAONSILL_HOME/data/VOCdevkit2007/VOC2007"
+},
+
+"voc0712_train_sdf" : {
+    "name" : "voc0712_train_sdf",
+    "type" : "annoset",
+    "desc" : "voc0712 train sdf",
+    "build" : false,
+    "imageSetList" : [
+        {
+            "name" : "train",
+            "dataSetPath" : "$LAONSILL_HOME/data/VOC0712/trainval.txt"
+        },
+    ],
+    "labelMapFilePath" : "$LAONSILL_HOME/resource/labelmap/labelmap_voc.json",
+    "outFilePath" : "$LAONSILL_HOME/data/sdf/voc0712_train_sdf",
+    "basePath" : "$LAONSILL_HOME/data/VOCdevkit"
+},
+
+"voc0712_test_sdf" : {
+    "name" : "voc0712_test_sdf",
+    "type" : "annoset",
+    "desc" : "voc0712 test sdf",
+    "build" : false,
+    "imageSetList" : [
+        {
+            "name" : "test",
+            "dataSetPath" : "$LAONSILL_HOME/data/VOC0712/test.txt"
+        },
+    ],
+    "labelMapFilePath" : "$LAONSILL_HOME/resource/labelmap/labelmap_voc.json",
+    "outFilePath" : "$LAONSILL_HOME/data/sdf/voc0712_test_sdf",
+    "basePath" : "$LAONSILL_HOME/data/VOCdevkit"
+},
+
+"ilsvrc12_train_224px_1000sp" : {
+    "name" : "ilsvrc12_train_224px_1000",
+    "type" : "imageset",
+    "desc" : "ilsvrc12 train 224px 1000",
+    "build" : false,
+    "imageSetList" : [
+        {
+            "name" : "train",
+            "dataSetPath" : "$LAONSILL_HOME/data/ilsvrc12_train/train.txt.1000"
+        }
+    ],
+    "labelMapFilePath" : "$LAONSILL_HOME/resource/labelmap/labelmap_imagenet.json",
+    "outFilePath" : "$LAONSILL_HOME/data/sdf/ilsvrc12_train_224px_1000",
+    "shuffle" : true,
+    "resizeWidth" : 224,
+    "resizeHeight" : 224,
+    "encoded" : false,
+    "encodeType" : "",
+    "basePath" : "$LAONSILL_HOME/data/ilsvrc12_train/images"
+},
+
+"ilsvrc12_train_299px_1000sp" : {
+    "name" : "ilsvrc12_train_299px_1000",
+    "type" : "imageset",
+    "desc" : "ilsvrc12 train 299px 1000",
+    "build" : false,
+    "imageSetList" : [
+        {
+            "name" : "train",
+            "dataSetPath" : "$LAONSILL_HOME/data/ilsvrc12_train/train.txt.1000"
+        }
+    ],
+    "labelMapFilePath" : "$LAONSILL_HOME/resource/labelmap/labelmap_imagenet.json",
+    "outFilePath" : "$LAONSILL_HOME/data/sdf/ilsvrc12_train_299px_1000",
+    "shuffle" : true,
+    "resizeWidth" : 299,
+    "resizeHeight" : 299,
+    "encoded" : false,
+    "encodeType" : "",
+    "basePath" : "$LAONSILL_HOME/data/ilsvrc12_train/images"
+},
+
+"ilsvrc12_train_320px_1000sp" : {
+    "name" : "ilsvrc12_train_320px_1000",
+    "type" : "imageset",
+    "desc" : "ilsvrc12 train 320px 1000",
+    "build" : false,
+    "imageSetList" : [
+        {
+            "name" : "train",
+            "dataSetPath" : "$LAONSILL_HOME/data/ilsvrc12_train/train.txt.1000"
+        }
+    ],
+    "labelMapFilePath" : "$LAONSILL_HOME/resource/labelmap/labelmap_imagenet.json",
+    "outFilePath" : "$LAONSILL_HOME/data/sdf/ilsvrc12_train_320px_1000",
+    "shuffle" : true,
+    "resizeWidth" : 320,
+    "resizeHeight" : 320,
+    "encoded" : false,
+    "encodeType" : "",
+    "basePath" : "$LAONSILL_HOME/data/ilsvrc12_train/images"
+},
+
+"cifar10_train_sdf" : {
+    "name" : "cifar10_train_sdf",
+    "type" : "imageset",
+    "desc" : "cifar10 train sdf",
+    "build" : false,
+    "imageSetList" : [
+        {
+            "name" : "train",
+            "dataSetPath" : "$LAONSILL_HOME/data/cifar10/train.txt"
+        }
+    ],
+    "labelMapFilePath" : "$LAONSILL_HOME/resource/labelmap/labelmap_cifar10.json",
+    "outFilePath" : "$LAONSILL_HOME/data/sdf/cifar10_train_sdf",
+    "shuffle" : false,
+    "encoded" : false,
+    "encodeType" : "",
+    "basePath" : "$LAONSILL_HOME/data/cifar10/images"
+},
+
+"cifar10_test_sdf" : {
+    "name" : "cifar10_test_sdf",
+    "type" : "imageset",
+    "desc" : "cifar10 test sdf",
+    "build" : false,
+    "imageSetList" : [
+        {
+            "name" : "test",
+            "dataSetPath" : "$LAONSILL_HOME/data/cifar10/test.txt"
+        }
+    ],
+    "labelMapFilePath" : "$LAONSILL_HOME/resource/labelmap/labelmap_cifar10.json",
+    "outFilePath" : "$LAONSILL_HOME/data/sdf/cifar10_test_sdf",
+    "shuffle" : false,
+    "encoded" : false,
+    "encodeType" : "",
+    "basePath" : "$LAONSILL_HOME/data/cifar10/images"
+}
+
+}
+
+
+

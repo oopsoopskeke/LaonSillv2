@@ -1,0 +1,21 @@
+{
+
+"0" : 
+{
+    "FMT" : "Reserved",
+    "ARGS" : ["INT32"]
+},
+
+"1" : 
+{
+    "FMT" : "Hot Log test#1. int value=%d, string value='%s', double value=%lf, bool value=%d",
+    "ARGS" : ["INT32", "CHAR(8)", "DOUBLE", "BOOL"]
+},
+
+"2" : 
+{
+    "FMT" : "Hot Log test#2(No arg test).",
+    "ARGS" : []
+}
+
+}

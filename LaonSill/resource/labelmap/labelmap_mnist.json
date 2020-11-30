@@ -1,0 +1,52 @@
+[
+	{
+		"name": "0",
+		"label": 0,
+		"display_name": "0"
+	},
+	{
+		"name": "1",
+		"label": 1,
+		"display_name": "1"
+	},
+	{
+		"name": "2",
+		"label": 2,
+		"display_name": "2"
+	},
+	{
+		"name": "3",
+		"label": 3,
+		"display_name": "3"
+	},
+	{
+		"name": "4",
+		"label": 4,
+		"display_name": "4"
+	},
+	{
+		"name": "5",
+		"label": 5,
+		"display_name": "5"
+	},
+	{
+		"name": "6",
+		"label": 6,
+		"display_name": "6"
+	},
+	{
+		"name": "7",
+		"label": 7,
+		"display_name": "7"
+	},
+	{
+		"name": "8",
+		"label": 8,
+		"display_name": "8"
+	},
+	{
+		"name": "9",
+		"label": 9,
+		"display_name": "9"
+	}
+]

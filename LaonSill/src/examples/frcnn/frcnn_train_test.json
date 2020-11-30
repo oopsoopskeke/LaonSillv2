@@ -1,0 +1,500 @@
+{
+	"layers" :
+	[		
+		{
+			"name" : "input-data",
+			"layer" : "DummyInput",
+			"id" : 0,
+			"output" : ["data", "im_info", "gt_boxes"],
+			"shapes" : [1, 3, 400, 533, 1, 1, 1, 3, 1, 1, 1, 4]
+		},
+
+		{
+			"name" : "conv1",
+			"layer" : "Conv",
+			"id" : 10,
+			"input" : ["data"],
+			"output" : ["conv1"],
+			"filterDim.rows" : 7,
+			"filterDim.cols" : 7,
+			"filterDim.channels" : 3,
+			"filterDim.filters" : 96,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 2,
+			"weightUpdateParam.lr_mult" : 0.0,
+			"weightUpdateParam.decay_mult" : 0.0,
+			"biasUpdateParam.lr_mult" : 0.0,
+			"biasUpdateParam.decay_mult" : 0.0
+		},
+
+		{
+			"name" : "relu1",
+			"layer" : "Relu",
+			"id" : 20,
+			"input" : ["conv1"],
+			"output" : ["conv1"]
+		},
+
+		{
+			"name" : "norm1",
+			"layer" : "LRN",
+			"id" : 30,
+			"input" : ["conv1"],
+			"output" : ["norm1"],
+			"lrnDim.local_size" : 5,
+			"lrnDim.alpha" : 0.0005,
+			"lrnDim.beta" : 0.75,
+			"lrnDim.k" : 2.0
+		},
+
+		{
+			"name" : "pool1",
+			"layer" : "Pooling",
+			"id" : 40,
+			"input" : ["norm1"],
+			"output" : ["pool1"],
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 2,
+			"poolingType" : "Max"
+		},
+
+		{
+			"name" : "conv2",
+			"layer" : "Conv",
+			"id" : 50,
+			"input" : ["pool1"],
+			"output" : ["conv2"],
+			"filterDim.rows" : 5,
+			"filterDim.cols" : 5,
+			"filterDim.channels" : 96,
+			"filterDim.filters" : 256,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 2,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 1.0
+		},
+
+		{
+			"name" : "relu2",
+			"layer" : "Relu",
+			"id" : 60,
+			"input" : ["conv2"],
+			"output" : ["conv2"]
+		},
+
+		{
+			"name" : "norm2",
+			"layer" : "LRN",
+			"id" : 70,
+			"input" : ["conv2"],
+			"output" : ["norm2"],
+			"lrnDim.local_size" : 5,
+			"lrnDim.alpha" : 0.0005,
+			"lrnDim.beta" : 0.75,
+			"lrnDim.k" : 2.0
+		},
+
+		{
+			"name" : "pool2",
+			"layer" : "Pooling",
+			"id" : 80,
+			"input" : ["norm2"],
+			"output" : ["pool2"],
+			"poolDim.rows" : 3,
+			"poolDim.cols" : 3,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 2,
+			"poolingType" : "Max"
+		},
+
+		{
+			"name" : "conv3",
+			"layer" : "Conv",
+			"id" : 90,
+			"input" : ["pool2"],
+			"output" : ["conv3"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 512,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 1.0
+		},
+
+		{
+			"name" : "relu3",
+			"layer" : "Relu",
+			"id" : 100,
+			"input" : ["conv3"],
+			"output" : ["conv3"]
+		},
+
+		{
+			"name" : "conv4",
+			"layer" : "Conv",
+			"id" : 110,
+			"input" : ["conv3"],
+			"output" : ["conv4"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 512,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 1.0
+		},
+
+		{
+			"name" : "relu4",
+			"layer" : "Relu",
+			"id" : 120,
+			"input" : ["conv4"],
+			"output" : ["conv4"]
+		},
+
+		{
+			"name" : "conv5",
+			"layer" : "Conv",
+			"id" : 130,
+			"input" : ["conv4"],
+			"output" : ["conv5"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 512,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 1.0
+		},
+
+		{
+			"name" : "relu5",
+			"layer" : "Relu",
+			"id" : 140,
+			"input" : ["conv5"],
+			"output" : ["conv5"]
+		},
+
+		{
+			"name" : "rpn_conv/3x3",
+			"layer" : "Conv",
+			"id" : 150,
+			"input" : ["conv5"],
+			"output" : ["rpn/output"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 256,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 1.0,
+			"weightFiller.type" : "Gaussian",
+			"weightFiller.std" : 0.01,
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "rpn_relu/3x3",
+			"layer" : "Relu",
+			"id" : 160,
+			"input" : ["rpn/output"],
+			"output" : ["rpn/output"]
+		},
+
+		{
+			"name" : "rpn_cls_score",
+			"layer" : "Conv",
+			"id" : 170,
+			"input" : ["rpn/output"],
+			"output" : ["rpn_cls_score"],
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 18,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 1.0,
+			"weightFiller.type" : "Gaussian",
+			"weightFiller.std" : 0.01,
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "rpn_bbox_pred",
+			"layer" : "Conv",
+			"id" : 180,
+			"input" : ["rpn/output"],
+			"output" : ["rpn_bbox_pred"],
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 36,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 1.0,
+			"weightFiller.type" : "Gaussian",
+			"weightFiller.std" : 0.01,
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0 
+		},
+
+		{
+			"name" : "rpn_cls_score_reshape",
+			"layer" : "Reshape",
+			"id" : 190,
+			"input" : ["rpn_cls_score"],
+			"output" : ["rpn_cls_score_reshape"],
+			"shape" : [0, 2, -1, 0]
+		},
+
+		{
+			"name" : "rpn-data",
+			"layer" : "AnchorTarget",
+			"id" : 200,
+			"input" : ["rpn_cls_score", "gt_boxes", "im_info", "data"],
+			"output" : ["rpn_labels", "rpn_bbox_targets", "rpn_bbox_inside_weights", "rpn_bbox_outside_weights"],
+			"propDown" : [false, false, false, false],
+			"featStride" : 16
+		},
+
+		{
+			"name" : "rpn_loss_cls",
+			"layer" : "SoftmaxWithLoss",
+			"id" : 210,
+			"input" : ["rpn_cls_score_reshape", "rpn_labels"],
+			"output" : ["rpn_cls_loss"],
+			"propDown" : [true, false],
+			"lossWeight": 1.0,
+			"ignoreLabel" : -1,
+			"hasIgnoreLabel" : true,
+			"normalize" : true,
+			"hasNormalize" : true,
+			"softmaxAxis" : 1,
+			"innerLayer" :
+			[
+				{
+					"name" : "inner_softmax",
+					"id" : 7000,
+					"layer" : "Softmax",
+					"input" : ["inner_softmax_7000_input"],
+					"output" : ["inner_softmax_7000_output"],
+					"softmaxAxis" : 1
+				}
+			]	
+		},
+
+		{
+			"name" : "rpn_loss_bbox",
+			"layer" : "SmoothL1Loss",
+			"id" : 220,
+			"input" : ["rpn_bbox_pred", "rpn_bbox_targets", "rpn_bbox_inside_weights", "rpn_bbox_outside_weights"],
+			"output" : ["rpn_loss_bbox"],
+			"propDown" : [true, true, false, false],
+			"lossWeight" : 1.0,
+			"sigma" : 3.0	
+		},
+
+		{
+			"name" : "rpn_cls_prob",
+			"layer" : "Softmax",
+			"id" : 230,
+			"input" : ["rpn_cls_score_reshape"],
+			"output" : ["rpn_cls_prob"],
+			"propDown" : [false],
+			"softmaxAxis" : 1
+		},
+
+		{
+			"name" : "rpn_cls_prob_reshape",
+			"layer" : "Reshape",
+			"id" : 240,
+			"input" : ["rpn_cls_prob"],
+			"output" : ["rpn_cls_prob_reshape"],
+			"propDown" : [false],
+			"shape" : [0, 18, -1, 0]
+		},
+
+		{
+			"name" : "proposal",
+			"layer" : "Proposal",
+			"id" : 250,
+			"input" : ["rpn_cls_prob_reshape", "rpn_bbox_pred", "im_info"],
+			"output" : ["rpn_rois"],
+			"propDown" : [false, false, false],
+			"featStride" : 16
+		},
+
+		{
+			"name" : "roi-data",
+			"layer" : "ProposalTarget",
+			"id" : 260,
+			"input" : ["rpn_rois", "gt_boxes"],
+			"output" : ["rois", "labels", "bbox_targets", "bbox_inside_weights", "bbox_outside_weights"],
+			"propDown" : [false, false],
+			"numClasses" : 21
+		},
+
+		{
+			"name" : "roi_pool5",
+			"layer" : "RoIPooling",
+			"id" : 270,
+			"input" : ["conv5", "rois"],
+			"output" : ["pool5"],
+			"pooledW" : 6,
+			"pooledH" : 6,
+			"spatialScale" : 0.0625
+		},
+
+		{
+			"name" : "fc6",
+			"layer" : "FullyConnected",
+			"id" : 280,
+			"input" : ["pool5"],
+			"output" : ["fc6"],
+			"nOut" : 4096,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 1.0			
+		},
+
+		{
+			"name" : "relu6",
+			"layer" : "Relu",
+			"id" : 290,
+			"input" : ["fc6"],
+			"output" : ["fc6"]
+		},
+
+		{
+			"name" : "fc7",
+			"layer" : "FullyConnected",
+			"id" : 300,
+			"input" : ["fc6"],
+			"output" : ["fc7"],
+			"nOut" : 1024,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 1.0			
+		},
+
+		{
+			"name" : "relu7",
+			"layer" : "Relu",
+			"id" : 310,
+			"input" : ["fc7"],
+			"output" : ["fc7"]
+		},
+
+		{
+			"name" : "cls_score",
+			"layer" : "FullyConnected",
+			"id" : 320,
+			"input" : ["fc7"],
+			"output" : ["cls_score"],
+			"nOut" : 21,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 1.0,
+			"weightFiller.type" : "Gaussian",
+			"weightFiller.std" : 0.01,
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "bbox_pred",
+			"layer" : "FullyConnected",
+			"id" : 330,
+			"input" : ["fc7"],
+			"output" : ["bbox_pred"],
+			"nOut" : 84,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 1.0,
+			"weightFiller.type" : "Gaussian",
+			"weightFiller.std" : 0.001,
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.0
+		},
+
+		{
+			"name" : "loss_cls",
+			"layer" : "SoftmaxWithLoss",
+			"id" : 340,
+			"input" : ["cls_score", "labels"],
+			"output" : ["loss_cls"],
+			"propDown" : [true, false],
+			"lossWeight": 1.0,
+			"softmaxAxis" : 2,
+			"innerLayer" :
+			[
+				{
+					"name" : "inner_softmax",
+					"id" : 7001,
+					"layer" : "Softmax",
+					"input" : ["inner_softmax_7001_input"],
+					"output" : ["inner_softmax_7001_output"],
+					"softmaxAxis" : 2
+				}
+			]	
+		},
+
+		{
+			"name" : "loss_bbox",
+			"layer" : "SmoothL1Loss",
+			"id" : 350,
+			"input" : ["bbox_pred", "bbox_targets", "bbox_inside_weights", "bbox_outside_weights"],
+			"output" : ["loss_bbox"],
+			"propDown" : [true, true, false, false],
+			"lossWeight" : 1.0
+		}
+	],
+
+	"configs" :
+	{
+		"batchSize" : 1, 
+		"epochs" : 5, 
+		"lossLayer" : ["rpn_loss_cls", "rpn_loss_bbox", "loss_cls", "loss_bbox"],
+		"gamma" : 0.1,
+		"testInterval" : 5,
+		"saveInterval" : 10000,
+		"savePathPrefix" : "", 
+		"baseLearningRate" : 0.01,
+		"stepSize" : 50000,
+		"weightDecay" : 0.0005,
+		"momentum" : 0.0,
+		"clipGradientsLevel" : 0.0,
+		"lrPolicy" : "Step",
+		"optimizer" : "Momentum"
+	}
+
+}

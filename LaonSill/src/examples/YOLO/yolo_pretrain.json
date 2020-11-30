@@ -1,0 +1,868 @@
+{
+	"layers" :
+	[
+		{
+	        "name" : "data",
+	        "layer" : "ILSVRCInput",
+	        "id" : 0,
+	        "output" : ["data", "label"],
+	        "imageDir" : "$(LAONSILL_HOME)/data/ilsvrc12_train/images/",
+            "resizedImageRow" : 224,
+            "resizedImageCol" : 224,
+            "resizeImage" : true
+	    },
+
+		{
+			"name" : "conv1",
+			"layer" : "Conv",
+			"id" : 10,
+			"input" : ["data"],
+			"output" : ["conv1"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 3,
+			"filterDim.filters" : 32,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv1",
+            "layer" : "BatchNorm2",
+            "id" : 11,
+            "input" : ["conv1"],
+            "output" : ["bn/conv1"]
+        },
+
+        {
+            "name" : "lrelu1",
+            "layer" : "Relu",
+            "id" : 12,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv1"],
+            "output" : ["bn/conv1"]
+		},
+
+		{
+			"name" : "pool1",
+			"layer" : "Pooling",
+			"id" : 20,
+			"input" : ["bn/conv1"],
+			"output" : ["pool1"],
+			"poolDim.rows" : 2,
+			"poolDim.cols" : 2,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 2,
+			"poolingType" : "Max"
+		},
+
+		{
+			"name" : "conv2",
+			"layer" : "Conv",
+			"id" : 30,
+			"input" : ["pool1"],
+			"output" : ["conv2"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 32,
+			"filterDim.filters" : 64,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv2",
+            "layer" : "BatchNorm2",
+            "id" : 31,
+            "input" : ["conv2"],
+            "output" : ["bn/conv2"]
+        },
+
+        {
+            "name" : "lrelu2",
+            "layer" : "Relu",
+            "id" : 32,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv2"],
+            "output" : ["bn/conv2"]
+		},
+
+		{
+			"name" : "pool2",
+			"layer" : "Pooling",
+			"id" : 40,
+			"input" : ["bn/conv2"],
+			"output" : ["pool2"],
+			"poolDim.rows" : 2,
+			"poolDim.cols" : 2,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 2,
+			"poolingType" : "Max"
+		},
+
+		{
+			"name" : "conv3",
+			"layer" : "Conv",
+			"id" : 50,
+			"input" : ["pool2"],
+			"output" : ["conv3"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 64,
+			"filterDim.filters" : 128,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv3",
+            "layer" : "BatchNorm2",
+            "id" : 51,
+            "input" : ["conv3"],
+            "output" : ["bn/conv3"]
+        },
+
+        {
+            "name" : "lrelu3",
+            "layer" : "Relu",
+            "id" : 52,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv3"],
+            "output" : ["bn/conv3"]
+		},
+
+		{
+			"name" : "conv4",
+			"layer" : "Conv",
+			"id" : 60,
+			"input" : ["bn/conv3"],
+			"output" : ["conv4"],
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.channels" : 128,
+			"filterDim.filters" : 64,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv4",
+            "layer" : "BatchNorm2",
+            "id" : 61,
+            "input" : ["conv4"],
+            "output" : ["bn/conv4"]
+        },
+
+        {
+            "name" : "lrelu4",
+            "layer" : "Relu",
+            "id" : 62,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv4"],
+            "output" : ["bn/conv4"]
+		},
+
+		{
+			"name" : "conv5",
+			"layer" : "Conv",
+			"id" : 70,
+			"input" : ["bn/conv4"],
+			"output" : ["conv5"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 64,
+			"filterDim.filters" : 128,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv5",
+            "layer" : "BatchNorm2",
+            "id" : 71,
+            "input" : ["conv5"],
+            "output" : ["bn/conv5"]
+        },
+
+        {
+            "name" : "lrelu5",
+            "layer" : "Relu",
+            "id" : 72,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv5"],
+            "output" : ["bn/conv5"]
+		},
+
+		{
+			"name" : "pool3",
+			"layer" : "Pooling",
+			"id" : 80,
+			"input" : ["bn/conv5"],
+			"output" : ["pool3"],
+			"poolDim.rows" : 2,
+			"poolDim.cols" : 2,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 2,
+			"poolingType" : "Max"
+		},
+
+		{
+			"name" : "conv6",
+			"layer" : "Conv",
+			"id" : 90,
+			"input" : ["pool3"],
+			"output" : ["conv6"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 128,
+			"filterDim.filters" : 256,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv6",
+            "layer" : "BatchNorm2",
+            "id" : 91,
+            "input" : ["conv6"],
+            "output" : ["bn/conv6"]
+        },
+
+        {
+            "name" : "lrelu6",
+            "layer" : "Relu",
+            "id" : 92,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv6"],
+            "output" : ["bn/conv6"]
+		},
+
+		{
+			"name" : "conv7",
+			"layer" : "Conv",
+			"id" : 100,
+			"input" : ["bn/conv6"],
+			"output" : ["conv7"],
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 128,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv7",
+            "layer" : "BatchNorm2",
+            "id" : 101,
+            "input" : ["conv7"],
+            "output" : ["bn/conv7"]
+        },
+
+        {
+            "name" : "lrelu7",
+            "layer" : "Relu",
+            "id" : 102,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv7"],
+            "output" : ["bn/conv7"]
+		},
+
+		{
+			"name" : "conv8",
+			"layer" : "Conv",
+			"id" : 110,
+			"input" : ["bn/conv7"],
+			"output" : ["conv8"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 128,
+			"filterDim.filters" : 256,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv8",
+            "layer" : "BatchNorm2",
+            "id" : 111,
+            "input" : ["conv8"],
+            "output" : ["bn/conv8"]
+        },
+
+        {
+            "name" : "lrelu8",
+            "layer" : "Relu",
+            "id" : 112,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv8"],
+            "output" : ["bn/conv8"]
+		},
+
+		{
+			"name" : "pool4",
+			"layer" : "Pooling",
+			"id" : 120,
+			"input" : ["bn/conv8"],
+			"output" : ["pool4"],
+			"poolDim.rows" : 2,
+			"poolDim.cols" : 2,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 2,
+			"poolingType" : "Max"
+		},
+
+		{
+			"name" : "conv9",
+			"layer" : "Conv",
+			"id" : 130,
+			"input" : ["pool4"],
+			"output" : ["conv9"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 512,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv9",
+            "layer" : "BatchNorm2",
+            "id" : 131,
+            "input" : ["conv9"],
+            "output" : ["bn/conv9"]
+        },
+
+        {
+            "name" : "lrelu9",
+            "layer" : "Relu",
+            "id" : 132,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv9"],
+            "output" : ["bn/conv9"]
+		},
+
+		{
+			"name" : "conv10",
+			"layer" : "Conv",
+			"id" : 140,
+			"input" : ["bn/conv9"],
+			"output" : ["conv10"],
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 256,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv10",
+            "layer" : "BatchNorm2",
+            "id" : 141,
+            "input" : ["conv10"],
+            "output" : ["bn/conv10"]
+        },
+
+        {
+            "name" : "lrelu10",
+            "layer" : "Relu",
+            "id" : 142,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv10"],
+            "output" : ["bn/conv10"]
+		},
+
+		{
+			"name" : "conv11",
+			"layer" : "Conv",
+			"id" : 150,
+			"input" : ["bn/conv10"],
+			"output" : ["conv11"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 512,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv11",
+            "layer" : "BatchNorm2",
+            "id" : 151,
+            "input" : ["conv11"],
+            "output" : ["bn/conv11"]
+        },
+
+        {
+            "name" : "lrelu11",
+            "layer" : "Relu",
+            "id" : 152,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv11"],
+            "output" : ["bn/conv11"]
+		},
+
+		{
+			"name" : "conv12",
+			"layer" : "Conv",
+			"id" : 160,
+			"input" : ["bn/conv11"],
+			"output" : ["conv12"],
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 256,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv12",
+            "layer" : "BatchNorm2",
+            "id" : 161,
+            "input" : ["conv12"],
+            "output" : ["bn/conv12"]
+        },
+
+        {
+            "name" : "lrelu12",
+            "layer" : "Relu",
+            "id" : 162,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv12"],
+            "output" : ["bn/conv12"]
+		},
+
+		{
+			"name" : "conv13",
+			"layer" : "Conv",
+			"id" : 170,
+			"input" : ["bn/conv12"],
+			"output" : ["conv13"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 256,
+			"filterDim.filters" : 512,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv13",
+            "layer" : "BatchNorm2",
+            "id" : 171,
+            "input" : ["conv13"],
+            "output" : ["bn/conv13"]
+        },
+
+        {
+            "name" : "lrelu13",
+            "layer" : "Relu",
+            "id" : 172,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv13"],
+            "output" : ["bn/conv13"]
+		},
+
+		{
+			"name" : "pool5",
+			"layer" : "Pooling",
+			"id" : 180,
+			"input" : ["bn/conv13"],
+			"output" : ["pool5"],
+			"poolDim.rows" : 2,
+			"poolDim.cols" : 2,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 2,
+			"poolingType" : "Max"
+		},
+
+		{
+			"name" : "conv14",
+			"layer" : "Conv",
+			"id" : 190,
+			"input" : ["pool5"],
+			"output" : ["conv14"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 1024,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv14",
+            "layer" : "BatchNorm2",
+            "id" : 191,
+            "input" : ["conv14"],
+            "output" : ["bn/conv14"]
+        },
+
+        {
+            "name" : "lrelu14",
+            "layer" : "Relu",
+            "id" : 192,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv14"],
+            "output" : ["bn/conv14"]
+		},
+
+		{
+			"name" : "conv15",
+			"layer" : "Conv",
+			"id" : 200,
+			"input" : ["bn/conv14"],
+			"output" : ["conv15"],
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.channels" : 1024,
+			"filterDim.filters" : 512,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv15",
+            "layer" : "BatchNorm2",
+            "id" : 201,
+            "input" : ["conv15"],
+            "output" : ["bn/conv15"]
+        },
+
+        {
+            "name" : "lrelu15",
+            "layer" : "Relu",
+            "id" : 202,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv15"],
+            "output" : ["bn/conv15"]
+		},
+
+		{
+			"name" : "conv16",
+			"layer" : "Conv",
+			"id" : 210,
+			"input" : ["bn/conv15"],
+			"output" : ["conv16"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 1024,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv16",
+            "layer" : "BatchNorm2",
+            "id" : 211,
+            "input" : ["conv16"],
+            "output" : ["bn/conv16"]
+        },
+
+        {
+            "name" : "lrelu16",
+            "layer" : "Relu",
+            "id" : 212,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv16"],
+            "output" : ["bn/conv16"]
+		},
+
+		{
+			"name" : "conv17",
+			"layer" : "Conv",
+			"id" : 220,
+			"input" : ["bn/conv16"],
+			"output" : ["conv17"],
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.channels" : 1024,
+			"filterDim.filters" : 1000,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv17",
+            "layer" : "BatchNorm2",
+            "id" : 221,
+            "input" : ["conv17"],
+            "output" : ["bn/conv17"]
+        },
+
+        {
+            "name" : "lrelu17",
+            "layer" : "Relu",
+            "id" : 222,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv17"],
+            "output" : ["bn/conv17"]
+		},
+
+		{
+			"name" : "conv18",
+			"layer" : "Conv",
+			"id" : 230,
+			"input" : ["bn/conv17"],
+			"output" : ["conv18"],
+			"filterDim.rows" : 3,
+			"filterDim.cols" : 3,
+			"filterDim.channels" : 512,
+			"filterDim.filters" : 1024,
+			"filterDim.pad" : 1,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+        {
+            "name" : "bn/conv18",
+            "layer" : "BatchNorm2",
+            "id" : 231,
+            "input" : ["conv18"],
+            "output" : ["bn/conv18"]
+        },
+
+        {
+            "name" : "lrelu18",
+            "layer" : "Relu",
+            "id" : 232,
+            "useLeaky" : true,
+            "leaky" : 0.1,
+            "input" : ["bn/conv18"],
+            "output" : ["bn/conv18"]
+		},
+
+		{
+			"name" : "conv19",
+			"layer" : "Conv",
+			"id" : 240,
+			"input" : ["bn/conv18"],
+			"output" : ["conv19"],
+			"filterDim.rows" : 1,
+			"filterDim.cols" : 1,
+			"filterDim.channels" : 1024,
+			"filterDim.filters" : 1000,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 0.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant",
+			"biasFiller.value" : 0.2
+		},
+
+		{
+			"name" : "pool6",
+			"layer" : "Pooling",
+			"id" : 250,
+			"input" : ["conv19"],
+			"output" : ["pool6"],
+			"poolDim.rows" : 7,
+			"poolDim.cols" : 7,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 7,
+			"poolingType" : "Avg"
+		},
+
+		
+		{
+			"name" : "loss",
+			"layer" : "SoftmaxWithLoss",
+			"id" : 260,
+			"input" : ["pool6", "label"],
+			"output" : ["loss"],
+			"propDown" : [true, false],
+			"softmaxAxis" : 1,
+			"innerLayer" :
+			[
+				{
+					"name" : "inner_softmax",
+					"id" : 7001,
+					"layer" : "Softmax",
+					"input" : ["inner_softmax_7001_input"],
+					"output" : ["inner_softmax_7001_input"],
+					"softmaxAxis" : 1
+				}
+			]	
+		},
+
+		{
+			"name" : "accuracy",
+			"layer" : "Accuracy",
+			"id" : 270,
+			"input" : ["pool6", "label"],
+			"output" : ["accuracy"],
+			"propDown" : [false, false],
+			"topK" : 1,
+			"axis" : 1
+		}
+	],
+
+	"configs" :
+	{
+		"batchSize" : 40,
+		"epochs" : 160, 
+		"lossLayer" : ["loss"],
+        "measureLayer" : ["loss"],
+		"gamma" : 0.1,
+		"testInterval" : 10,
+		"saveInterval" : 1000,
+		"baseLearningRate" : 0.1,
+		"stepSize" : 50000,
+		"weightDecay" : 0.0005,
+		"momentum" : 0.9,
+        "power" : 4.0,
+		"lrPolicy" : "Poly",
+		"optimizer" : "Momentum",
+        "keepSaveBestModel" : false
+	}
+}

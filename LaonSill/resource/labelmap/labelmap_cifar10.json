@@ -1,0 +1,52 @@
+[
+	{
+	  "name": "airplane",
+	  "label": 0,
+	  "display_name": "airplane"
+	},
+	{
+	  "name": "automobile",
+	  "label": 1,
+	  "display_name": "automobile"
+	},
+	{
+	  "name": "bird",
+	  "label": 2,
+	  "display_name": "bird"
+	},
+	{
+	  "name": "cat",
+	  "label": 3,
+	  "display_name": "cat"
+	},
+	{
+	  "name": "deer",
+	  "label": 4,
+	  "display_name": "deer"
+	},
+	{
+	  "name": "dog",
+	  "label": 5,
+	  "display_name": "dog"
+	},
+	{
+	  "name": "frog",
+	  "label": 6,
+	  "display_name": "frog"
+	},
+	{
+	  "name": "horse",
+	  "label": 7,
+	  "display_name": "horse"
+	},
+	{
+	  "name": "ship",
+	  "label": 8,
+	  "display_name": "ship"
+	},
+	{
+	  "name": "truck",
+	  "label": 9,
+	  "display_name": "truck"
+	}
+]

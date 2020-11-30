@@ -1,0 +1,214 @@
+{
+    "layers" :
+    [
+        {
+            "name" : "celebAInput",
+            "layer" : "CelebAInput",
+            "id" : 1,
+            "output" : ["data"],
+            "imageDir" : "$(LAONSILL_HOME)/data/celebA",
+            "cropLen" : 108,
+            "resizeImage" : true,
+            "resizedImageRow" : 64,
+            "resizedImageCol" : 64
+        },
+
+        {
+            "name" : "conv1",
+            "layer" : "Conv",
+            "id" : 2,
+            "input" : ["data"],
+            "output" : ["conv1"],
+            "weightFiller.type" : "Gaussian",
+            "weightFiller.std" : 0.02,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.0,
+            "filterDim.rows" : 4,
+            "filterDim.cols" : 4,
+            "filterDim.channels" : 3,
+            "filterDim.filters" : 64,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 2,
+            "receive" : true,
+            "donatorID" : 10015
+        },
+
+        {
+            "name" : "lrelu1",
+            "layer" : "Relu",
+            "id" : 4,
+            "useLeaky" : true,
+            "leaky" : 0.2,
+            "input" : ["conv1"],
+            "output" : ["lrelu1"]
+        },
+
+        {
+            "name" : "conv2",
+            "layer" : "Conv",
+            "id" : 5,
+            "input" : ["lrelu1"],
+            "output" : ["conv2"],
+            "weightFiller.type" : "Gaussian",
+            "weightFiller.std" : 0.02,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.0,
+            "filterDim.rows" : 4,
+            "filterDim.cols" : 4,
+            "filterDim.channels" : 64,
+            "filterDim.filters" : 128,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 2,
+            "receive" : true,
+            "donatorID" : 10018
+        },
+
+        {
+            "name" : "bn/conv2",
+            "layer" : "BatchNorm",
+            "id" : 6,
+            "input" : ["conv2"],
+            "output" : ["bn/conv2"],
+            "receive" : true,
+            "donatorID" : 10019
+        },
+
+        {
+            "name" : "lrelu2",
+            "layer" : "Relu",
+            "id" : 7,
+            "useLeaky" : true,
+            "leaky" : 0.2,
+            "input" : ["bn/conv2"],
+            "output" : ["lrelu2"]
+        },
+
+        {
+            "name" : "conv3",
+            "layer" : "Conv",
+            "id" : 8,
+            "input" : ["lrelu2"],
+            "output" : ["conv3"],
+            "weightFiller.type" : "Gaussian",
+            "weightFiller.std" : 0.02,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.0,
+            "filterDim.rows" : 4,
+            "filterDim.cols" : 4,
+            "filterDim.channels" : 128,
+            "filterDim.filters" : 256,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 2,
+            "receive" : true,
+            "donatorID" : 10021
+        },
+
+        {
+            "name" : "bn/conv3",
+            "layer" : "BatchNorm",
+            "id" : 9,
+            "input" : ["conv3"],
+            "output" : ["bn/conv3"],
+            "receive" : true,
+            "donatorID" : 10022
+        },
+
+        {
+            "name" : "lrelu3",
+            "layer" : "Relu",
+            "id" : 10,
+            "useLeaky" : true,
+            "leaky" : 0.2,
+            "input" : ["bn/conv3"],
+            "output" : ["lrelu3"]
+        },
+
+        {
+            "name" : "conv4",
+            "layer" : "Conv",
+            "id" : 11,
+            "input" : ["lrelu3"],
+            "output" : ["conv4"],
+            "weightFiller.type" : "Gaussian",
+            "weightFiller.std" : 0.02,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.0,
+            "filterDim.rows" : 4,
+            "filterDim.cols" : 4,
+            "filterDim.channels" : 256,
+            "filterDim.filters" : 512,
+            "filterDim.pad" : 1,
+            "filterDim.stride" : 2,
+            "receive" : true,
+            "donatorID" : 10024
+        },
+
+        {
+            "name" : "bn/conv4",
+            "layer" : "BatchNorm",
+            "id" : 12,
+            "input" : ["conv4"],
+            "output" : ["bn/conv4"],
+            "receive" : true,
+            "donatorID" : 10025
+        },
+
+        {
+            "name" : "lrelu4",
+            "layer" : "Relu",
+            "id" : 13,
+            "useLeaky" : true,
+            "leaky" : 0.2,
+            "input" : ["bn/conv4"],
+            "output" : ["lrelu4"]
+        },
+
+        {
+            "name" : "fc1",
+            "layer" : "FullyConnected",
+            "id" : 14,
+            "input" : ["lrelu4"],
+            "output" : ["fc1"],
+            "nOut" : 1,
+            "weightFiller.type" : "Gaussian",
+            "weightFiller.std" : 0.02,
+            "biasFiller.type" : "Constant",
+            "biasFiller.value" : 0.0,
+            "receive" : true,
+            "donatorID" : 10027
+        },
+
+        {
+            "name" : "celossDGAN",
+            "layer" : "CrossEntropyWithLoss",
+            "id" : 15,
+            "input" : ["fc1"],
+            "output" : ["prob"],
+            "targetValue" : 1.0,
+            "withSigmoid" : true
+        }
+        
+    ],
+
+    "configs" :
+    {
+        "batchSize" : 64,
+        "epochs" : 16,
+        "lossLayer" : ["celossDGAN"],
+        "gamma" : 0.1,
+        "saveInterval" : 1000000,
+        "testInterval" : 100,
+        "savePathPrefix" : "",
+        "baseLearningRate" : 0.0002,
+        "stepSize" : 100000,
+        "weightDecay" : 0.0001,
+        "momentum" : 0.9,
+        "clipGradientsLevel" : 0.0,
+        "gamma" : 0.1,
+        "lrPolicy" : "Fixed",
+        "optimizer" : "Adam",
+        "beta1" : 0.5,
+        "beta2" : 0.999,
+        "miniBatch" : 0
+    }
+}

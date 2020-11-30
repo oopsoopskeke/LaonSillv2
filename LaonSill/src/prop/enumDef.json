@@ -1,0 +1,116 @@
+{
+
+"CONF" :
+[
+    {
+        "NAME" : "ParamFillerType",
+        "ENUM" : ["Constant", "Xavier", "Gaussian", "MSRA"]
+    },
+
+    {
+        "NAME" : "NormalizationMode",
+        "ENUM" : ["Full", "Valid", "BatchSize", "NoNormalization"]
+    },
+
+    {
+        "NAME" : "LabelType",
+        "ENUM" : ["NONE", "IMAGE", "PIXEL"]
+    },
+
+    {
+        "NAME" : "ElementWiseOp",
+        "ENUM" : ["PROD", "SUM", "MAX"]
+    },
+
+    {
+        "NAME" : "LocLossType",
+        "ENUM" : ["L2", "SMOOTH_L1"]
+    },
+
+    {
+        "NAME" : "ConfLossType",
+        "ENUM" : ["SOFTMAX", "LOGISTIC"]
+    },
+
+    {
+        "NAME" : "MatchType",
+        "ENUM" : ["MATCH_NONE", "BIPARTITE", "PER_PREDICTION"]
+    },
+
+    {
+        "NAME" : "MiningType",
+        "ENUM" : ["MINING_NONE", "MAX_NEGATIVE", "HARD_EXAMPLE"]
+    },
+
+    {
+        "NAME" : "CodeType",
+        "ENUM" : ["CODE_NONE", "CORNER", "CENTER_SIZE", "CORNER_SIZE"]
+    },
+
+    {
+        "NAME" : "ResizeMode",
+        "ENUM" : ["RESIZE_NONE", "WARP", "FIT_SMALL_SIZE", "FIT_LARGE_SIZE_AND_PAD"]
+    },
+
+    {
+        "NAME" : "PadMode",
+        "ENUM" : ["PAD_NONE", "CONSTANT", "MIRRORED", "REPEAT_NEAREST"]
+    },
+
+    {
+        "NAME" : "InterpMode",
+        "ENUM" : ["INTERP_NONE", "LINEAR", "AREA", "NEAREST", "CUBIC", "LANCZOS4"]
+    },
+
+    {
+        "NAME" : "AccuracyMetric",
+        "ENUM" : ["PixelAccuracy", "ClassAccuracy", "PixelIOU"]
+    },
+
+    {
+        "NAME" : "EmitType",
+        "ENUM" : ["EMIT_NONE", "CENTER", "MIN_OVERLAP"]
+    },
+
+    {
+        "NAME" : "PoolingType",
+        "ENUM" : ["NoPooling", "Max", "Avg"]
+    },
+
+    {
+        "NAME" : "AnnotationType",
+        "ENUM" : ["ANNO_NONE", "BBOX"]
+    },
+
+    {
+        "NAME" : "Optimizer",
+        "ENUM" : ["Momentum", "Vanilla", "Nesterov", "Adagrad", "RMSprop", "Adam", "Adadelta"]
+    },
+
+    {
+        "NAME" : "LRPolicy",
+        "ENUM" : ["Fixed", "Step", "Exp", "Inv", "Multistep", "Poly"]
+    },
+
+    {
+        "NAME" : "NetworkPhase",
+        "ENUM" : ["TrainPhase", "ValidationPhase"]
+    },
+
+    {
+        "NAME" : "NetworkStatus",
+        "ENUM" : ["Train", "Test"]
+    },
+
+    {
+        "NAME" : "LayerActivation",
+        "ENUM" : ["AllActivation", "TrainActivation", "TestActivation"]
+    },
+
+    {
+        "NAME" : "BatchNormUseGlobal",
+        "ENUM" : ["Use", "NotUse", "DependOnNetStat"]
+    }
+]
+
+}

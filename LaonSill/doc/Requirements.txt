@@ -1,0 +1,24 @@
+* minimum requirements for LAONSILL framework
+ (1) CPU : Intel(R) Core(TM) i5-4670 CPU @ 3.40GHz
+ (2) Memory : 8GB
+ (3) OS : Centos 6.8, Ubuntu 14.04
+ (4) Disk : 1TB HDD disk
+ (5) GPU : GeForce GTX 650
+
+* recommanded requirements for LAONSILL framework
+ (1) CPU : Intel(R) Core(TM) i7-6850K CPU @ 3.60GHz
+ (2) Memory : 64GB
+ (3) OS : Centos 7.3
+ (4) Disk : 4TB HDD disk, 1TB SSD disk
+ (5) GPU : TITAN X
+
+* requirements for multi-device
+ (1) GPU should support peer-to-peer access functionality
+     According to the NVIDIA documentation, the following conditions must be met:
+     (https://developer.download.nvidia.com/CUDA/training/cuda_webinars_GPUDirect_uva.pdf)
+     - Needs to be a 64bit application
+     - Fermi-class Tesla GPU
+     - Linux or Windows TCC
+     - CUDA 4.0
+     - Drivers v270.41.19 or later
+     - GPUs need to be on same IOH

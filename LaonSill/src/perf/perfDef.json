@@ -1,0 +1,104 @@
+{
+
+"SERVER_RUNNING_TIME" :
+{
+    "DESC"          : "specify server running time",
+    "SCOPE"         : "SYSTEM",
+    "USETIME"       : true,
+    "USEAVGTIME"    : false,
+    "USEMAXTIME"    : false,
+    "ARGS"          : []
+},
+
+"NETWORK_TRAINING_TESTTIME" :
+{
+    "DESC"          : "specify network training time",
+    "SCOPE"         : "JOB",
+    "USETIME"       : true,
+    "USEAVGTIME"    : false,
+    "USEMAXTIME"    : false,
+    "ARGS"          : 
+    [
+        ["EpochCount", "UINT32", "specify epoch count"]
+    ]
+},
+
+"DATAINPUT_ACCESS_TIME" :
+{
+    "DESC"          : "specify data input access time",
+    "SCOPE"         : "SYSTEM",
+    "USETIME"       : true,
+    "USEAVGTIME"    : true,
+    "USEMAXTIME"    : true,
+    "ARGS"          : []
+},
+
+"BATCHNORM_LAYER_FWTIME" :
+{
+    "DESC"          : "specify forward time of batch normalization layer",
+    "SCOPE"         : "SYSTEM",
+    "USETIME"       : true,
+    "USEAVGTIME"    : true,
+    "USEMAXTIME"    : true,
+    "ARGS"          : []
+},
+
+"BATCHNORM_LAYER_BWTIME" :
+{
+    "DESC"          : "specify backward time of batch normalization layer",
+    "SCOPE"         : "SYSTEM",
+    "USETIME"       : true,
+    "USEAVGTIME"    : true,
+    "USEMAXTIME"    : true,
+    "ARGS"          : []
+},
+
+"BATCHNORM_LAYER_UPTIME" :
+{
+    "DESC"          : "specify update time of batch normalization layer",
+    "SCOPE"         : "SYSTEM",
+    "USETIME"       : true,
+    "USEAVGTIME"    : true,
+    "USEMAXTIME"    : true,
+    "ARGS"          : []
+},
+
+"TEST_PERF1" : 
+{
+    "DESC"          : "test performance 1",
+    "SCOPE"         : "JOB",
+    "USETIME"       : true,
+    "USEAVGTIME"    : true,
+    "USEMAXTIME"    : true,
+    "ARGS"          : 
+    [
+        ["IntegerPerf", "UINT32", "specify integer test value"],
+        ["DoublePerf", "DOUBLE", "specify double test value"]
+    ]
+},
+
+"TEST_PERF2" : 
+{
+    "DESC"          : "test performance 2",
+    "SCOPE"         : "SYSTEM",
+    "USETIME"       : false,
+    "USEAVGTIME"    : false,
+    "USEMAXTIME"    : false,
+    "ARGS"          : []
+},
+
+"TEST_PERF3" : 
+{
+    "DESC"          : "test performance 3",
+    "SCOPE"         : "SYSTEM",
+    "USETIME"       : true,
+    "USEAVGTIME"    : true,
+    "USEMAXTIME"    : true,
+    "ARGS"          : 
+    [
+        ["IntegerPerf", "UINT32", "specify integer test value"],
+        ["DoublePerf", "DOUBLE", "specify double test value"]
+    ]
+}
+
+}

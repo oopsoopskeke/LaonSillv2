@@ -1,0 +1,127 @@
+[
+	{
+	  "name": "none_of_the_above",
+	  "label": 0,
+	  "display_name": "background"
+	},
+	{
+	  "name": "aeroplane",
+	  "label": 1,
+	  "display_name": "aeroplane",
+	  "color": [10, 163, 240]
+	},
+	{
+	  "name": "bicycle",
+	  "label": 2,
+	  "display_name": "bicycle",
+	  "color": [44, 90, 130]
+	},
+	{
+	  "name": "bird",
+	  "label": 3,
+	  "display_name": "bird",
+	  "color": [239, 80, 0]
+	},
+	{
+	  "name": "boat",
+	  "label": 4,
+	  "display_name": "boat",
+	  "color": [37, 0, 162]
+	},
+	{
+	  "name": "bottle",
+	  "label": 5,
+	  "display_name": "bottle",
+	  "color": [226, 161, 27]
+	},
+	{
+	  "name": "bus",
+	  "label": 6,
+	  "display_name": "bus",
+	  "color": [115, 0, 216]
+	},
+	{
+	  "name": "car",
+	  "label": 7,
+	  "display_name": "car",
+	  "color": [0, 196, 164]
+	},
+	{
+	  "name": "cat",
+	  "label": 8,
+	  "display_name": "cat",
+	  "color": [255, 0, 106]
+	},
+	{
+	  "name": "chair",
+	  "label": 9,
+	  "display_name": "chair",
+	  "color": [23, 169, 96]
+	},
+	{
+	  "name": "cow",
+	  "label": 10,
+	  "display_name": "cow",
+	  "color": [0, 138, 0]
+	},
+	{
+	  "name": "diningtable",
+	  "label": 11,
+	  "display_name": "diningtable",
+	  "color": [138, 96, 118]
+	},
+	{
+	  "name": "dog",
+	  "label": 12,
+	  "display_name": "dog",
+	  "color": [100, 135, 109]
+	},
+	{
+	  "name": "horse",
+	  "label": 13,
+	  "display_name": "horse",
+	  "color": [0, 104, 250]
+	},
+	{
+	  "name": "motorbike",
+	  "label": 14,
+	  "display_name": "motorbike",
+	  "color": [208, 114, 244]
+	},
+	{
+	  "name": "person",
+	  "label": 15,
+	  "display_name": "person",
+	  "color": [0, 20, 229]
+	},
+	{
+	  "name": "pottedplant",
+	  "label": 16,
+	  "display_name": "pottedplant",
+	  "color": [63, 59, 122]
+	},
+	{
+	  "name": "sheep",
+	  "label": 17,
+	  "display_name": "sheep",
+	  "color": [135, 118, 100]
+	},
+	{
+	  "name": "sofa",
+	  "label": 18,
+	  "display_name": "sofa",
+	  "color": [169, 171, 0]
+	},
+	{
+	  "name": "train",
+	  "label": 19,
+	  "display_name": "train",
+	  "color": [255, 0, 170]
+	},
+	{
+	  "name": "tvmonitor",
+	  "label": 20,
+	  "display_name": "tvmonitor",
+	  "color": [0, 193, 216]
+	}
+]

@@ -1,0 +1,47 @@
+{
+
+"VARS" :
+[
+    ["batchSize", "uint32_t", "1"],
+    ["dop", "uint32_t", "1"],
+    ["epochs", "uint32_t", "1"],
+    ["miniBatch", "uint32_t", "0"],
+    ["testInterval", "uint32_t", "0"],
+    ["saveInterval", "uint32_t", "0"],
+    ["iterations", "uint32_t", "1"],
+    ["maxIterations", "uint32_t", "0"],
+    ["stepSize", "uint32_t", "1"],
+    ["baseLearningRate", "float", "0.001"],
+    ["power", "float", "1.0"],
+    ["momentum", "float", "0.9"],
+    ["weightDecay", "float", "0.001"],
+    ["clipGradientsLevel", "float", "35.0"],
+    ["doClipGradients", "bool", "false"],
+    ["gamma", "float", "0.0"],
+    ["epsilon", "float", "0.00000001"],
+    ["beta1", "float", "0.9"],
+    ["beta2", "float", "0.999"],
+    ["decayRate", "float", "0.9"],
+    ["savePathPrefix", "std::string", "\"\""],
+    ["loadPath", "std::string", "\"\""],
+    ["optimizer", "Optimizer", "Optimizer::Momentum"],
+    ["lrPolicy", "LRPolicy", "LRPolicy::Fixed"],
+	["stepValue", "std::vector<int>", ""],
+	["stepScale", "std::vector<float>", ""],
+    ["phase", "NetworkPhase", "NetworkPhase::TrainPhase"],
+    ["lossLayer", "std::vector<std::string>", ""],
+    ["measureLayer", "std::vector<std::string>", ""],
+    ["inputLayer", "std::string", "\"\""],
+    ["outputLayer", "std::string", "\"\""],
+    ["rate", "float", "-1.0"],
+    ["status", "NetworkStatus", "NetworkStatus::Train"],
+    ["keepSaveIntervalModelCount", "uint32_t", "3"],
+    ["keepSaveBestModel", "bool", "false"],
+    ["keepSaveBestModelStartIterNum", "uint32_t", "10000"],
+    ["useCompositeModel", "bool", "false"],
+    ["loadPathForTest", "std::string", "\"\""],
+    ["startIterNum", "uint32_t", "0"],
+    ["currentStep", "uint32_t", "0"]
+]
+
+}

@@ -1,0 +1,160 @@
+{
+	"layers" :
+	[
+		{
+			"name" : "data",
+			"layer" : "DataInput",
+			"id" : 0,
+			"output" : ["data", "label"],
+			"source" : "$(LAONSILL_HOME)/data/sdf/mnist_train_sdf_8",
+			"dataSetName" : "train",
+			"dataTransformParam.scale" : 0.00390625
+		},
+
+		{
+			"name" : "conv1",
+			"layer" : "Conv",
+			"id" : 10,
+			"input" : ["data"],
+			"output" : ["conv1"],
+			"filterDim.rows" : 5,
+			"filterDim.cols" : 5,
+			"filterDim.channels" : 1,
+			"filterDim.filters" : 20,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 1.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant"
+		},
+
+		{
+			"name" : "pool1",
+			"layer" : "Pooling",
+			"id" : 20,
+			"input" : ["conv1"],
+			"output" : ["pool1"],
+			"poolDim.rows" : 2,
+			"poolDim.cols" : 2,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 2,
+			"poolingType" : "Max"
+		},
+
+		{
+			"name" : "conv2",
+			"layer" : "Conv",
+			"id" : 30,
+			"input" : ["pool1"],
+			"output" : ["conv2"],
+			"filterDim.rows" : 5,
+			"filterDim.cols" : 5,
+			"filterDim.channels" : 20,
+			"filterDim.filters" : 50,
+			"filterDim.pad" : 0,
+			"filterDim.stride" : 1,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 1.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant"
+		},
+
+		{
+			"name" : "pool2",
+			"layer" : "Pooling",
+			"id" : 40,
+			"input" : ["conv2"],
+			"output" : ["pool2"],
+			"poolDim.rows" : 2,
+			"poolDim.cols" : 2,
+			"poolDim.pad" : 0,
+			"poolDim.stride" : 2,
+			"poolingType" : "Max"
+		},
+		
+		{
+			"name" : "ip1",
+			"layer" : "FullyConnected",
+			"id" : 50,
+			"input" : ["pool2"],
+			"output" : ["ip1"],
+			"nOut" : 500,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 1.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant"			
+		},
+
+		{
+			"name" : "relu1",
+			"layer" : "Relu",
+			"id" : 60,
+			"input" : ["ip1"],
+			"output" : ["ip1"]
+		},
+
+		{
+			"name" : "ip2",
+			"layer" : "FullyConnected",
+			"id" : 70,
+			"input" : ["ip1"],
+			"output" : ["ip2"],
+			"nOut" : 8,
+			"weightUpdateParam.lr_mult" : 1.0,
+			"weightUpdateParam.decay_mult" : 1.0,
+			"biasUpdateParam.lr_mult" : 2.0,
+			"biasUpdateParam.decay_mult" : 1.0,
+			"weightFiller.type" : "Xavier",
+			"biasFiller.type" : "Constant"			
+		},
+		
+		{
+			"name" : "loss",
+			"layer" : "SoftmaxWithLoss",
+			"id" : 80,
+			"input" : ["ip2", "label"],
+			"output" : ["loss"],
+			"propDown" : [true, false],
+			"softmaxAxis" : 2
+		},
+		
+		{
+			"name" : "accuracy",
+			"layer" : "Accuracy",
+			"id" : 90,
+			"input" : ["ip2", "label"],
+			"output" : ["accuracy"],
+			"propDown" : [false, false],
+			"topK" : 1,
+			"axis" : 2
+		}
+	],
+
+	"configs" :
+	{
+		"batchSize" : 64,
+		"epochs" : 10, 
+		"lossLayer" : ["loss"],
+		"testInterval" : 1000,
+		"saveInterval" : 1000,
+		"savePathPrefix" : "", 
+		"baseLearningRate" : 0.01,
+		"weightDecay" : 0.0005,
+		"momentum" : 0.9,
+		"lrPolicy" : "Inv",
+		"gamma" : 0.0001,
+		"power" : 0.75,
+		"optimizer" : "Momentum",
+        "measureLayer" : ["loss", "accuracy"],
+        "keepSaveIntervalModelCount" : 4,
+        "keepSaveBestModel" : false,
+        "keepSaveBestModelStartIterNum" : 10000
+	}
+}
